@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal } from '../common/Modal';
-import { Mic, MicOff, Video, VideoOff, PhoneOff, MessageSquare, Sparkles } from 'lucide-react';
+import { Mic, MicOff, Video, VideoOff, PhoneOff, Sparkles } from 'lucide-react';
 
 interface VirtualVisitModalProps {
   isOpen: boolean;

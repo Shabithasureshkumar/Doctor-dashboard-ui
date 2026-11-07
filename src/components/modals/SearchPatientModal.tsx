@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal } from '../common/Modal';
-import { Search, UserCheck, Calendar, ArrowRight } from 'lucide-react';
+import { Search, ArrowRight } from 'lucide-react';
 import { QUEUE_PATIENTS } from '../../mockData';
 import { Avatar } from '../common/Avatar';
 

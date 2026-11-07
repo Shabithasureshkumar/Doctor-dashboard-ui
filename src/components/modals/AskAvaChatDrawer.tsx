@@ -15,7 +15,7 @@ interface Message {
 export const AskAvaChatDrawer: React.FC<AskAvaChatDrawerProps> = ({
   isOpen,
   onClose,
-  onOpenChart,
+  onOpenChart: _onOpenChart,
 }) => {
   const [messages, setMessages] = useState<Message[]>([
     {

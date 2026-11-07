@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal } from '../common/Modal';
-import { Activity, AlertTriangle, FileText, Pill, Plus } from 'lucide-react';
+import { AlertTriangle, Plus } from 'lucide-react';
 import { Avatar } from '../common/Avatar';
 
 interface PatientChartModalProps {

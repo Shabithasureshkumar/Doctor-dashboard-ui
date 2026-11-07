@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Sparkles,
   Pill,
-  Clock,
   FlaskConical,
   FileText,
   AlertTriangle,

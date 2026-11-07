@@ -16,6 +16,7 @@ interface CalendarViewProps {
   onOpenVirtualVisit: (patientName: string) => void;
   onRefillRequest: () => void;
   onOpenAskAva: () => void;
+  appointments?: Appointment[];
 }
 
 export const CalendarView: React.FC<CalendarViewProps> = ({
@@ -27,6 +28,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
   onOpenVirtualVisit,
   onRefillRequest,
   onOpenAskAva,
+  appointments: propAppointments,
 }) => {
   const PHONE = '(max-width: 767px)';
   const [isPhone, setIsPhone] = useState(
@@ -39,7 +41,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
   const [typeFilters, setTypeFilters] = useState<AppointmentType[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [weekOffset, setWeekOffset] = useState(0);
-  const [appointments, setAppointments] = useState<Appointment[]>(CALENDAR_APPOINTMENTS);
+  const appointments = propAppointments || CALENDAR_APPOINTMENTS;
 
   // Seven columns do not fit a phone, so default to the single-day grid there.
   useEffect(() => {

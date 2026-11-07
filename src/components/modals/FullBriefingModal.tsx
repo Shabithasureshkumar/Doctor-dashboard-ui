@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from '../common/Modal';
-import { Sparkles, AlertCircle, Clock, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { CURRENT_DOCTOR } from '../../mockData';
 
 interface FullBriefingModalProps {

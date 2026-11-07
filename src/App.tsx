@@ -17,10 +17,12 @@ import {
   TasksModal,
 } from './components/modals/AuxiliaryModals';
 import { Appointment } from './types';
+import { CALENDAR_APPOINTMENTS } from './mockData';
 
 export function App() {
   // Navigation View State: 'dashboard' | 'calendar'
   const [currentView, setCurrentView] = useState<'dashboard' | 'calendar'>('dashboard');
+  const [appointments, setAppointments] = useState<Appointment[]>(CALENDAR_APPOINTMENTS);
 
   // Selected Patient for Contextual Modals
   const [selectedPatient, setSelectedPatient] = useState<string>('Sarah Johnson');
@@ -82,7 +84,9 @@ export function App() {
     setIsNewAppointmentOpen(true);
   };
 
-  const handleAddAppointment = (_newAppointment: Appointment) => {
+  const handleAddAppointment = (newAppointment: Appointment) => {
+    setAppointments((prev) => [newAppointment, ...prev]);
+    showToast(`Appointment scheduled for ${newAppointment.patientName}`);
     setCurrentView('calendar');
   };
 
@@ -114,6 +118,7 @@ export function App() {
           onOpenVirtualVisit={handleOpenVirtualVisit}
           onRefillRequest={() => setIsRequestRefillOpen(true)}
           onOpenAskAva={() => setIsAskAvaOpen(true)}
+          appointments={appointments}
         />
       )}
 

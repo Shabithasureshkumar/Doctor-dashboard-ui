@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal } from '../common/Modal';
-import { Sparkles, Mic, Check, Copy, Save } from 'lucide-react';
+import { Mic, Check, Copy, Save } from 'lucide-react';
 
 interface AIScribeModalProps {
   isOpen: boolean;

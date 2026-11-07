@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Modal } from '../common/Modal';
-import { Calendar as CalendarIcon, Clock, User, FileText } from 'lucide-react';
+import { User } from 'lucide-react';
 import { Appointment } from '../../types';
 
 interface NewAppointmentModalProps {
@@ -21,17 +21,20 @@ export const NewAppointmentModal: React.FC<NewAppointmentModalProps> = ({
   const [patientName, setPatientName] = useState('Sarah Johnson');
   const [day, setDay] = useState<'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN'>('MON');
   const [time, setTime] = useState('08:00 AM');
-  const [type, setType] = useState<'Video Visit' | 'In-person' | 'Follow-up' | 'Procedure' | 'New Patient'>('Video Visit');
-  const [notes, setNotes] = useState('');
+  const [prevInitial, setPrevInitial] = useState({ initialDay, initialTime });
 
-  useEffect(() => {
+  if (prevInitial.initialDay !== initialDay || prevInitial.initialTime !== initialTime) {
+    setPrevInitial({ initialDay, initialTime });
     if (initialDay && ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'].includes(initialDay)) {
       setDay(initialDay as any);
     }
     if (initialTime) {
       setTime(initialTime);
     }
-  }, [initialDay, initialTime]);
+  }
+
+  const [type, setType] = useState<'Video Visit' | 'In-person' | 'Follow-up' | 'Procedure' | 'New Patient'>('Video Visit');
+  const [notes, setNotes] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

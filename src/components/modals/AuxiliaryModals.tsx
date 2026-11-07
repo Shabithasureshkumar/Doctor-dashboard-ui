@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal } from '../common/Modal';
-import { Send, Check, Download, Settings as SettingsIcon, Clock, FlaskConical, ClipboardCheck } from 'lucide-react';
+import { Check, Download } from 'lucide-react';
 
 // 1. Refer Patient Modal
 export const ReferPatientModal: React.FC<{

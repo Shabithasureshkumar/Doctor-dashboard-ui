@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal } from '../common/Modal';
-import { Pill, Check, Send } from 'lucide-react';
+import { Check, Send } from 'lucide-react';
 
 interface NewPrescriptionModalProps {
   isOpen: boolean;
