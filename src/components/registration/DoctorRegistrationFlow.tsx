@@ -302,8 +302,8 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
   return (
     <div className="min-h-screen w-full bg-[#F8F9FE] text-slate-800 antialiased flex flex-col justify-between selection:bg-purple-200 selection:text-purple-900">
       {/* ──────────────── Top Global Navigation Bar ──────────────── */}
-      <header className="w-full bg-white/90 backdrop-blur-md border-b border-slate-100 sticky top-0 z-40 px-4 sm:px-8 lg:px-12 py-3.5 transition-all">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      <header className="w-full bg-white/90 backdrop-blur-md border-b border-slate-100 sticky top-0 z-40 px-4 sm:px-8 lg:px-12 xl:px-16 py-3.5 transition-all">
+        <div className="w-full flex items-center justify-between gap-4">
           {/* Logo & Portal Identity */}
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#9A6AFB] to-[#5C24FF] flex items-center justify-center text-white shadow-[0_4px_14px_rgba(154,106,251,0.35)]">
@@ -344,7 +344,7 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
         </div>
 
         {/* Global Progress Bar (Full Width) */}
-        <div className="max-w-7xl mx-auto mt-3">
+        <div className="w-full mt-3">
           <div className="flex items-center justify-between text-xs font-sora mb-1.5">
             <span className="font-bold text-slate-700 flex items-center gap-2">
               <span className="w-5 h-5 rounded-full bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white flex items-center justify-center text-[10px] font-bold">
@@ -370,8 +370,8 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
         </div>
       </header>
 
-      {/* ──────────────── Main Content Canvas ──────────────── */}
-      <main className="w-full flex-1 max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-6 sm:py-8 flex flex-col justify-center">
+      {/* ──────────────── Main Content Canvas (Full Viewport Width) ──────────────── */}
+      <main className="w-full flex-1 px-4 sm:px-8 lg:px-12 xl:px-16 py-6 sm:py-8 flex flex-col justify-center">
         {/* SCREEN 01: Choose Your Professional Journey */}
         {currentStep === 1 && (
           <div className="space-y-8 animate-in fade-in duration-200">
@@ -1731,111 +1731,278 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
           </div>
         )}
 
-        {/* SCREEN 08: Welcome to Mednevo, Doctor! (Celebration & Summary) */}
+        {/* SCREEN 08: Welcome to Mednevo, Doctor! (Full-Width Executive Launchpad) */}
         {currentStep === 8 && (
-          <div className="space-y-6 text-center py-4 max-w-4xl mx-auto animate-in zoom-in-95 duration-300">
-            {/* Celebration Emblem */}
-            <div className="w-24 h-24 rounded-3xl bg-gradient-to-tr from-[#9A6AFB] to-[#5C24FF] flex items-center justify-center text-white mx-auto shadow-[0_12px_40px_rgba(154,106,251,0.45)]">
-              <Sparkles className="w-12 h-12" />
+          <div className="w-full space-y-8 py-2 animate-in fade-in duration-300">
+            {/* Top Celebration Banner - Full Width */}
+            <div className="w-full bg-gradient-to-r from-purple-50 via-white to-purple-50/80 rounded-3xl border border-purple-100 p-6 sm:p-10 shadow-sm relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-6">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5">
+                <div className="relative">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-gradient-to-tr from-[#9A6AFB] to-[#5C24FF] flex items-center justify-center text-white shadow-[0_10px_35px_rgba(154,106,251,0.45)] flex-shrink-0">
+                    <Sparkles className="w-10 h-10 sm:w-12 sm:h-12" />
+                  </div>
+                  <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-emerald-500 border-2 border-white flex items-center justify-center text-white text-xs font-bold shadow-xs">
+                    ✓
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="inline-flex items-center gap-2 text-xs font-sora font-bold text-[#5C24FF] bg-white px-3.5 py-1 rounded-full border border-purple-200/60 shadow-2xs">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    Verified Clinician Onboarding Complete · HIPAA Credentialed
+                  </div>
+                  <h2 className="font-sora font-extrabold text-2xl sm:text-4xl text-slate-900 tracking-tight">
+                    Welcome to Mednevo, Dr. {formData.firstName} {formData.lastName}!
+                  </h2>
+                  <p className="text-xs sm:text-sm text-slate-600 max-w-3xl leading-relaxed">
+                    Your digital medical practice workspace, patient scheduling queue, direct payout escrow,
+                    and AI clinical copilot Ava have been successfully configured and activated.
+                  </p>
+                </div>
+              </div>
+
+              {/* Status Pill Badge */}
+              <div className="flex flex-col sm:flex-row lg:flex-col items-center gap-3 bg-white/90 backdrop-blur-xs p-4 rounded-2xl border border-purple-100 shadow-2xs text-center flex-shrink-0 min-w-[220px]">
+                <div className="flex items-center gap-2">
+                  <BadgeCheck className="w-5 h-5 text-emerald-500" />
+                  <span className="font-sora font-bold text-xs text-slate-800">License Status: Active</span>
+                </div>
+                <span className="text-[11px] font-mono text-purple-700 font-bold bg-purple-50 px-2.5 py-1 rounded-lg">
+                  {formData.licenseNumber}
+                </span>
+                <span className="text-[10px] text-slate-400 font-medium">NPI Registry Verified</span>
+              </div>
             </div>
 
-            <div>
-              <span className="inline-flex items-center gap-1.5 text-xs font-sora font-bold text-[#5C24FF] bg-purple-100/90 px-3.5 py-1 rounded-full mb-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                Verified Clinician Onboarding Complete
-              </span>
-              <h2 className="font-sora font-extrabold text-2xl sm:text-4xl text-slate-900 tracking-tight">
-                Welcome to Mednevo, Dr. {formData.lastName || 'Rivers'}!
-              </h2>
-              <p className="text-xs sm:text-base text-slate-600 max-w-xl mx-auto mt-2 leading-relaxed">
-                Your medical practice workspace, patient queue, and clinical AI copilot Ava are now
-                configured and ready for consultations.
-              </p>
-            </div>
+            {/* 4-Column Executive Profile Overview Across Entire Width */}
+            <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+              {/* Card 1: Clinician Profile & Credentials */}
+              <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-card hover:shadow-card-hover transition-all space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                  <span className="text-xs font-sora font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                    <Stethoscope className="w-4 h-4 text-[#5C24FF]" />
+                    Clinician Profile
+                  </span>
+                  <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                    Verified
+                  </span>
+                </div>
 
-            {/* Structured Registration Summary Card */}
-            <div className="p-6 bg-white rounded-3xl border border-slate-200/80 text-left space-y-4 max-w-2xl mx-auto shadow-card">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div className="flex items-center gap-3">
                   <img
                     src={formData.photoUrl}
-                    alt="Profile"
-                    className="w-12 h-12 rounded-2xl object-cover shadow-2xs"
+                    alt="Doctor Profile"
+                    className="w-14 h-14 rounded-2xl object-cover border-2 border-purple-100 shadow-2xs"
                   />
                   <div>
-                    <h4 className="font-sora font-bold text-sm sm:text-base text-slate-900">
+                    <h4 className="font-sora font-bold text-sm text-slate-900">
                       {formData.title} {formData.firstName} {formData.lastName}
                     </h4>
-                    <p className="text-xs text-[#5C24FF] font-semibold">
-                      {formData.primarySpecialty} · {formData.credentials}
+                    <p className="text-xs font-semibold text-[#5C24FF]">
+                      {formData.primarySpecialty}
                     </p>
+                    <p className="text-[11px] text-slate-500">{formData.credentials}</p>
                   </div>
                 </div>
-                <span className="text-[11px] font-mono bg-emerald-50 text-emerald-700 border border-emerald-200/60 font-bold px-2.5 py-1 rounded-lg">
-                  {formData.licenseNumber}
-                </span>
+
+                <div className="pt-2 border-t border-slate-100 space-y-1.5 text-xs text-slate-600">
+                  <div className="flex justify-between">
+                    <span className="text-slate-400 text-[11px]">Gender & DOB</span>
+                    <span className="font-medium">{formData.gender} · {formData.dob}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400 text-[11px]">Primary Specialty</span>
+                    <span className="font-medium text-slate-800">{formData.primarySpecialty}</span>
+                  </div>
+                </div>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-                <div>
-                  <span className="text-slate-400 text-[10px] uppercase font-semibold block">
-                    Practice Location
+              {/* Card 2: Facility & Practice Location */}
+              <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-card hover:shadow-card-hover transition-all space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                  <span className="text-xs font-sora font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                    <Building2 className="w-4 h-4 text-[#5C24FF]" />
+                    Practice Facility
                   </span>
-                  <span className="font-medium text-slate-800">
-                    {formData.clinicName}, {formData.city}
-                  </span>
-                </div>
-                <div>
-                  <span className="text-slate-400 text-[10px] uppercase font-semibold block">
-                    Consultation Mode
-                  </span>
-                  <span className="font-medium text-slate-800">{formData.consultMode}</span>
-                </div>
-                <div>
-                  <span className="text-slate-400 text-[10px] uppercase font-semibold block">
-                    Initial Visit Fee
-                  </span>
-                  <span className="font-bold text-[#5C24FF]">
-                    ${formData.consultFee} {formData.currency.split(' ')[0]}
+                  <span className="text-[10px] font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full">
+                    {formData.practiceType}
                   </span>
                 </div>
-                <div>
-                  <span className="text-slate-400 text-[10px] uppercase font-semibold block">
-                    AI Copilot Ava
+
+                <div className="space-y-2">
+                  <h4 className="font-sora font-bold text-sm text-slate-900">
+                    {formData.clinicName}
+                  </h4>
+                  <p className="text-xs text-slate-600 flex items-start gap-1.5">
+                    <MapPin className="w-3.5 h-3.5 text-[#5C24FF] flex-shrink-0 mt-0.5" />
+                    <span>{formData.address}, {formData.city}, {formData.state} {formData.postalCode}</span>
+                  </p>
+                </div>
+
+                <div className="pt-2 border-t border-slate-100 space-y-1.5 text-xs text-slate-600">
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-400 text-[11px]">Care Delivery</span>
+                    <span className="font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-md">
+                      {formData.consultMode}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400 text-[11px]">Additional Sites</span>
+                    <span className="font-medium text-slate-800">
+                      {formData.additionalLocations.length > 0
+                        ? `${formData.additionalLocations.length} registered`
+                        : 'Single practice'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 3: Fee Schedule & Payout Escrow */}
+              <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-card hover:shadow-card-hover transition-all space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                  <span className="text-xs font-sora font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                    <CreditCard className="w-4 h-4 text-[#5C24FF]" />
+                    Financial Escrow
                   </span>
-                  <span className="font-semibold text-emerald-600 flex items-center gap-1">
-                    <Sparkles className="w-3 h-3" />
-                    <span>Enabled</span>
+                  <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                    Connected
                   </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 bg-purple-50/50 p-2.5 rounded-2xl border border-purple-100">
+                  <div>
+                    <span className="text-[10px] text-slate-500 font-semibold uppercase block">Initial Visit</span>
+                    <span className="font-sora font-extrabold text-base text-[#5C24FF]">
+                      ${formData.consultFee}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-slate-500 font-semibold uppercase block">Follow-up</span>
+                    <span className="font-sora font-extrabold text-base text-slate-800">
+                      ${formData.followUpFee}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-slate-100 space-y-1.5 text-xs text-slate-600">
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-400 text-[11px]">Payout Method</span>
+                    <span className="font-semibold text-slate-800">
+                      {formData.payoutMethod === 'direct_deposit' ? 'Direct ACH' : 'Stripe Connect'}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-400 text-[11px]">Bank / Escrow</span>
+                    <span className="font-mono text-[11px] text-slate-700">{formData.bankName}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 4: Patient Gateway & Ava AI Copilot */}
+              <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-card hover:shadow-card-hover transition-all space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                  <span className="text-xs font-sora font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-[#5C24FF]" />
+                    Patient Gateway & AI
+                  </span>
+                  <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    Online
+                  </span>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-xs text-slate-700">
+                    <Phone className="w-3.5 h-3.5 text-slate-400" />
+                    <span className="font-mono">{formData.officePhone}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-slate-700">
+                    <Mail className="w-3.5 h-3.5 text-slate-400" />
+                    <span className="truncate">{formData.officeEmail}</span>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-slate-100 space-y-1.5 text-xs text-slate-600">
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-400 text-[11px]">Ava AI Copilot</span>
+                    <span className="font-semibold text-emerald-600 flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-emerald-500" />
+                      Active 24/7
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-400 text-[11px]">Directory Listing</span>
+                    <span className="font-semibold text-[#5C24FF]">Publicly Searchable</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Launch Roadmap */}
-            <div className="max-w-2xl mx-auto text-left p-4 bg-purple-50/60 rounded-2xl border border-purple-100 space-y-2 text-xs text-slate-700">
-              <span className="font-sora font-bold text-slate-900 block">
-                Immediate Clinical Workflow Steps:
-              </span>
-              <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                <span>Review today's 8 scheduled appointments in your daily schedule</span>
+            {/* Launch Readiness Roadmap - Full Width Across Entire Screen */}
+            <div className="w-full bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-card space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
+                <div>
+                  <h3 className="font-sora font-bold text-base sm:text-lg text-slate-900">
+                    Your Clinical Practice Launch Readiness
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    All core systems have been initialized and are ready for your clinical shift.
+                  </p>
+                </div>
+                <span className="text-xs font-sora font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full self-start sm:self-auto">
+                  ✓ 100% Operational
+                </span>
               </div>
-              <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                <span>Check Ava's Morning Intelligence Brief for Mike Lee's K+ critical alert</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                <span>Launch encrypted HIPAA video visits with automated SOAP clinical scribing</span>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                <div className="p-4 rounded-2xl bg-[#F8F9FE] border border-slate-200/60 space-y-2">
+                  <div className="w-8 h-8 rounded-xl bg-purple-100 text-[#5C24FF] flex items-center justify-center font-bold">
+                    1
+                  </div>
+                  <h4 className="font-sora font-bold text-slate-900">Daily Schedule Loaded</h4>
+                  <p className="text-slate-500 text-[11px] leading-relaxed">
+                    8 scheduled patient consultations waiting in today's timeline, starting with Sarah Jenkins.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-[#F8F9FE] border border-slate-200/60 space-y-2">
+                  <div className="w-8 h-8 rounded-xl bg-purple-100 text-[#5C24FF] flex items-center justify-center font-bold">
+                    2
+                  </div>
+                  <h4 className="font-sora font-bold text-slate-900">Ava Intelligence Armed</h4>
+                  <p className="text-slate-500 text-[11px] leading-relaxed">
+                    Critical potassium lab flag for Mike Lee (3.1 mEq/L) queued in your morning briefing panel.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-[#F8F9FE] border border-slate-200/60 space-y-2">
+                  <div className="w-8 h-8 rounded-xl bg-purple-100 text-[#5C24FF] flex items-center justify-center font-bold">
+                    3
+                  </div>
+                  <h4 className="font-sora font-bold text-slate-900">HIPAA Video & Scribe</h4>
+                  <p className="text-slate-500 text-[11px] leading-relaxed">
+                    1-click HD telehealth room ready with live ambient transcription and auto SOAP drafting.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-[#F8F9FE] border border-slate-200/60 space-y-2">
+                  <div className="w-8 h-8 rounded-xl bg-purple-100 text-[#5C24FF] flex items-center justify-center font-bold">
+                    4
+                  </div>
+                  <h4 className="font-sora font-bold text-slate-900">E-Rx & Escrow Linked</h4>
+                  <p className="text-slate-500 text-[11px] leading-relaxed">
+                    SureScripts pharmacy e-prescribing and automated direct-deposit payouts active.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         )}
       </main>
 
-      {/* ──────────────── Bottom Navigation Toolbar ──────────────── */}
-      <footer className="w-full bg-white/90 backdrop-blur-md border-t border-slate-100 px-4 sm:px-8 lg:px-12 py-4 sticky bottom-0 z-40">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      {/* ──────────────── Bottom Navigation Toolbar (Full Width) ──────────────── */}
+      <footer className="w-full bg-white/90 backdrop-blur-md border-t border-slate-100 px-4 sm:px-8 lg:px-12 xl:px-16 py-4 sticky bottom-0 z-40">
+        <div className="w-full flex items-center justify-between gap-4">
           {currentStep > 1 && currentStep < 8 ? (
             <button
               type="button"
@@ -1862,7 +2029,7 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
             <button
               type="button"
               onClick={() => onComplete(formData)}
-              className="w-full max-w-md mx-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white py-3.5 px-8 rounded-2xl font-sora font-bold text-sm sm:text-base shadow-[0_6px_22px_rgba(154,106,251,0.4)] transition-all active:scale-98"
+              className="w-full sm:w-auto min-w-[280px] max-w-xl mx-auto inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white py-4 px-10 rounded-2xl font-sora font-bold text-sm sm:text-base shadow-[0_8px_30px_rgba(154,106,251,0.45)] transition-all active:scale-98"
             >
               <span>Go to Doctor Dashboard</span>
               <ArrowRight className="w-5 h-5" />
