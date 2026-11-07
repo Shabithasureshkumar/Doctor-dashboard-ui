@@ -18,6 +18,15 @@ import {
   Mail,
   Globe,
   Lock,
+  MapPin,
+  Clock,
+  Activity,
+  Sliders,
+  BadgeCheck,
+  Hospital,
+  BrainCircuit,
+  CheckCircle2,
+  LockKeyhole,
 } from 'lucide-react';
 
 export interface DoctorRegistrationData {
@@ -85,15 +94,17 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
   const [currentStep, setCurrentStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState('SecurePass@2026');
+  const [confirmPassword, setConfirmPassword] = useState('SecureDoc#2026');
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [newLocationInput, setNewLocationInput] = useState('');
+  const [showAddLocation, setShowAddLocation] = useState(false);
 
-  // Form State initialized with sensible clinician defaults
+  // Form State initialized with realistic clinician defaults
   const [formData, setFormData] = useState<DoctorRegistrationData>({
     providerType: 'individual_physician',
     fullName: 'Dr. Brock Rivers',
     email: 'b.rivers@mednevo-health.com',
-    password: 'SecurePass@2026',
+    password: 'SecureDoc#2026',
     agreeTerms: true,
     firstName: 'Brock',
     lastName: 'Rivers',
@@ -103,8 +114,8 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
     phone: '+1 (555) 234-5678',
     licenseNumber: 'MED-CA-948201',
     credentials: 'MD, FACC, Board Certified Cardiologist',
-    bio: 'Cardiologist with 14+ years of clinical experience specializing in preventive cardiology, hypertension titration, and remote patient monitoring.',
-    photoUrl: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=200&auto=format&fit=crop&q=80',
+    bio: 'Cardiologist with 14+ years of clinical practice specializing in preventive cardiology, refractory hypertension titration, and AI-assisted remote patient monitoring.',
+    photoUrl: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=300&auto=format&fit=crop&q=80',
     clinicName: 'Metro Cardiovascular Institute',
     practiceType: 'Private Specialty Clinic',
     address: '742 Evergreen Terrace, Suite 400',
@@ -113,7 +124,7 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
     city: 'San Francisco',
     postalCode: '94107',
     consultMode: 'Hybrid',
-    additionalLocations: [],
+    additionalLocations: ['St. Jude Outpatient Center (Bay Area)'],
     primarySpecialty: 'Cardiology',
     subSpecialties: [
       'Hypertension Management',
@@ -126,6 +137,7 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
       '12-Lead ECG Interpretation',
       'Remote Patient Monitoring (RPM)',
       'Prescription Refill & Titration',
+      'Pre-Operative Clearance',
     ],
     encounterTypes: ['Video Telehealth Visits', 'Office Consultations'],
     duration: '30 Minutes',
@@ -133,7 +145,7 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
     followUpFee: '90',
     currency: 'USD ($)',
     payoutMethod: 'ach_direct',
-    bankName: 'Silicon Valley Health Bank',
+    bankName: 'Silicon Valley Healthcare Federal',
     accountHolder: 'Dr. Brock Rivers, MD',
     routingNumber: '121000358',
     accountNumber: '••••••••4829',
@@ -145,15 +157,15 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
     visibility: 'Public in Mednevo Directory',
   });
 
-  const stepTitles = [
-    'Provider Type',
-    'Account Credentials',
-    'Profile & License',
-    'Practice Location',
-    'Clinical Services',
-    'Payment & Payout',
-    'Patient Contact',
-    'Registration Complete',
+  const stepMeta = [
+    { num: 1, title: 'Provider Type', subtitle: 'Classification' },
+    { num: 2, title: 'Credentials', subtitle: 'Account Security' },
+    { num: 3, title: 'Profile & License', subtitle: 'Identity Verification' },
+    { num: 4, title: 'Practice Location', subtitle: 'Clinics & Facilities' },
+    { num: 5, title: 'Clinical Services', subtitle: 'Specialties & Duration' },
+    { num: 6, title: 'Payout & Fees', subtitle: 'Financial Settlement' },
+    { num: 7, title: 'Patient Contact', subtitle: 'Channels & Triage' },
+    { num: 8, title: 'Welcome Doctor', subtitle: 'Workspace Ready' },
   ];
 
   // Validation rules per screen
@@ -165,9 +177,9 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
         newErrors.providerType = 'Please select your provider registration type.';
       }
     } else if (step === 2) {
-      if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required.';
+      if (!formData.fullName.trim()) newErrors.fullName = 'Full legal name is required.';
       if (!formData.email.trim() || !/^\S+@\S+\.\S+$/.test(formData.email)) {
-        newErrors.email = 'Valid professional email is required.';
+        newErrors.email = 'Valid professional email address is required.';
       }
       if (!formData.password || formData.password.length < 8) {
         newErrors.password = 'Password must be at least 8 characters.';
@@ -176,7 +188,7 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
         newErrors.confirmPassword = 'Passwords do not match.';
       }
       if (!formData.agreeTerms) {
-        newErrors.agreeTerms = 'You must agree to the Terms of Service & HIPAA agreement.';
+        newErrors.agreeTerms = 'You must accept the Provider Terms and HIPAA agreement.';
       }
     } else if (step === 3) {
       if (!formData.firstName.trim()) newErrors.firstName = 'First name is required.';
@@ -189,7 +201,7 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
       }
       if (!formData.phone.trim()) newErrors.phone = 'Contact phone number is required.';
     } else if (step === 4) {
-      if (!formData.clinicName.trim()) newErrors.clinicName = 'Clinic / Practice name is required.';
+      if (!formData.clinicName.trim()) newErrors.clinicName = 'Practice/Clinic name is required.';
       if (!formData.address.trim()) newErrors.address = 'Practice street address is required.';
       if (!formData.city.trim()) newErrors.city = 'City is required.';
       if (!formData.state.trim()) newErrors.state = 'State / Province is required.';
@@ -199,14 +211,14 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
         newErrors.primarySpecialty = 'Please select your primary specialty.';
       }
       if (formData.servicesOffered.length === 0) {
-        newErrors.servicesOffered = 'Select at least one clinical service offered.';
+        newErrors.servicesOffered = 'Select at least one clinical service.';
       }
     } else if (step === 6) {
       if (!formData.consultFee || parseFloat(formData.consultFee) <= 0) {
         newErrors.consultFee = 'Valid consultation fee is required.';
       }
       if (!formData.accountNumber) {
-        newErrors.accountNumber = 'Bank account number is required for payouts.';
+        newErrors.accountNumber = 'Bank account number is required.';
       }
     } else if (step === 7) {
       if (!formData.officePhone.trim()) newErrors.officePhone = 'Clinic phone number is required.';
@@ -264,177 +276,191 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
     }));
   };
 
+  const addLocation = () => {
+    if (newLocationInput.trim()) {
+      setFormData((prev) => ({
+        ...prev,
+        additionalLocations: [...prev.additionalLocations, newLocationInput.trim()],
+      }));
+      setNewLocationInput('');
+      setShowAddLocation(false);
+    }
+  };
+
+  // Password strength helper
+  const getPasswordStrength = (pwd: string = '') => {
+    let score = 0;
+    if (pwd.length >= 8) score++;
+    if (/[A-Z]/.test(pwd) && /[a-z]/.test(pwd)) score++;
+    if (/\d/.test(pwd)) score++;
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(pwd)) score++;
+    return score;
+  };
+
+  const pwdScore = getPasswordStrength(formData.password);
+
   return (
-    <div className="min-h-screen bg-[#F8F9FE] text-slate-800 antialiased py-6 px-4 sm:px-6 lg:px-8">
-      {/* Top Header & Branding */}
-      <div className="max-w-3xl mx-auto mb-6 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#9A6AFB] to-[#5C24FF] flex items-center justify-center text-white shadow-md">
-            <Stethoscope className="w-5 h-5" />
+    <div className="min-h-screen w-full bg-[#F8F9FE] text-slate-800 antialiased flex flex-col justify-between selection:bg-purple-200 selection:text-purple-900">
+      {/* ──────────────── Top Global Navigation Bar ──────────────── */}
+      <header className="w-full bg-white/90 backdrop-blur-md border-b border-slate-100 sticky top-0 z-40 px-4 sm:px-8 lg:px-12 py-3.5 transition-all">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          {/* Logo & Portal Identity */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#9A6AFB] to-[#5C24FF] flex items-center justify-center text-white shadow-[0_4px_14px_rgba(154,106,251,0.35)]">
+              <Stethoscope className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-sora font-extrabold text-base sm:text-lg text-slate-900 tracking-tight">
+                  Mednevo
+                </span>
+                <span className="text-[10px] font-sora font-bold text-white bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] px-2 py-0.5 rounded-full uppercase tracking-wider shadow-2xs">
+                  Doctor Portal
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-400 font-medium">
+                Verified Clinician Onboarding Experience
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="font-sora font-extrabold text-lg sm:text-xl tracking-tight text-slate-900 flex items-center gap-1.5">
-              <span>Mednevo</span>
-              <span className="text-[10px] font-bold text-white bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] px-2 py-0.5 rounded-full uppercase tracking-wider">
-                Provider Onboarding
-              </span>
-            </h1>
-            <p className="text-xs text-slate-500 font-medium">
-              Clinician Registration & Credentialing Intake
-            </p>
+
+          {/* Quick Actions & Skip Option */}
+          <div className="flex items-center gap-3">
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-purple-50 text-[#5C24FF] rounded-xl text-xs font-sora font-semibold border border-purple-100">
+              <ShieldCheck className="w-4 h-4 text-[#5C24FF]" />
+              <span>HIPAA Compliant Credentialing</span>
+            </div>
+
+            {onSkip && (
+              <button
+                onClick={onSkip}
+                className="text-xs font-sora font-semibold text-slate-500 hover:text-[#5C24FF] bg-slate-100/80 hover:bg-slate-200/80 px-3.5 py-1.5 rounded-xl transition-all"
+                title="Jump directly to Doctor Dashboard"
+              >
+                Skip to Dashboard →
+              </button>
+            )}
           </div>
         </div>
 
-        {onSkip && currentStep < 8 && (
-          <button
-            onClick={onSkip}
-            className="text-xs font-sora font-semibold text-slate-500 hover:text-[#5C24FF] bg-white border border-slate-200/80 px-3.5 py-1.5 rounded-xl shadow-2xs transition-colors"
-          >
-            Skip to Dashboard →
-          </button>
-        )}
-      </div>
-
-      {/* Main Container Card */}
-      <div className="max-w-3xl mx-auto bg-white rounded-3xl border border-slate-100 shadow-card overflow-hidden">
-        {/* Step Progress Tracker */}
-        <div className="p-5 sm:p-6 border-b border-slate-100 bg-slate-50/50">
-          <div className="flex items-center justify-between mb-2">
-            <span className="font-sora text-xs font-bold text-slate-900">
-              Screen {currentStep} of 8:{' '}
-              <span className="bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] bg-clip-text text-transparent">
-                {stepTitles[currentStep - 1]}
+        {/* Global Progress Bar (Full Width) */}
+        <div className="max-w-7xl mx-auto mt-3">
+          <div className="flex items-center justify-between text-xs font-sora mb-1.5">
+            <span className="font-bold text-slate-700 flex items-center gap-2">
+              <span className="w-5 h-5 rounded-full bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white flex items-center justify-center text-[10px] font-bold">
+                {currentStep}
+              </span>
+              <span>
+                Step {currentStep} of 8:{' '}
+                <strong className="text-slate-900">{stepMeta[currentStep - 1].title}</strong>
               </span>
             </span>
-            <span className="text-[11px] font-semibold text-slate-400">
+            <span className="font-bold bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] bg-clip-text text-transparent">
               {Math.round((currentStep / 8) * 100)}% Complete
             </span>
           </div>
 
-          {/* Progress Bar */}
-          <div className="w-full h-2 bg-slate-200/80 rounded-full overflow-hidden">
+          {/* Progress Track */}
+          <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] transition-all duration-300 rounded-full"
+              className="h-full bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] transition-all duration-300 rounded-full shadow-[0_0_8px_rgba(154,106,251,0.5)]"
               style={{ width: `${(currentStep / 8) * 100}%` }}
             />
           </div>
+        </div>
+      </header>
 
-          {/* Step Dots (Desktop) */}
-          <div className="hidden sm:flex items-center justify-between mt-3 px-1">
-            {stepTitles.map((title, idx) => {
-              const stepNum = idx + 1;
-              const isPast = stepNum < currentStep;
-              const isCurrent = stepNum === currentStep;
+      {/* ──────────────── Main Content Canvas ──────────────── */}
+      <main className="w-full flex-1 max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-6 sm:py-8 flex flex-col justify-center">
+        {/* SCREEN 01: Choose Your Professional Journey */}
+        {currentStep === 1 && (
+          <div className="space-y-8 animate-in fade-in duration-200">
+            {/* Hero Header */}
+            <div className="text-center max-w-3xl mx-auto space-y-2.5">
+              <span className="inline-flex items-center gap-1.5 text-xs font-sora font-bold text-[#5C24FF] bg-gradient-to-r from-[#9A6AFB]/15 to-[#5C24FF]/15 border border-[#9A6AFB]/30 px-3.5 py-1 rounded-full uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5 text-[#5C24FF]" />
+                Step 1 of 8 · Welcome to Mednevo
+              </span>
+              <h2 className="font-sora font-extrabold text-2xl sm:text-4xl text-slate-900 tracking-tight leading-tight">
+                Join Mednevo as a Healthcare Provider
+              </h2>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
+                Select your clinical classification to customize your credentialing pipeline,
+                AI-assisted consultations, and patient referral routing.
+              </p>
+            </div>
 
-              return (
-                <div
-                  key={title}
-                  onClick={() => stepNum <= currentStep && setCurrentStep(stepNum)}
-                  className={`flex flex-col items-center gap-1 cursor-pointer transition-colors ${
-                    stepNum <= currentStep ? 'opacity-100' : 'opacity-40'
-                  }`}
-                >
+            {/* Provider Type Selection Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+              {[
+                {
+                  id: 'individual_physician',
+                  title: 'Individual Physician',
+                  role: 'Doctor of Medicine / Specialist',
+                  desc: 'Licensed MD, DO, or MBBS practitioners providing outpatient primary care, specialty consults, or virtual visits.',
+                  icon: Stethoscope,
+                  badge: 'Recommended',
+                  features: ['Personal Telehealth Room', 'E-Prescribe & SOAP Scribe', 'Automated Payouts'],
+                },
+                {
+                  id: 'group_practice',
+                  title: 'Medical Clinic / Group',
+                  role: 'Multi-Provider Facility',
+                  desc: 'Healthcare centers, group clinics, and outpatient departments managing shared clinical appointment queues.',
+                  icon: Building2,
+                  features: ['Multi-Doctor Scheduling', 'Centralized Intake Desk', 'Facility Billing'],
+                },
+                {
+                  id: 'allied_health',
+                  title: 'Allied Health Expert',
+                  role: 'Therapist / Nurse Practitioner',
+                  desc: 'Nurse practitioners, clinical psychologists, physical therapists, and certified specialist therapists.',
+                  icon: HeartPulse,
+                  features: ['Patient Chat Intake', 'Custom Care Plans', 'Asynchronous Vitals'],
+                },
+                {
+                  id: 'diagnostic_partner',
+                  title: 'Diagnostic Partner',
+                  role: 'Imaging & Laboratory Center',
+                  desc: 'Certified pathology labs, diagnostic testing centers, and imaging facilities receiving digital test orders.',
+                  icon: FlaskConical,
+                  features: ['Digital Lab Orders', 'Automated HL7 Delivery', 'Direct Physician Chat'],
+                },
+              ].map((card) => {
+                const isSelected = formData.providerType === card.id;
+                const Icon = card.icon;
+
+                return (
                   <div
-                    className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                      isPast
-                        ? 'bg-emerald-500 text-white'
-                        : isCurrent
-                        ? 'bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white shadow-xs'
-                        : 'bg-slate-200 text-slate-600'
+                    key={card.id}
+                    onClick={() => setFormData({ ...formData, providerType: card.id })}
+                    className={`relative p-5 rounded-3xl border-2 cursor-pointer transition-all duration-200 flex flex-col justify-between ${
+                      isSelected
+                        ? 'border-[#5C24FF] bg-gradient-to-br from-[#9A6AFB]/10 to-[#5C24FF]/10 shadow-[0_8px_30px_rgba(154,106,251,0.22)] scale-[1.02]'
+                        : 'border-slate-200/80 bg-white hover:border-purple-200 hover:shadow-card hover:-translate-y-0.5'
                     }`}
                   >
-                    {isPast ? <Check className="w-3 h-3 stroke-[3]" /> : stepNum}
-                  </div>
-                  <span className="text-[9px] font-medium text-slate-500 hidden md:block">
-                    {title.split(' ')[0]}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Dynamic Screen Body */}
-        <div className="p-6 sm:p-8">
-          {/* SCREEN 1: Join Mednevo as a Provider */}
-          {currentStep === 1 && (
-            <div className="space-y-6">
-              <div>
-                <h2 className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900 leading-tight">
-                  Join Mednevo as a Provider
-                </h2>
-                <p className="text-xs sm:text-sm text-slate-500 mt-1 leading-relaxed">
-                  Select your provider registration classification to customize your credentialing,
-                  clinical workspace, and patient booking channels.
-                </p>
-              </div>
-
-              {errors.providerType && (
-                <div className="p-3 bg-rose-50 text-rose-600 text-xs rounded-xl border border-rose-100">
-                  {errors.providerType}
-                </div>
-              )}
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {[
-                  {
-                    id: 'individual_physician',
-                    title: 'Individual Physician / Specialist',
-                    desc: 'Licensed medical doctors (MD, DO, MBBS) providing direct outpatient, specialty consults, or virtual visits.',
-                    icon: Stethoscope,
-                    badge: 'Most Popular',
-                  },
-                  {
-                    id: 'group_practice',
-                    title: 'Medical Clinic / Group Practice',
-                    desc: 'Multi-provider healthcare centers, outpatient clinics, and group practices managing collective queues.',
-                    icon: Building2,
-                  },
-                  {
-                    id: 'allied_health',
-                    title: 'Allied Healthcare Professional',
-                    desc: 'Nurse practitioners, clinical psychologists, physical therapists, and certified specialist clinicians.',
-                    icon: HeartPulse,
-                  },
-                  {
-                    id: 'diagnostic_partner',
-                    title: 'Diagnostic & Laboratory Partner',
-                    desc: 'Accredited imaging facilities, pathology labs, and diagnostic centers receiving digital test orders.',
-                    icon: FlaskConical,
-                  },
-                ].map((card) => {
-                  const isSelected = formData.providerType === card.id;
-                  const Icon = card.icon;
-
-                  return (
-                    <div
-                      key={card.id}
-                      onClick={() => setFormData({ ...formData, providerType: card.id })}
-                      className={`relative p-4 rounded-2xl border-2 cursor-pointer transition-all ${
-                        isSelected
-                          ? 'border-[#5C24FF] bg-gradient-to-br from-[#9A6AFB]/10 to-[#5C24FF]/10 shadow-[0_4px_16px_rgba(154,106,251,0.18)]'
-                          : 'border-slate-200/90 hover:border-slate-300 bg-white hover:bg-slate-50/60'
-                      }`}
-                    >
-                      <div className="flex items-start justify-between mb-3">
+                    <div>
+                      {/* Card Header & Indicator */}
+                      <div className="flex items-center justify-between mb-4">
                         <div
-                          className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                          className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${
                             isSelected
-                              ? 'bg-gradient-to-tr from-[#9A6AFB] to-[#5C24FF] text-white shadow-xs'
+                              ? 'bg-gradient-to-tr from-[#9A6AFB] to-[#5C24FF] text-white shadow-md'
                               : 'bg-purple-50 text-[#5C24FF]'
                           }`}
                         >
-                          <Icon className="w-5 h-5" />
+                          <Icon className="w-6 h-6" />
                         </div>
 
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5">
                           {card.badge && (
-                            <span className="text-[10px] font-bold bg-[#9A6AFB]/20 text-[#5C24FF] px-2 py-0.5 rounded-full">
+                            <span className="text-[10px] font-sora font-bold bg-[#9A6AFB]/20 text-[#5C24FF] px-2 py-0.5 rounded-full">
                               {card.badge}
                             </span>
                           )}
                           <div
-                            className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
+                            className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
                               isSelected
                                 ? 'border-[#5C24FF] bg-[#5C24FF]'
                                 : 'border-slate-300 bg-white'
@@ -445,31 +471,117 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
                         </div>
                       </div>
 
-                      <h4 className="font-sora font-bold text-sm text-slate-900 leading-snug">
+                      <h3 className="font-sora font-bold text-base text-slate-900 leading-snug">
                         {card.title}
-                      </h4>
-                      <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">{card.desc}</p>
+                      </h3>
+                      <span className="text-[11px] font-medium text-[#5C24FF] block mt-0.5">
+                        {card.role}
+                      </span>
+                      <p className="text-xs text-slate-500 mt-2.5 leading-relaxed">{card.desc}</p>
                     </div>
-                  );
-                })}
+
+                    {/* Features list */}
+                    <div className="mt-4 pt-3 border-t border-slate-100 space-y-1.5">
+                      {card.features.map((feat) => (
+                        <div
+                          key={feat}
+                          className="flex items-center gap-1.5 text-[11px] text-slate-600"
+                        >
+                          <Check className="w-3 h-3 text-emerald-500 flex-shrink-0" />
+                          <span>{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Clinician Trust Banner */}
+            <div className="bg-white rounded-2xl p-4 border border-slate-100 shadow-2xs flex flex-wrap items-center justify-around gap-4 text-xs text-slate-600 font-medium">
+              <span className="flex items-center gap-2">
+                <BadgeCheck className="w-4 h-4 text-emerald-500" />
+                <span>State Board Registry Sync</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <Lock className="w-4 h-4 text-[#5C24FF]" />
+                <span>256-Bit Encrypted EHR</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <BrainCircuit className="w-4 h-4 text-[#9A6AFB]" />
+                <span>Ava AI Ambient Scribe Included</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <CreditCard className="w-4 h-4 text-blue-500" />
+                <span>Zero-Fee Daily ACH Deposits</span>
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* SCREEN 02: Your Professional Identity Starts Here (Split Layout) */}
+        {currentStep === 2 && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center animate-in fade-in duration-200">
+            {/* Left Column: Security & Privacy Showcase */}
+            <div className="lg:col-span-5 bg-gradient-to-br from-[#9A6AFB]/10 via-purple-50 to-[#5C24FF]/10 rounded-3xl p-6 sm:p-8 border border-purple-100/80 space-y-6">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#9A6AFB] to-[#5C24FF] flex items-center justify-center text-white shadow-lg">
+                <ShieldCheck className="w-7 h-7" />
+              </div>
+
+              <div>
+                <span className="text-xs font-sora font-bold text-[#5C24FF] uppercase tracking-wider block">
+                  Security & Identity
+                </span>
+                <h3 className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900 mt-1 leading-snug">
+                  Your Professional Identity Starts Here
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+                  Mednevo secures clinician credentials with enterprise-grade safeguards. All health
+                  encounters comply with HIPAA and HITECH privacy mandates.
+                </p>
+              </div>
+
+              {/* Security Pill Highlights */}
+              <div className="space-y-3">
+                <div className="flex items-start gap-3 p-3 bg-white/80 rounded-2xl border border-purple-100">
+                  <LockKeyhole className="w-5 h-5 text-[#5C24FF] flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h5 className="font-sora font-bold text-xs text-slate-900">
+                      End-to-End Encryption
+                    </h5>
+                    <p className="text-[11px] text-slate-500 leading-tight">
+                      Patient medical charts and prescriptions are encrypted in transit and at rest.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-3 bg-white/80 rounded-2xl border border-purple-100">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h5 className="font-sora font-bold text-xs text-slate-900">
+                      Business Associate Agreement (BAA)
+                    </h5>
+                    <p className="text-[11px] text-slate-500 leading-tight">
+                      Automatic BAA execution protecting your practice from regulatory liabilities.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
-          )}
 
-          {/* SCREEN 2: Create Your Mednevo Account */}
-          {currentStep === 2 && (
-            <div className="space-y-5">
+            {/* Right Column: Account Creation Form */}
+            <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-card space-y-5">
               <div>
-                <h2 className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900 leading-tight">
-                  Create Your Mednevo Account
-                </h2>
+                <h3 className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900">
+                  Create Provider Account
+                </h3>
                 <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                  Enter your administrative login credentials to protect clinician encounter
-                  records.
+                  Enter your primary credentials to establish your master clinician login.
                 </p>
               </div>
 
               <div className="space-y-4">
+                {/* Full Name */}
                 <div>
                   <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
                     Full Legal Name *
@@ -479,30 +591,35 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                     placeholder="e.g. Dr. Brock Rivers"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#9A6AFB]/20 focus:border-[#5C24FF]"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#9A6AFB]/20 focus:border-[#5C24FF]"
                   />
                   {errors.fullName && (
                     <span className="text-[11px] text-rose-500 mt-1 block">{errors.fullName}</span>
                   )}
                 </div>
 
+                {/* Email Address */}
                 <div>
                   <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
                     Professional Email Address *
                   </label>
-                  <input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="doctor@clinic.com"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#9A6AFB]/20 focus:border-[#5C24FF]"
-                  />
+                  <div className="relative">
+                    <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      placeholder="doctor@riversclinic.com"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#9A6AFB]/20 focus:border-[#5C24FF]"
+                    />
+                  </div>
                   {errors.email && (
                     <span className="text-[11px] text-rose-500 mt-1 block">{errors.email}</span>
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* Password & Confirm */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div>
                     <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
                       Password *
@@ -523,9 +640,6 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
                         {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                       </button>
                     </div>
-                    {errors.password && (
-                      <span className="text-[11px] text-rose-500 mt-1 block">{errors.password}</span>
-                    )}
                   </div>
 
                   <div>
@@ -552,25 +666,41 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
                         )}
                       </button>
                     </div>
-                    {errors.confirmPassword && (
-                      <span className="text-[11px] text-rose-500 mt-1 block">
-                        {errors.confirmPassword}
-                      </span>
-                    )}
                   </div>
                 </div>
 
-                {/* Password strength helper */}
-                <div className="p-3 bg-purple-50/60 rounded-xl border border-purple-100 flex items-center gap-2 text-xs text-slate-600">
-                  <Lock className="w-4 h-4 text-[#5C24FF] flex-shrink-0" />
-                  <span>
-                    Must contain at least 8 characters, including 1 uppercase, 1 number, and 1
-                    symbol.
-                  </span>
+                {/* Password Strength Meter */}
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between text-[11px] font-semibold text-slate-500">
+                    <span>Password Strength:</span>
+                    <span
+                      className={
+                        pwdScore >= 3
+                          ? 'text-emerald-600'
+                          : pwdScore === 2
+                          ? 'text-amber-600'
+                          : 'text-rose-500'
+                      }
+                    >
+                      {pwdScore >= 4 ? 'Strong' : pwdScore === 3 ? 'Good' : 'Fair'}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-4 gap-1.5 h-1.5">
+                    {[1, 2, 3, 4].map((bar) => (
+                      <div
+                        key={bar}
+                        className={`rounded-full transition-all duration-300 ${
+                          pwdScore >= bar
+                            ? 'bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF]'
+                            : 'bg-slate-200'
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </div>
 
-                {/* Terms checkbox */}
-                <div>
+                {/* Terms Acceptance */}
+                <div className="pt-2">
                   <label className="flex items-start gap-2.5 cursor-pointer">
                     <input
                       type="checkbox"
@@ -579,8 +709,8 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
                       className="mt-0.5 w-4 h-4 rounded accent-[#5C24FF] cursor-pointer"
                     />
                     <span className="text-xs text-slate-600 leading-relaxed">
-                      I agree to the Mednevo Provider Terms of Service, Business Associate Agreement
-                      (BAA), and HIPAA Privacy Protocols.
+                      I accept the Mednevo Provider Agreement, Business Associate Agreement (BAA),
+                      and verify that I hold active licensure in my practice jurisdiction.
                     </span>
                   </label>
                   {errors.agreeTerms && (
@@ -591,49 +721,52 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
                 </div>
               </div>
             </div>
-          )}
+          </div>
+        )}
 
-          {/* SCREEN 3: Tell Us About Yourself */}
-          {currentStep === 3 && (
-            <div className="space-y-5">
+        {/* SCREEN 03: Let Your Professional Story Shine (Live Clinician ID Card) */}
+        {currentStep === 3 && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start animate-in fade-in duration-200">
+            {/* Left Column: Form Fields */}
+            <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-card space-y-4">
               <div>
-                <h2 className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900 leading-tight">
+                <h3 className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900">
                   Tell Us About Yourself
-                </h2>
+                </h3>
                 <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                  Provide your verified credentials and medical board license details for provider
-                  intake.
+                  Build your verified clinician identity card visible to booked patients.
                 </p>
               </div>
 
-              {/* Photo Upload Box */}
-              <div className="flex items-center gap-4 p-4 rounded-2xl border border-dashed border-purple-200 bg-purple-50/40">
+              {/* Photo Upload Area */}
+              <div className="flex items-center gap-4 p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80">
                 <img
                   src={formData.photoUrl}
-                  alt="Doctor Preview"
-                  className="w-16 h-16 rounded-2xl object-cover ring-2 ring-white shadow-xs"
+                  alt="Doctor"
+                  className="w-16 h-16 rounded-2xl object-cover ring-2 ring-white shadow-sm"
                 />
                 <div className="flex-1">
-                  <h4 className="font-sora font-semibold text-xs text-slate-900">
-                    Doctor Profile Photo
-                  </h4>
-                  <p className="text-[11px] text-slate-500 mt-0.5">
-                    Clear clinician headshot recommended (.jpg, .png, max 5MB).
+                  <span className="font-sora font-bold text-xs text-slate-900 block">
+                    Clinician Headshot Photo
+                  </span>
+                  <p className="text-[11px] text-slate-500">
+                    High-resolution portrait recommended for patient trust.
                   </p>
                 </div>
                 <button
                   type="button"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-2xs transition-colors"
+                  className="px-3.5 py-1.5 bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-2xs flex items-center gap-1.5"
                 >
                   <Upload className="w-3.5 h-3.5 text-slate-500" />
-                  <span>Upload</span>
+                  <span>Change</span>
                 </button>
               </div>
 
+              {/* Names & Title */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                   <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
-                    Title / Honorific *
+                    Title *
                   </label>
                   <select
                     value={formData.title}
@@ -684,375 +817,543 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {/* License & Phone */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
-                    Gender *
-                  </label>
-                  <select
-                    value={formData.gender}
-                    onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
-                  >
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Non-Binary</option>
-                    <option>Prefer not to say</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
-                    Date of Birth *
+                    Medical Board License / Reg Number *
                   </label>
                   <input
-                    type="date"
-                    value={formData.dob}
-                    onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
+                    type="text"
+                    value={formData.licenseNumber}
+                    onChange={(e) => setFormData({ ...formData, licenseNumber: e.target.value })}
+                    placeholder="e.g. MED-CA-948201"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
-                    Direct Phone *
+                    Direct Contact Phone *
                   </label>
                   <input
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
                   />
                 </div>
               </div>
 
+              {/* Degrees */}
               <div>
                 <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
-                  Medical License / Board Registration Number *
-                </label>
-                <input
-                  type="text"
-                  value={formData.licenseNumber}
-                  onChange={(e) => setFormData({ ...formData, licenseNumber: e.target.value })}
-                  placeholder="e.g. MED-CA-948201"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
-                />
-                {errors.licenseNumber && (
-                  <span className="text-[11px] text-rose-500 mt-1 block">
-                    {errors.licenseNumber}
-                  </span>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
-                  Professional Degrees & Fellowships *
+                  Credentials, Fellowships & Degrees *
                 </label>
                 <input
                   type="text"
                   value={formData.credentials}
                   onChange={(e) => setFormData({ ...formData, credentials: e.target.value })}
-                  placeholder="e.g. MD, FACC (Harvard Medical School, 2012)"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
+                  placeholder="e.g. MD, FACC, Board Certified Cardiologist"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
                 />
               </div>
 
+              {/* Bio */}
               <div>
                 <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
-                  Professional Bio / Care Philosophy (Optional)
+                  Professional Bio & Philosophy of Care
                 </label>
                 <textarea
                   rows={2}
                   value={formData.bio}
                   onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
                 />
               </div>
             </div>
-          )}
 
-          {/* SCREEN 4: Where Do You Practice? */}
-          {currentStep === 4 && (
-            <div className="space-y-5">
+            {/* Right Column: Live Clinician ID Badge Card */}
+            <div className="lg:col-span-5 bg-gradient-to-br from-[#9A6AFB] to-[#5C24FF] rounded-3xl p-6 sm:p-7 text-white shadow-[0_12px_36px_rgba(154,106,251,0.35)] space-y-5">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-sora font-extrabold uppercase tracking-widest bg-white/20 px-2.5 py-1 rounded-full backdrop-blur-xs">
+                  Live Provider Preview
+                </span>
+                <span className="flex items-center gap-1 text-[11px] font-semibold text-emerald-300">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  Active Credential
+                </span>
+              </div>
+
+              {/* Badge Main Body */}
+              <div className="flex items-center gap-4">
+                <img
+                  src={formData.photoUrl}
+                  alt="Doctor"
+                  className="w-20 h-20 rounded-2xl object-cover ring-4 ring-white/30 shadow-md"
+                />
+                <div>
+                  <h4 className="font-sora font-bold text-lg text-white leading-tight">
+                    Dr. {formData.firstName} {formData.lastName}, {formData.title}
+                  </h4>
+                  <span className="text-xs text-purple-200 font-medium block mt-0.5">
+                    {formData.primarySpecialty}
+                  </span>
+                  <span className="inline-flex items-center gap-1 bg-white/20 text-white text-[10px] font-mono px-2 py-0.5 rounded mt-1.5">
+                    <BadgeCheck className="w-3 h-3 text-emerald-300" />
+                    <span>{formData.licenseNumber}</span>
+                  </span>
+                </div>
+              </div>
+
+              {/* Bio & Highlights */}
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 space-y-2">
+                <p className="text-xs text-purple-100 italic leading-relaxed line-clamp-3">
+                  "{formData.bio}"
+                </p>
+                <div className="pt-2 border-t border-white/15 flex items-center justify-between text-[11px] text-purple-200">
+                  <span>{formData.credentials}</span>
+                  <span>14+ Yrs Practice</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* SCREEN 04: Your Healthcare Location (Facility & Map Preview) */}
+        {currentStep === 4 && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start animate-in fade-in duration-200">
+            {/* Left: Location Form */}
+            <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-card space-y-4">
               <div>
-                <h2 className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900 leading-tight">
+                <h3 className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900">
                   Where Do You Practice?
-                </h2>
+                </h3>
                 <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                  Add your primary clinic location, hospital affiliation, or telehealth base.
+                  Configure your primary clinical practice facility and consultation modes.
                 </p>
               </div>
 
-              <div className="space-y-3.5">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
-                      Hospital / Clinic / Organization Name *
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.clinicName}
-                      onChange={(e) => setFormData({ ...formData, clinicName: e.target.value })}
-                      placeholder="e.g. Metro Cardiovascular Center"
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
-                    />
-                    {errors.clinicName && (
-                      <span className="text-[10px] text-rose-500 mt-0.5 block">
-                        {errors.clinicName}
-                      </span>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
-                      Practice Type *
-                    </label>
-                    <select
-                      value={formData.practiceType}
-                      onChange={(e) => setFormData({ ...formData, practiceType: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
-                    >
-                      <option>Private Specialty Clinic</option>
-                      <option>Hospital Affiliated Department</option>
-                      <option>Multi-Specialty Center</option>
-                      <option>Solo Practice</option>
-                      <option>Virtual Telehealth Only</option>
-                    </select>
-                  </div>
+              {/* Facility Name & Type */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
+                    Hospital / Clinic / Organization *
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.clinicName}
+                    onChange={(e) => setFormData({ ...formData, clinicName: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
+                  />
+                  {errors.clinicName && (
+                    <span className="text-[10px] text-rose-500 mt-0.5 block">
+                      {errors.clinicName}
+                    </span>
+                  )}
                 </div>
 
                 <div>
                   <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
-                    Street Address *
+                    Facility Classification *
+                  </label>
+                  <select
+                    value={formData.practiceType}
+                    onChange={(e) => setFormData({ ...formData, practiceType: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
+                  >
+                    <option>Private Specialty Clinic</option>
+                    <option>Hospital Affiliated Department</option>
+                    <option>Multi-Specialty Center</option>
+                    <option>Solo Practice</option>
+                    <option>Virtual Telehealth Headquarters</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Address */}
+              <div>
+                <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
+                  Street Address *
+                </label>
+                <input
+                  type="text"
+                  value={formData.address}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  placeholder="e.g. 742 Evergreen Terrace, Suite 400"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
+                />
+              </div>
+
+              {/* City, State, Country, Postal */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div>
+                  <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
+                    City *
                   </label>
                   <input
                     type="text"
-                    value={formData.address}
-                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                    placeholder="e.g. 742 Evergreen Terrace, Suite 400"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
+                    value={formData.city}
+                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
                   />
-                  {errors.address && (
-                    <span className="text-[10px] text-rose-500 mt-0.5 block">{errors.address}</span>
-                  )}
                 </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  <div>
-                    <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
-                      Country *
-                    </label>
-                    <select
-                      value={formData.country}
-                      onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
-                    >
-                      <option>United States</option>
-                      <option>United Kingdom</option>
-                      <option>Canada</option>
-                      <option>Australia</option>
-                      <option>India</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
-                      State / Province *
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.state}
-                      onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
-                      City *
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.city}
-                      onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
-                      Postal Code *
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.postalCode}
-                      onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
-                    />
-                  </div>
-                </div>
-
-                {/* Consultation Mode */}
                 <div>
-                  <label className="block text-xs font-sora font-semibold text-slate-700 mb-2">
-                    Consultation Fulfillment Mode *
+                  <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
+                    State *
                   </label>
-                  <div className="grid grid-cols-3 gap-2.5">
-                    {['Hybrid', 'In-Person Only', 'Telehealth Only'].map((mode) => (
-                      <button
-                        key={mode}
-                        type="button"
-                        onClick={() => setFormData({ ...formData, consultMode: mode })}
-                        className={`p-3 rounded-xl border text-xs font-sora font-semibold text-center transition-all ${
-                          formData.consultMode === mode
-                            ? 'bg-gradient-to-r from-[#9A6AFB]/15 to-[#5C24FF]/15 border-[#5C24FF] text-[#5C24FF] shadow-2xs'
-                            : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
-                        }`}
-                      >
-                        {mode}
-                      </button>
-                    ))}
-                  </div>
+                  <input
+                    type="text"
+                    value={formData.state}
+                    onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
+                    Postal Code *
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.postalCode}
+                    onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
+                    Country *
+                  </label>
+                  <select
+                    value={formData.country}
+                    onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
+                  >
+                    <option>United States</option>
+                    <option>United Kingdom</option>
+                    <option>Canada</option>
+                    <option>Australia</option>
+                    <option>India</option>
+                  </select>
                 </div>
               </div>
-            </div>
-          )}
 
-          {/* SCREEN 5: Services You Provide */}
-          {currentStep === 5 && (
-            <div className="space-y-5">
+              {/* Consultation Modes */}
               <div>
-                <h2 className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900 leading-tight">
-                  Services You Provide
-                </h2>
-                <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                  Define your clinical specialty, sub-specialties, and consultation durations.
-                </p>
-              </div>
-
-              <div>
-                <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
-                  Primary Medical Specialty *
+                <label className="block text-xs font-sora font-semibold text-slate-700 mb-2">
+                  Consultation Fulfillment Mode *
                 </label>
-                <select
-                  value={formData.primarySpecialty}
-                  onChange={(e) => setFormData({ ...formData, primarySpecialty: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
-                >
-                  <option>Cardiology</option>
-                  <option>Internal Medicine</option>
-                  <option>Family Medicine</option>
-                  <option>Endocrinology</option>
-                  <option>Neurology</option>
-                  <option>Orthopedics</option>
-                  <option>Pediatrics</option>
-                  <option>Dermatology</option>
-                  <option>Psychiatry</option>
-                </select>
-              </div>
-
-              {/* Sub-Specialties Multi-Select Chips */}
-              <div>
-                <label className="block text-xs font-sora font-semibold text-slate-700 mb-1.5">
-                  Sub-Specialties & Focus Areas (Select all that apply)
-                </label>
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-3 gap-3">
                   {[
-                    'Hypertension Management',
-                    'Lipidology & Preventive Cardiology',
-                    'Heart Failure Care',
-                    'Electrophysiology',
-                    'Interventional Cardiology',
-                    'Diabetic Vascular Risk',
-                    'Cardio-Oncology',
-                  ].map((sub) => {
-                    const active = formData.subSpecialties.includes(sub);
+                    { id: 'Hybrid', title: 'Hybrid Care', desc: 'In-Clinic + Video Telehealth' },
+                    { id: 'In-Person Only', title: 'In-Clinic Only', desc: 'Physical Visits Only' },
+                    { id: 'Telehealth Only', title: 'Virtual Only', desc: '100% Video Telemedicine' },
+                  ].map((mode) => {
+                    const isSelected = formData.consultMode === mode.id;
                     return (
                       <button
-                        key={sub}
+                        key={mode.id}
                         type="button"
-                        onClick={() => toggleSubSpecialty(sub)}
-                        className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                          active
-                            ? 'bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white shadow-2xs'
-                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                        onClick={() => setFormData({ ...formData, consultMode: mode.id })}
+                        className={`p-3 rounded-2xl border text-left transition-all ${
+                          isSelected
+                            ? 'border-[#5C24FF] bg-gradient-to-r from-[#9A6AFB]/10 to-[#5C24FF]/10 text-[#5C24FF]'
+                            : 'border-slate-200 bg-slate-50/50 hover:bg-slate-100 text-slate-700'
                         }`}
                       >
-                        {active ? `✓ ${sub}` : `+ ${sub}`}
+                        <span className="font-sora font-bold text-xs block">{mode.title}</span>
+                        <span className="text-[10px] text-slate-500 mt-0.5 block">{mode.desc}</span>
                       </button>
                     );
                   })}
                 </div>
               </div>
 
-              {/* Services Offered */}
-              <div>
-                <label className="block text-xs font-sora font-semibold text-slate-700 mb-1.5">
-                  Clinical Services Offered *
-                </label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {[
-                    'Comprehensive Clinical Intake',
-                    'Chronic Disease Management',
-                    '12-Lead ECG Interpretation',
-                    'Remote Patient Monitoring (RPM)',
-                    'Prescription Refill & Titration',
-                    'Pre-Operative Clearance',
-                  ].map((svc) => (
-                    <label
-                      key={svc}
-                      className="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200/90 bg-slate-50/50 hover:bg-slate-50 cursor-pointer"
+              {/* Additional Locations */}
+              <div className="pt-2">
+                {formData.additionalLocations.length > 0 && (
+                  <div className="space-y-1.5 mb-2">
+                    <span className="text-[11px] font-semibold text-slate-500">
+                      Additional Practice Centers:
+                    </span>
+                    {formData.additionalLocations.map((loc, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center justify-between p-2 rounded-xl bg-purple-50/60 border border-purple-100 text-xs text-slate-800"
+                      >
+                        <span className="flex items-center gap-1.5">
+                          <Hospital className="w-3.5 h-3.5 text-[#5C24FF]" />
+                          <span>{loc}</span>
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {showAddLocation ? (
+                  <div className="flex items-center gap-2 mt-2">
+                    <input
+                      type="text"
+                      placeholder="Enter second clinic address..."
+                      value={newLocationInput}
+                      onChange={(e) => setNewLocationInput(e.target.value)}
+                      className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-800"
+                    />
+                    <button
+                      type="button"
+                      onClick={addLocation}
+                      className="px-3 py-1.5 bg-[#5C24FF] text-white text-xs font-semibold rounded-xl"
                     >
-                      <input
-                        type="checkbox"
-                        checked={formData.servicesOffered.includes(svc)}
-                        onChange={() => toggleServiceOffered(svc)}
-                        className="w-4 h-4 rounded accent-[#5C24FF]"
-                      />
-                      <span className="text-xs text-slate-800 font-medium">{svc}</span>
-                    </label>
-                  ))}
+                      Save
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setShowAddLocation(true)}
+                    className="text-xs font-sora font-semibold text-[#5C24FF] hover:underline"
+                  >
+                    + Add Additional Practice Center
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Right: Facility & Map Location Showcase Card */}
+            <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-card space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="font-sora font-bold text-xs text-slate-900">
+                  Location Routing Pin
+                </span>
+                <span className="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                  GPS Mapped
+                </span>
+              </div>
+
+              {/* Simulated Map Canvas */}
+              <div className="relative aspect-video w-full rounded-2xl bg-gradient-to-tr from-slate-900 via-indigo-950 to-slate-900 overflow-hidden flex items-center justify-center border border-slate-800 shadow-inner">
+                {/* Stylized Grid Lines */}
+                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#9A6AFB_1px,transparent_1px)] [background-size:16px_16px]" />
+
+                {/* Animated Pulsing Location Pin */}
+                <div className="relative flex flex-col items-center">
+                  <span className="w-12 h-12 rounded-full bg-[#9A6AFB]/30 animate-ping absolute -top-3" />
+                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#9A6AFB] to-[#5C24FF] text-white flex items-center justify-center shadow-lg relative z-10">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <span className="mt-2 text-xs font-sora font-bold text-white bg-black/60 backdrop-blur-sm px-2.5 py-0.5 rounded-full border border-white/20">
+                    {formData.city}, {formData.state}
+                  </span>
                 </div>
               </div>
 
-              {/* Default Consultation Duration */}
-              <div>
-                <label className="block text-xs font-sora font-semibold text-slate-700 mb-1.5">
-                  Standard Consultation Slot Duration
-                </label>
-                <div className="grid grid-cols-5 gap-2">
-                  {['15 mins', '20 mins', '30 Minutes', '45 mins', '60 mins'].map((dur) => (
-                    <button
-                      key={dur}
-                      type="button"
-                      onClick={() => setFormData({ ...formData, duration: dur })}
-                      className={`py-2 rounded-xl text-xs font-sora font-semibold text-center border transition-all ${
-                        formData.duration === dur
-                          ? 'bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white border-transparent shadow-xs'
-                          : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
-                      }`}
-                    >
-                      {dur}
-                    </button>
-                  ))}
+              <div className="space-y-2 pt-1 text-xs">
+                <div className="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl">
+                  <span className="text-slate-500">Practice Name</span>
+                  <span className="font-semibold text-slate-900">{formData.clinicName}</span>
+                </div>
+                <div className="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl">
+                  <span className="text-slate-500">Fulfillment Mode</span>
+                  <span className="font-bold text-[#5C24FF]">{formData.consultMode}</span>
                 </div>
               </div>
             </div>
-          )}
+          </div>
+        )}
 
-          {/* SCREEN 6: How Would You Like to Get Paid? */}
-          {currentStep === 6 && (
-            <div className="space-y-5">
+        {/* SCREEN 05: Showcase Your Medical Expertise (Specialty Grid & Services) */}
+        {currentStep === 5 && (
+          <div className="space-y-6 animate-in fade-in duration-200">
+            <div>
+              <span className="text-xs font-sora font-bold text-[#5C24FF] uppercase tracking-wider block">
+                Clinical Offerings
+              </span>
+              <h2 className="font-sora font-extrabold text-xl sm:text-3xl text-slate-900 tracking-tight mt-1">
+                Services You Provide to Patients
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl">
+                Define your primary medical department, sub-specialty tags, and outpatient visit
+                offerings.
+              </p>
+            </div>
+
+            {/* Primary Specialty Cards Grid */}
+            <div className="space-y-2">
+              <label className="block text-xs font-sora font-semibold text-slate-700">
+                Primary Medical Specialty *
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {[
+                  { name: 'Cardiology', icon: Activity, desc: 'Heart & Vascular' },
+                  { name: 'Internal Medicine', icon: Stethoscope, desc: 'Comprehensive Adult Care' },
+                  { name: 'Neurology', icon: BrainCircuit, desc: 'Brain & Nervous System' },
+                  { name: 'Orthopedics', icon: Hospital, desc: 'Bones & Joints' },
+                  { name: 'Pediatrics', icon: HeartPulse, desc: 'Infant & Child Health' },
+                  { name: 'Endocrinology', icon: FlaskConical, desc: 'Metabolic & Hormonal' },
+                  { name: 'Dermatology', icon: Sparkles, desc: 'Skin & Aesthetics' },
+                  { name: 'Psychiatry', icon: Sliders, desc: 'Mental Health' },
+                ].map((spec) => {
+                  const isSelected = formData.primarySpecialty === spec.name;
+                  const Icon = spec.icon;
+
+                  return (
+                    <div
+                      key={spec.name}
+                      onClick={() => setFormData({ ...formData, primarySpecialty: spec.name })}
+                      className={`p-3.5 rounded-2xl border-2 cursor-pointer transition-all ${
+                        isSelected
+                          ? 'border-[#5C24FF] bg-gradient-to-br from-[#9A6AFB]/10 to-[#5C24FF]/10 shadow-[0_4px_16px_rgba(154,106,251,0.18)]'
+                          : 'border-slate-200 bg-white hover:border-purple-200 hover:bg-slate-50'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <div
+                          className={`w-8 h-8 rounded-xl flex items-center justify-center ${
+                            isSelected
+                              ? 'bg-gradient-to-tr from-[#9A6AFB] to-[#5C24FF] text-white'
+                              : 'bg-purple-50 text-[#5C24FF]'
+                          }`}
+                        >
+                          <Icon className="w-4 h-4" />
+                        </div>
+                        {isSelected && <Check className="w-4 h-4 text-[#5C24FF] stroke-[3]" />}
+                      </div>
+                      <h4 className="font-sora font-bold text-xs text-slate-900 leading-snug">
+                        {spec.name}
+                      </h4>
+                      <p className="text-[10px] text-slate-400 mt-0.5">{spec.desc}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Sub-Specialties Multi-Select Chips */}
+            <div className="bg-white rounded-3xl p-5 border border-slate-100 shadow-2xs space-y-2.5">
+              <span className="font-sora font-bold text-xs text-slate-800 block">
+                Sub-Specialty Focus Areas (Click to Toggle)
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  'Hypertension Management',
+                  'Lipidology & Preventive Cardiology',
+                  'Heart Failure Care',
+                  'Electrophysiology',
+                  'Interventional Cardiology',
+                  'Diabetic Vascular Risk',
+                  'Cardio-Oncology',
+                  'Echocardiography & Stress Testing',
+                ].map((sub) => {
+                  const active = formData.subSpecialties.includes(sub);
+                  return (
+                    <button
+                      key={sub}
+                      type="button"
+                      onClick={() => toggleSubSpecialty(sub)}
+                      className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                        active
+                          ? 'bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white shadow-2xs'
+                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      }`}
+                    >
+                      {active ? `✓ ${sub}` : `+ ${sub}`}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Clinical Services Offered */}
+            <div className="bg-white rounded-3xl p-5 border border-slate-100 shadow-2xs space-y-3">
+              <span className="font-sora font-bold text-xs text-slate-800 block">
+                Clinical Services Offered *
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                {[
+                  'Comprehensive Clinical Intake',
+                  'Chronic Disease Management',
+                  '12-Lead ECG Interpretation',
+                  'Remote Patient Monitoring (RPM)',
+                  'Prescription Refill & Titration',
+                  'Pre-Operative Clearance',
+                ].map((svc) => {
+                  const isChecked = formData.servicesOffered.includes(svc);
+                  return (
+                    <label
+                      key={svc}
+                      onClick={() => toggleServiceOffered(svc)}
+                      className={`flex items-center gap-2.5 p-3 rounded-2xl border cursor-pointer transition-all ${
+                        isChecked
+                          ? 'border-[#5C24FF] bg-gradient-to-r from-[#9A6AFB]/10 to-[#5C24FF]/10 text-slate-900'
+                          : 'border-slate-200 bg-slate-50/50 hover:bg-slate-50 text-slate-600'
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={() => {}}
+                        className="w-4 h-4 rounded accent-[#5C24FF]"
+                      />
+                      <span className="text-xs font-medium">{svc}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Standard Duration Selection */}
+            <div className="flex items-center justify-between flex-wrap gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-200/80">
+              <div className="flex items-center gap-2.5">
+                <Clock className="w-5 h-5 text-[#5C24FF]" />
+                <div>
+                  <span className="font-sora font-bold text-xs text-slate-900 block">
+                    Default Consultation Duration
+                  </span>
+                  <span className="text-[11px] text-slate-500">
+                    Standard schedule calendar booking slot
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1.5 flex-wrap">
+                {['15 mins', '20 mins', '30 Minutes', '45 mins', '60 mins'].map((dur) => (
+                  <button
+                    key={dur}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, duration: dur })}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-sora font-semibold transition-all ${
+                      formData.duration === dur
+                        ? 'bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white shadow-xs'
+                        : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'
+                    }`}
+                  >
+                    {dur}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* SCREEN 06: Simple and Transparent Payments (Fee Calculator & Payouts) */}
+        {currentStep === 6 && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start animate-in fade-in duration-200">
+            {/* Left: Fee Calculation Card */}
+            <div className="lg:col-span-5 bg-gradient-to-br from-[#9A6AFB]/10 via-purple-50 to-[#5C24FF]/10 rounded-3xl p-6 sm:p-8 border border-purple-100/90 space-y-5">
               <div>
-                <h2 className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900 leading-tight">
-                  How Would You Like to Get Paid?
-                </h2>
-                <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                  Configure consultation fees, currency, and verified payout bank accounts.
+                <span className="text-xs font-sora font-bold text-[#5C24FF] uppercase tracking-wider block">
+                  Transparency
+                </span>
+                <h3 className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900 mt-1 leading-snug">
+                  Consultation Rates
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
+                  Set transparent pricing for patient visits. You receive 100% of your listed fee.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {/* Fee Inputs */}
+              <div className="space-y-3.5 bg-white rounded-2xl p-4 border border-purple-100 shadow-2xs">
                 <div>
                   <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
                     Currency *
@@ -1062,12 +1363,12 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
                     onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
                   >
-                    <option>USD ($)</option>
-                    <option>EUR (€)</option>
-                    <option>GBP (£)</option>
-                    <option>CAD ($)</option>
-                    <option>INR (₹)</option>
-                    <option>AUD ($)</option>
+                    <option>USD ($ - US Dollar)</option>
+                    <option>EUR (€ - Euro)</option>
+                    <option>GBP (£ - British Pound)</option>
+                    <option>CAD ($ - Canadian Dollar)</option>
+                    <option>INR (₹ - Indian Rupee)</option>
+                    <option>AUD ($ - Australian Dollar)</option>
                   </select>
                 </div>
 
@@ -1075,121 +1376,172 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
                   <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
                     Initial Consultation Fee *
                   </label>
-                  <input
-                    type="number"
-                    value={formData.consultFee}
-                    onChange={(e) => setFormData({ ...formData, consultFee: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
-                  />
-                  {errors.consultFee && (
-                    <span className="text-[10px] text-rose-500 mt-0.5 block">
-                      {errors.consultFee}
+                  <div className="relative">
+                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-slate-400 text-xs">
+                      $
                     </span>
-                  )}
+                    <input
+                      type="number"
+                      value={formData.consultFee}
+                      onChange={(e) => setFormData({ ...formData, consultFee: e.target.value })}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-3 py-2 text-xs text-slate-800 font-sora font-bold text-sm focus:outline-none focus:border-[#5C24FF]"
+                    />
+                  </div>
                 </div>
 
                 <div>
                   <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
                     Follow-Up Visit Fee
                   </label>
-                  <input
-                    type="number"
-                    value={formData.followUpFee}
-                    onChange={(e) => setFormData({ ...formData, followUpFee: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
-                  />
+                  <div className="relative">
+                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-slate-400 text-xs">
+                      $
+                    </span>
+                    <input
+                      type="number"
+                      value={formData.followUpFee}
+                      onChange={(e) => setFormData({ ...formData, followUpFee: e.target.value })}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-3 py-2 text-xs text-slate-800 font-sora font-semibold text-xs focus:outline-none focus:border-[#5C24FF]"
+                    />
+                  </div>
                 </div>
               </div>
 
-              {/* Payment Method Option Cards */}
-              <div>
-                <label className="block text-xs font-sora font-semibold text-slate-700 mb-2">
-                  Payout Method Selection
-                </label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {[
-                    {
-                      id: 'ach_direct',
-                      title: 'Direct Bank ACH',
-                      desc: '0% fee, daily settlement',
-                      icon: Building,
-                    },
-                    {
-                      id: 'stripe_connect',
-                      title: 'Stripe Healthcare',
-                      desc: 'Instant card deposits',
-                      icon: CreditCard,
-                    },
-                    {
-                      id: 'wire',
-                      title: 'Corporate Wire',
-                      desc: 'Monthly batch payout',
-                      icon: ShieldCheck,
-                    },
-                  ].map((pm) => {
-                    const isSelected = formData.payoutMethod === pm.id;
-                    const Icon = pm.icon;
-                    return (
-                      <div
-                        key={pm.id}
-                        onClick={() => setFormData({ ...formData, payoutMethod: pm.id })}
-                        className={`p-3.5 rounded-2xl border-2 cursor-pointer transition-all ${
-                          isSelected
-                            ? 'border-[#5C24FF] bg-gradient-to-br from-[#9A6AFB]/10 to-[#5C24FF]/10'
-                            : 'border-slate-200 bg-white hover:bg-slate-50'
-                        }`}
-                      >
-                        <Icon className="w-5 h-5 text-[#5C24FF] mb-1.5" />
-                        <h4 className="font-sora font-bold text-xs text-slate-900">{pm.title}</h4>
-                        <p className="text-[11px] text-slate-500 mt-0.5">{pm.desc}</p>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Bank details */}
-              <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
-                <span className="text-[11px] font-sora font-bold text-slate-400 uppercase tracking-wider block">
-                  Encrypted Bank Account Information
+              {/* Monthly Estimation Pill */}
+              <div className="p-3.5 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] rounded-2xl text-white space-y-1 shadow-md">
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-purple-100">
+                  Estimated Monthly Payout
                 </span>
+                <div className="text-xl font-sora font-extrabold">
+                  ${parseInt(formData.consultFee || '150', 10) * 8 * 22} / mo
+                </div>
+                <p className="text-[10px] text-purple-200">
+                  Based on 8 consultations/day · Direct next-day ACH deposit
+                </p>
+              </div>
+            </div>
+
+            {/* Right: Bank Payout Configuration */}
+            <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-card space-y-5">
+              <div>
+                <h3 className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900">
+                  Payout Method & Banking
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                  Connect your verified bank account for automated clinician earnings distribution.
+                </p>
+              </div>
+
+              {/* Payout Method Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {[
+                  {
+                    id: 'ach_direct',
+                    title: 'Direct Bank ACH',
+                    desc: '0% fee · Daily payout',
+                    icon: Building,
+                  },
+                  {
+                    id: 'stripe_connect',
+                    title: 'Stripe Healthcare',
+                    desc: 'Instant settlement',
+                    icon: CreditCard,
+                  },
+                  {
+                    id: 'wire',
+                    title: 'Corporate Wire',
+                    desc: 'Monthly batch transfer',
+                    icon: ShieldCheck,
+                  },
+                ].map((pm) => {
+                  const isSelected = formData.payoutMethod === pm.id;
+                  const Icon = pm.icon;
+
+                  return (
+                    <div
+                      key={pm.id}
+                      onClick={() => setFormData({ ...formData, payoutMethod: pm.id })}
+                      className={`p-3.5 rounded-2xl border-2 cursor-pointer transition-all ${
+                        isSelected
+                          ? 'border-[#5C24FF] bg-gradient-to-br from-[#9A6AFB]/10 to-[#5C24FF]/10'
+                          : 'border-slate-200 bg-white hover:bg-slate-50'
+                      }`}
+                    >
+                      <Icon className="w-5 h-5 text-[#5C24FF] mb-1.5" />
+                      <h4 className="font-sora font-bold text-xs text-slate-900">{pm.title}</h4>
+                      <p className="text-[11px] text-slate-500 mt-0.5">{pm.desc}</p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Bank Details */}
+              <div className="space-y-3 p-4 bg-slate-50 rounded-2xl border border-slate-200/80">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-[11px] font-semibold text-slate-600 mb-1">
-                      Bank Name
+                      Bank Name *
                     </label>
                     <input
                       type="text"
                       value={formData.bankName}
                       onChange={(e) => setFormData({ ...formData, bankName: e.target.value })}
-                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-800"
+                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800"
                     />
                   </div>
                   <div>
                     <label className="block text-[11px] font-semibold text-slate-600 mb-1">
-                      Routing / Sort Code
+                      Account Holder Name *
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.accountHolder}
+                      onChange={(e) => setFormData({ ...formData, accountHolder: e.target.value })}
+                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+                      Routing / Sort Code *
                     </label>
                     <input
                       type="text"
                       value={formData.routingNumber}
                       onChange={(e) => setFormData({ ...formData, routingNumber: e.target.value })}
-                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-800"
+                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+                      Account Number *
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.accountNumber}
+                      onChange={(e) => setFormData({ ...formData, accountNumber: e.target.value })}
+                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800"
                     />
                   </div>
                 </div>
               </div>
             </div>
-          )}
+          </div>
+        )}
 
-          {/* SCREEN 7: How Can Patients Reach You? */}
-          {currentStep === 7 && (
-            <div className="space-y-5">
+        {/* SCREEN 07: Stay Connected With Your Patients (Patient Communication & Live Preview) */}
+        {currentStep === 7 && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start animate-in fade-in duration-200">
+            {/* Left: Contact Form */}
+            <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-card space-y-4">
               <div>
-                <h2 className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900 leading-tight">
+                <h3 className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900">
                   How Can Patients Reach You?
-                </h2>
+                </h3>
                 <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                  Configure clinical communication preferences and public directory visibility.
+                  Specify professional communication channels and public directory visibility.
                 </p>
               </div>
 
@@ -1207,16 +1559,11 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
                       className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
                     />
                   </div>
-                  {errors.officePhone && (
-                    <span className="text-[10px] text-rose-500 mt-0.5 block">
-                      {errors.officePhone}
-                    </span>
-                  )}
                 </div>
 
                 <div>
                   <label className="block text-xs font-sora font-semibold text-slate-700 mb-1">
-                    Patient Communication Email *
+                    Patient Inquiry Email *
                   </label>
                   <div className="relative">
                     <Mail className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -1227,11 +1574,6 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
                       className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-[#5C24FF]"
                     />
                   </div>
-                  {errors.officeEmail && (
-                    <span className="text-[10px] text-rose-500 mt-0.5 block">
-                      {errors.officeEmail}
-                    </span>
-                  )}
                 </div>
               </div>
 
@@ -1250,7 +1592,7 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
                 </div>
               </div>
 
-              {/* Available Contact Methods */}
+              {/* Contact Channels Multi-Select Chips */}
               <div>
                 <label className="block text-xs font-sora font-semibold text-slate-700 mb-1.5">
                   Available Patient Contact Channels
@@ -1278,7 +1620,7 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
                 </div>
               </div>
 
-              {/* Patient Communication Preferences */}
+              {/* Triage Mode Cards */}
               <div>
                 <label className="block text-xs font-sora font-semibold text-slate-700 mb-2">
                   Patient Intake & Communication Mode
@@ -1301,7 +1643,7 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
                       <div
                         key={opt.id}
                         onClick={() => setFormData({ ...formData, triageMode: opt.id })}
-                        className={`p-3 rounded-xl border-2 cursor-pointer transition-all flex items-start gap-2.5 ${
+                        className={`p-3 rounded-2xl border-2 cursor-pointer transition-all flex items-start gap-2.5 ${
                           isSelected
                             ? 'border-[#5C24FF] bg-gradient-to-r from-[#9A6AFB]/10 to-[#5C24FF]/10'
                             : 'border-slate-200 bg-white hover:bg-slate-50'
@@ -1341,117 +1683,164 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
                 </select>
               </div>
             </div>
-          )}
 
-          {/* SCREEN 8: Welcome to Mednevo, Dr. Doctor! */}
-          {currentStep === 8 && (
-            <div className="space-y-6 text-center py-4">
-              {/* Success Badge */}
-              <div className="w-20 h-20 rounded-3xl bg-gradient-to-tr from-[#9A6AFB] to-[#5C24FF] flex items-center justify-center text-white mx-auto shadow-[0_8px_25px_rgba(154,106,251,0.4)] animate-in zoom-in-75 duration-300">
-                <Sparkles className="w-10 h-10" />
-              </div>
+            {/* Right: Patient-Facing Mobile Card Preview */}
+            <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-card space-y-4">
+              <span className="font-sora font-bold text-xs text-slate-900 block">
+                Patient Booking Card Preview
+              </span>
 
-              <div>
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#5C24FF] bg-purple-100/80 px-3 py-1 rounded-full mb-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  Credentials Intake Verified
-                </span>
-                <h2 className="font-sora font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight">
-                  Welcome to Mednevo, Dr. {formData.lastName || 'Rivers'}!
-                </h2>
-                <p className="text-xs sm:text-sm text-slate-500 max-w-lg mx-auto mt-2 leading-relaxed">
-                  Your provider profile has been registered and verified. Your clinical dashboard,
-                  AI copilot Ava, and patient schedule are now ready.
-                </p>
-              </div>
-
-              {/* Registration Summary Card */}
-              <div className="p-5 bg-slate-50 rounded-2xl border border-slate-200/80 text-left space-y-3.5 max-w-xl mx-auto shadow-2xs">
-                <div className="flex items-center justify-between border-b border-slate-200/80 pb-2.5">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={formData.photoUrl}
-                      alt="Profile"
-                      className="w-10 h-10 rounded-xl object-cover"
-                    />
-                    <div>
-                      <h4 className="font-sora font-bold text-sm text-slate-900">
-                        {formData.title} {formData.firstName} {formData.lastName}
-                      </h4>
-                      <p className="text-xs text-[#5C24FF] font-medium">
-                        {formData.primarySpecialty} · {formData.credentials}
-                      </p>
-                    </div>
+              {/* Mobile Phone Mockup */}
+              <div className="max-w-[280px] mx-auto rounded-3xl border-4 border-slate-800 bg-slate-50 p-3 shadow-xl space-y-3">
+                <div className="flex items-center gap-2.5 bg-white p-2.5 rounded-2xl shadow-2xs">
+                  <img
+                    src={formData.photoUrl}
+                    alt="Doctor"
+                    className="w-12 h-12 rounded-xl object-cover"
+                  />
+                  <div>
+                    <h5 className="font-sora font-bold text-xs text-slate-900 leading-tight">
+                      Dr. {formData.firstName} {formData.lastName}
+                    </h5>
+                    <span className="text-[10px] text-[#5C24FF] font-medium block">
+                      {formData.primarySpecialty}
+                    </span>
+                    <span className="text-[9px] text-slate-400 block">{formData.clinicName}</span>
                   </div>
-                  <span className="text-[10px] font-mono bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">
-                    {formData.licenseNumber}
-                  </span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 text-xs">
-                  <div>
-                    <span className="text-slate-400 text-[10px] uppercase font-semibold block">
-                      Practice Location
-                    </span>
-                    <span className="font-medium text-slate-800">
-                      {formData.clinicName}, {formData.city}
-                    </span>
+                <div className="bg-white p-2.5 rounded-2xl space-y-2 text-[10px] shadow-2xs">
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-400">Consultation Fee</span>
+                    <span className="font-bold text-[#5C24FF]">${formData.consultFee}</span>
                   </div>
-                  <div>
-                    <span className="text-slate-400 text-[10px] uppercase font-semibold block">
-                      Consultation Mode
-                    </span>
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-400">Care Mode</span>
                     <span className="font-medium text-slate-800">{formData.consultMode}</span>
                   </div>
+                </div>
+
+                <button
+                  type="button"
+                  className="w-full py-2 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white font-sora font-semibold text-xs rounded-xl shadow-xs"
+                >
+                  Book Appointment
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* SCREEN 08: Welcome to Mednevo, Doctor! (Celebration & Summary) */}
+        {currentStep === 8 && (
+          <div className="space-y-6 text-center py-4 max-w-4xl mx-auto animate-in zoom-in-95 duration-300">
+            {/* Celebration Emblem */}
+            <div className="w-24 h-24 rounded-3xl bg-gradient-to-tr from-[#9A6AFB] to-[#5C24FF] flex items-center justify-center text-white mx-auto shadow-[0_12px_40px_rgba(154,106,251,0.45)]">
+              <Sparkles className="w-12 h-12" />
+            </div>
+
+            <div>
+              <span className="inline-flex items-center gap-1.5 text-xs font-sora font-bold text-[#5C24FF] bg-purple-100/90 px-3.5 py-1 rounded-full mb-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                Verified Clinician Onboarding Complete
+              </span>
+              <h2 className="font-sora font-extrabold text-2xl sm:text-4xl text-slate-900 tracking-tight">
+                Welcome to Mednevo, Dr. {formData.lastName || 'Rivers'}!
+              </h2>
+              <p className="text-xs sm:text-base text-slate-600 max-w-xl mx-auto mt-2 leading-relaxed">
+                Your medical practice workspace, patient queue, and clinical AI copilot Ava are now
+                configured and ready for consultations.
+              </p>
+            </div>
+
+            {/* Structured Registration Summary Card */}
+            <div className="p-6 bg-white rounded-3xl border border-slate-200/80 text-left space-y-4 max-w-2xl mx-auto shadow-card">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div className="flex items-center gap-3">
+                  <img
+                    src={formData.photoUrl}
+                    alt="Profile"
+                    className="w-12 h-12 rounded-2xl object-cover shadow-2xs"
+                  />
                   <div>
-                    <span className="text-slate-400 text-[10px] uppercase font-semibold block">
-                      Initial Consult Fee
-                    </span>
-                    <span className="font-bold text-[#5C24FF]">
-                      ${formData.consultFee} {formData.currency.split(' ')[0]}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 text-[10px] uppercase font-semibold block">
-                      AI Triage Copilot
-                    </span>
-                    <span className="font-medium text-emerald-600 flex items-center gap-1">
-                      <Sparkles className="w-3 h-3" />
-                      <span>Ava AI Enabled</span>
-                    </span>
+                    <h4 className="font-sora font-bold text-sm sm:text-base text-slate-900">
+                      {formData.title} {formData.firstName} {formData.lastName}
+                    </h4>
+                    <p className="text-xs text-[#5C24FF] font-semibold">
+                      {formData.primarySpecialty} · {formData.credentials}
+                    </p>
                   </div>
                 </div>
+                <span className="text-[11px] font-mono bg-emerald-50 text-emerald-700 border border-emerald-200/60 font-bold px-2.5 py-1 rounded-lg">
+                  {formData.licenseNumber}
+                </span>
               </div>
 
-              {/* Next Steps List */}
-              <div className="max-w-xl mx-auto text-left p-4 bg-purple-50/50 rounded-2xl border border-purple-100 space-y-2">
-                <span className="text-xs font-sora font-bold text-slate-800 block">
-                  Next recommended clinical actions:
-                </span>
-                <div className="flex items-center gap-2 text-xs text-slate-600">
-                  <Check className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
-                  <span>Review today's 8 patient visits in your daily schedule</span>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                <div>
+                  <span className="text-slate-400 text-[10px] uppercase font-semibold block">
+                    Practice Location
+                  </span>
+                  <span className="font-medium text-slate-800">
+                    {formData.clinicName}, {formData.city}
+                  </span>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-slate-600">
-                  <Check className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
-                  <span>Inspect Ava's morning briefing for critical chemistry lab alerts</span>
+                <div>
+                  <span className="text-slate-400 text-[10px] uppercase font-semibold block">
+                    Consultation Mode
+                  </span>
+                  <span className="font-medium text-slate-800">{formData.consultMode}</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-slate-600">
-                  <Check className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
-                  <span>Access ambient SOAP AI Scribe during telehealth consultations</span>
+                <div>
+                  <span className="text-slate-400 text-[10px] uppercase font-semibold block">
+                    Initial Visit Fee
+                  </span>
+                  <span className="font-bold text-[#5C24FF]">
+                    ${formData.consultFee} {formData.currency.split(' ')[0]}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-slate-400 text-[10px] uppercase font-semibold block">
+                    AI Copilot Ava
+                  </span>
+                  <span className="font-semibold text-emerald-600 flex items-center gap-1">
+                    <Sparkles className="w-3 h-3" />
+                    <span>Enabled</span>
+                  </span>
                 </div>
               </div>
             </div>
-          )}
-        </div>
 
-        {/* Bottom Navigation Toolbar */}
-        <div className="p-5 sm:p-6 bg-slate-50/80 border-t border-slate-100 flex items-center justify-between gap-3">
+            {/* Launch Roadmap */}
+            <div className="max-w-2xl mx-auto text-left p-4 bg-purple-50/60 rounded-2xl border border-purple-100 space-y-2 text-xs text-slate-700">
+              <span className="font-sora font-bold text-slate-900 block">
+                Immediate Clinical Workflow Steps:
+              </span>
+              <div className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                <span>Review today's 8 scheduled appointments in your daily schedule</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                <span>Check Ava's Morning Intelligence Brief for Mike Lee's K+ critical alert</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                <span>Launch encrypted HIPAA video visits with automated SOAP clinical scribing</span>
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
+
+      {/* ──────────────── Bottom Navigation Toolbar ──────────────── */}
+      <footer className="w-full bg-white/90 backdrop-blur-md border-t border-slate-100 px-4 sm:px-8 lg:px-12 py-4 sticky bottom-0 z-40">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           {currentStep > 1 && currentStep < 8 ? (
             <button
               type="button"
               onClick={handleBack}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-sora font-semibold text-slate-600 hover:bg-slate-200/80 transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-sora font-semibold text-slate-600 hover:bg-slate-100 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back</span>
@@ -1464,7 +1853,7 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
             <button
               type="button"
               onClick={handleNext}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white px-6 py-2.5 rounded-xl font-sora font-semibold text-xs sm:text-sm shadow-[0_4px_16px_rgba(154,106,251,0.35)] transition-all active:scale-95 ml-auto"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white px-7 py-3 rounded-2xl font-sora font-semibold text-xs sm:text-sm shadow-[0_4px_16px_rgba(154,106,251,0.35)] transition-all active:scale-95 ml-auto"
             >
               <span>Continue to Step {currentStep + 1}</span>
               <ArrowRight className="w-4 h-4" />
@@ -1473,14 +1862,14 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
             <button
               type="button"
               onClick={() => onComplete(formData)}
-              className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white py-3.5 px-6 rounded-2xl font-sora font-bold text-sm sm:text-base shadow-[0_6px_22px_rgba(154,106,251,0.4)] transition-all active:scale-98"
+              className="w-full max-w-md mx-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white py-3.5 px-8 rounded-2xl font-sora font-bold text-sm sm:text-base shadow-[0_6px_22px_rgba(154,106,251,0.4)] transition-all active:scale-98"
             >
               <span>Go to Doctor Dashboard</span>
               <ArrowRight className="w-5 h-5" />
             </button>
           )}
         </div>
-      </div>
+      </footer>
     </div>
   );
 };
