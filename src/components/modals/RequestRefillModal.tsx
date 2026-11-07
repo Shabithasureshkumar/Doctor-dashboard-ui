@@ -201,7 +201,7 @@ export const RequestRefillModal: React.FC<RequestRefillModalProps> = ({
             </button>
             <button
               type="submit"
-              className="flex items-center gap-2 bg-[#5C24FF] hover:bg-[#4A15E8] text-white px-5 py-2.5 rounded-xl text-xs sm:text-sm font-sora font-semibold shadow-sm transition-all active:scale-95"
+              className="flex items-center gap-2 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white px-5 py-2.5 rounded-xl text-xs sm:text-sm font-sora font-semibold shadow-[0_4px_14px_rgba(154,106,251,0.35)] transition-all active:scale-95"
             >
               <RefreshCw className="w-4 h-4" />
               <span>Request Refill</span>

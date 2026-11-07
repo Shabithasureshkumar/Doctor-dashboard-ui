@@ -16,7 +16,7 @@ export const Badge: React.FC<BadgeProps> = ({
   className = '',
 }) => {
   const variantStyles = {
-    purple: 'bg-purple-100/80 text-[#5C24FF] border border-purple-200/50',
+    purple: 'bg-gradient-to-r from-[#9A6AFB]/15 to-[#5C24FF]/15 text-[#5C24FF] border border-[#9A6AFB]/30',
     green: 'bg-emerald-50 text-emerald-600 border border-emerald-200/50',
     amber: 'bg-amber-50 text-amber-600 border border-amber-200/50',
     red: 'bg-rose-50 text-rose-600 border border-rose-200/50',
@@ -26,13 +26,13 @@ export const Badge: React.FC<BadgeProps> = ({
   };
 
   const dotStyles = {
-    purple: 'bg-[#5C24FF]',
+    purple: 'bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF]',
     green: 'bg-emerald-500',
     amber: 'bg-amber-500',
     red: 'bg-rose-500',
     blue: 'bg-blue-500',
     gray: 'bg-slate-400',
-    'outline-purple': 'bg-[#5C24FF]',
+    'outline-purple': 'bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF]',
   };
 
   const sizeStyles = {

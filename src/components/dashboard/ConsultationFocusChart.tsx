@@ -35,13 +35,13 @@ export const ConsultationFocusChart: React.FC = () => {
         >
           <defs>
             <linearGradient id="consultGradLarge" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#5C24FF" stopOpacity="0.75" />
-              <stop offset="50%" stopColor="#8E70FF" stopOpacity="0.45" />
-              <stop offset="100%" stopColor="#C4B5FD" stopOpacity="0.2" />
+              <stop offset="0%" stopColor="#9A6AFB" stopOpacity="0.75" />
+              <stop offset="50%" stopColor="#7B43FF" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#5C24FF" stopOpacity="0.25" />
             </linearGradient>
-            <linearGradient id="curveFillLarge" x1="0%" y1="100%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#5C24FF" stopOpacity="0.95" />
-              <stop offset="100%" stopColor="#9373FF" stopOpacity="0.5" />
+            <linearGradient id="curveFillLarge" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#9A6AFB" stopOpacity="0.95" />
+              <stop offset="100%" stopColor="#5C24FF" stopOpacity="0.7" />
             </linearGradient>
           </defs>
 

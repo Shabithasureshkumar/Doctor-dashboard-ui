@@ -188,7 +188,7 @@ export const NewAppointmentModal: React.FC<NewAppointmentModalProps> = ({
           </button>
           <button
             type="submit"
-            className="bg-[#5C24FF] hover:bg-[#4A15E8] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-sm transition-all active:scale-95"
+            className="bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-[0_4px_14px_rgba(154,106,251,0.35)] transition-all active:scale-95"
           >
             Confirm Appointment
           </button>

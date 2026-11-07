@@ -146,7 +146,7 @@ export const NewPrescriptionModal: React.FC<NewPrescriptionModalProps> = ({
             </button>
             <button
               type="submit"
-              className="flex items-center gap-1.5 bg-[#5C24FF] hover:bg-[#4A15E8] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-sm transition-all active:scale-95"
+              className="flex items-center gap-1.5 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-[0_4px_14px_rgba(154,106,251,0.35)] transition-all active:scale-95"
             >
               <Send className="w-3.5 h-3.5" />
               <span>Submit Prescription</span>

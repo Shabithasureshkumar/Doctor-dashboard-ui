@@ -144,7 +144,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
                     </p>
                   </div>
                 </div>
-                <button className="bg-[#5C24FF] hover:bg-[#4A15E8] text-white text-xs font-semibold px-3 py-1.5 rounded-lg">
+                <button className="bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-[0_2px_8px_rgba(154,106,251,0.3)] transition-all active:scale-95">
                   View Details
                 </button>
               </div>
@@ -178,7 +178,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
                 <span
                   className={`text-xs font-sora font-semibold ${
                     dayNum === 17
-                      ? 'w-6 h-6 rounded-full bg-[#5C24FF] text-white inline-flex items-center justify-center'
+                      ? 'w-6 h-6 rounded-full bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white inline-flex items-center justify-center'
                       : 'text-slate-700'
                   }`}
                 >
@@ -220,7 +220,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
                 key={day.label}
                 onClick={() => onSelectDay?.(day.label)}
                 className={`flex-1 min-w-[42px] rounded-xl py-1.5 transition-all ${
-                  isActive ? 'bg-[#5C24FF] text-white shadow-sm' : 'hover:bg-slate-50 text-slate-700'
+                  isActive ? 'bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white shadow-[0_2px_8px_rgba(154,106,251,0.35)]' : 'hover:bg-slate-50 text-slate-700'
                 }`}
                 aria-pressed={isActive}
               >
@@ -318,7 +318,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
             </span>
             <div className="mt-1 flex justify-center">
               {day.isToday ? (
-                <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#5C24FF] text-white flex items-center justify-center font-sora font-bold text-xs sm:text-sm shadow-sm">
+                <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white flex items-center justify-center font-sora font-bold text-xs sm:text-sm shadow-[0_2px_8px_rgba(154,106,251,0.35)]">
                   {day.num}
                 </span>
               ) : (

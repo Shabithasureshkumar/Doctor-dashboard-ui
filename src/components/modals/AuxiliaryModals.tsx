@@ -90,7 +90,7 @@ export const ReferPatientModal: React.FC<{
             <button type="button" onClick={onClose} className="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl">
               Cancel
             </button>
-            <button type="submit" className="bg-[#5C24FF] hover:bg-[#4A15E8] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-xs">
+            <button type="submit" className="bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-[0_4px_14px_rgba(154,106,251,0.35)] transition-all active:scale-95">
               Transmit Referral
             </button>
           </div>
@@ -162,7 +162,7 @@ export const AdjustScheduleModal: React.FC<{
                   onClose();
                 }, 1000);
               }}
-              className="bg-[#5C24FF] hover:bg-[#4A15E8] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-xs"
+              className="bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-[0_4px_14px_rgba(154,106,251,0.35)] transition-all active:scale-95"
             >
               Save Changes
             </button>
@@ -222,7 +222,7 @@ export const ExportModal: React.FC<{
           </button>
           <button
             onClick={handleExport}
-            className="flex items-center gap-1.5 bg-[#5C24FF] hover:bg-[#4A15E8] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-xs"
+            className="flex items-center gap-1.5 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-[0_4px_14px_rgba(154,106,251,0.35)] transition-all active:scale-95"
           >
             <Download className="w-3.5 h-3.5" />
             <span>{downloading ? 'Preparing...' : 'Download File'}</span>

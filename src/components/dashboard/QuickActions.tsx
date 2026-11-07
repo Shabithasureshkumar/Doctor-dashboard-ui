@@ -34,7 +34,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
       title: 'New Virtual Visit',
       subtitle: 'Start instant call',
       icon: Video,
-      iconBg: 'bg-[#5C24FF]',
+      iconBg: 'bg-gradient-to-tr from-[#9A6AFB] to-[#5C24FF]',
       onClick: onNewVirtualVisit,
     },
     {
@@ -74,7 +74,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
       title: 'Adjust Schedule',
       subtitle: 'Modify availability',
       icon: CalendarClock,
-      iconBg: 'bg-[#5C24FF]',
+      iconBg: 'bg-gradient-to-tr from-[#9A6AFB] to-[#5C24FF]',
       onClick: onAdjustSchedule,
     },
   ];
@@ -88,7 +88,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
         </h3>
         <button
           onClick={onAddQuickAction || onNewPrescription}
-          className="w-7 h-7 min-w-[36px] min-h-[36px] sm:min-w-0 sm:min-h-0 rounded-full bg-[#5C24FF] hover:bg-[#4A15E8] text-white flex items-center justify-center transition-transform active:scale-95 shadow-xs"
+          className="w-7 h-7 min-w-[36px] min-h-[36px] sm:min-w-0 sm:min-h-0 rounded-full bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white flex items-center justify-center transition-transform active:scale-95 shadow-sm"
           title="Add Action"
           aria-label="Add Action"
         >

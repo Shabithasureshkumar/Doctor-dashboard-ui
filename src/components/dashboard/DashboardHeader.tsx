@@ -38,7 +38,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 onClick={() => onTabChange(tab)}
                 className={`flex items-center gap-2.5 rounded-2xl font-sora transition-all duration-150 whitespace-nowrap ${
                   isActive
-                    ? 'bg-[#5C24FF] text-white px-6 py-3 font-semibold text-sm sm:text-base shadow-[0_4px_14px_rgba(92, 36, 255,0.3)]'
+                    ? 'bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white px-6 py-3 font-semibold text-sm sm:text-base shadow-[0_4px_14px_rgba(154,106,251,0.35)]'
                     : 'text-slate-700 hover:text-[#5C24FF] px-2 py-2 font-medium text-sm sm:text-base'
                 }`}
               >

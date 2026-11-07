@@ -88,7 +88,7 @@ export const NextAppointmentCard: React.FC<NextAppointmentCardProps> = ({
       <div className="flex items-center gap-2 mb-2.5">
         <button
           onClick={onJoinCall}
-          className="flex-1 flex items-center justify-center gap-2 bg-[#5C24FF] hover:bg-[#4A15E8] text-white py-2.5 px-4 rounded-xl font-sora font-semibold text-xs sm:text-sm shadow-sm transition-all active:scale-98"
+          className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white py-2.5 px-4 rounded-xl font-sora font-semibold text-xs sm:text-sm shadow-[0_4px_14px_rgba(154,106,251,0.3)] transition-all active:scale-98"
         >
           <Video className="w-4 h-4" />
           <span>Join Call</span>

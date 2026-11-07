@@ -80,7 +80,7 @@ export const FullBriefingModal: React.FC<FullBriefingModalProps> = ({
                 onOpenChart('Sarah Johnson');
                 onClose();
               }}
-              className="bg-[#5C24FF] hover:bg-[#4A15E8] text-white text-xs font-semibold px-3 py-1.5 rounded-lg whitespace-nowrap shadow-xs"
+              className="bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white text-xs font-semibold px-3 py-1.5 rounded-lg whitespace-nowrap shadow-[0_2px_8px_rgba(154,106,251,0.3)] transition-all active:scale-95"
             >
               Open Chart
             </button>

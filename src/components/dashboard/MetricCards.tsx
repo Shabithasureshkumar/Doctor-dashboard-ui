@@ -31,7 +31,7 @@ export const MetricCards: React.FC<MetricCardsProps> = ({ onCardClick }) => {
       {/* 2. Appointments (Featured Purple Card) */}
       <div
         onClick={() => onCardClick?.('appointments')}
-        className="bg-[#5C24FF] rounded-3xl px-5 sm:px-6 py-7 sm:py-9 text-white shadow-[0_6px_22px_rgba(92, 36, 255,0.35)] hover:bg-[#6247c4] transition-all cursor-pointer group"
+        className="bg-gradient-to-br from-[#9A6AFB] to-[#5C24FF] rounded-3xl px-5 sm:px-6 py-7 sm:py-9 text-white shadow-[0_6px_22px_rgba(154,106,251,0.4)] hover:opacity-95 transition-all cursor-pointer group"
       >
         <div className="flex items-center justify-between mb-4">
           <div className="w-11 h-11 rounded-2xl bg-white/20 text-white flex items-center justify-center backdrop-blur-xs">

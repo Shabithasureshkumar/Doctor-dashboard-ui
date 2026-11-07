@@ -56,7 +56,7 @@ export const CalendarSidebar: React.FC<CalendarSidebarProps> = ({
                 onClick={() => setProviderStatus(st)}
                 className={`inline-flex items-center gap-1.5 px-2.5 py-1 min-h-[36px] sm:min-h-0 rounded-full text-xs font-sora font-semibold transition-all ${
                   isSelected
-                    ? 'bg-[#5C24FF] text-white shadow-xs'
+                    ? 'bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white shadow-[0_2px_8px_rgba(154,106,251,0.35)]'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200/80'
                 }`}
               >
@@ -173,7 +173,7 @@ export const CalendarSidebar: React.FC<CalendarSidebarProps> = ({
         {/* Refill Request Button */}
         <button
           onClick={onRefillRequest}
-          className="w-full bg-[#5C24FF] hover:bg-[#4A15E8] text-white text-xs font-sora font-semibold py-2 min-h-[36px] sm:min-h-0 rounded-xl shadow-xs transition-all active:scale-98 mb-3"
+          className="w-full bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white text-xs font-sora font-semibold py-2 min-h-[36px] sm:min-h-0 rounded-xl shadow-[0_2px_8px_rgba(154,106,251,0.35)] transition-all active:scale-98 mb-3"
         >
           Refill Request
         </button>
@@ -293,7 +293,7 @@ export const CalendarSidebar: React.FC<CalendarSidebarProps> = ({
             <div className="flex items-center gap-1.5">
               <button
                 onClick={() => onJoinQueuePatient('Sarah Johnson')}
-                className="bg-[#5C24FF] hover:bg-[#4A15E8] text-white text-[11px] font-sora font-semibold px-2.5 py-1 min-h-[36px] sm:min-h-0 rounded-lg transition-all active:scale-95"
+                className="bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white text-[11px] font-sora font-semibold px-2.5 py-1 min-h-[36px] sm:min-h-0 rounded-lg shadow-[0_2px_8px_rgba(154,106,251,0.3)] transition-all active:scale-95"
               >
                 Join
               </button>
@@ -330,7 +330,7 @@ export const CalendarSidebar: React.FC<CalendarSidebarProps> = ({
             <div className="flex items-center gap-1.5">
               <button
                 onClick={() => onJoinQueuePatient('Mike Lee')}
-                className="bg-[#5C24FF] hover:bg-[#4A15E8] text-white text-[11px] font-sora font-semibold px-2.5 py-1 min-h-[36px] sm:min-h-0 rounded-lg transition-all active:scale-95"
+                className="bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white text-[11px] font-sora font-semibold px-2.5 py-1 min-h-[36px] sm:min-h-0 rounded-lg shadow-[0_2px_8px_rgba(154,106,251,0.3)] transition-all active:scale-95"
               >
                 Join
               </button>

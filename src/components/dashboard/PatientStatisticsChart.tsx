@@ -31,7 +31,7 @@ export const PatientStatisticsChart: React.FC = () => {
         </h3>
         <div className="flex items-center gap-3.5 text-xs sm:text-sm">
           <span className="flex items-center gap-1.5 text-slate-700 font-medium">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#5C24FF]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF]" />
             <span>New</span>
           </span>
           <span className="flex items-center gap-1.5 text-slate-500">
@@ -81,8 +81,8 @@ export const PatientStatisticsChart: React.FC = () => {
                     style={{ height: `${item.purpleHeight}%` }}
                     className={`w-full rounded-xl transition-all ${
                       item.isPeak
-                        ? 'bg-[#5C24FF] shadow-[0_4px_12px_rgba(92, 36, 255,0.4)]'
-                        : 'bg-[#C7B5FC]'
+                        ? 'bg-gradient-to-t from-[#5C24FF] to-[#9A6AFB] shadow-[0_4px_12px_rgba(154,106,251,0.45)]'
+                        : 'bg-gradient-to-t from-[#5C24FF]/60 to-[#9A6AFB]/60'
                     }`}
                   />
                 </div>

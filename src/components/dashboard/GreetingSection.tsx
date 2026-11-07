@@ -18,7 +18,7 @@ export const GreetingSection: React.FC<GreetingSectionProps> = ({
       <div>
         <h1 className="font-sora font-extrabold text-2xl sm:text-3xl lg:text-[32px] text-slate-900 tracking-tight flex flex-wrap items-center gap-x-2.5">
           <span>Good Morning,</span>
-          <span className="text-[#5C24FF]">{CURRENT_DOCTOR.greetingName}</span>
+          <span className="bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] bg-clip-text text-transparent font-bold">{CURRENT_DOCTOR.greetingName}</span>
           <span className="inline-block origin-bottom-right">👋</span>
         </h1>
         <p className="text-slate-500 text-sm sm:text-base mt-1.5">
@@ -38,7 +38,7 @@ export const GreetingSection: React.FC<GreetingSectionProps> = ({
       <div className="flex items-center gap-3 flex-wrap">
         <button
           onClick={onOpenCalendar}
-          className="flex items-center gap-2.5 bg-[#5C24FF] hover:bg-[#4A15E8] text-white px-5 py-2.5 sm:py-3 rounded-2xl font-sora font-semibold text-sm shadow-[0_2px_8px_rgba(92, 36, 255,0.25)] transition-all duration-150 active:scale-95 whitespace-nowrap"
+          className="flex items-center gap-2.5 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white px-5 py-2.5 sm:py-3 rounded-2xl font-sora font-semibold text-sm shadow-[0_4px_16px_rgba(154,106,251,0.35)] transition-all duration-150 active:scale-95 whitespace-nowrap"
         >
           <CalendarIcon className="w-4 h-4" />
           <span>Calendar</span>

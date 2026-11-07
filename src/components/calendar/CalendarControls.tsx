@@ -138,7 +138,7 @@ export const CalendarControls: React.FC<CalendarControlsProps> = ({
             />
             <span>Filters</span>
             {typeFilters.length > 0 && (
-              <span className="bg-[#5C24FF] text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+              <span className="bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
                 {typeFilters.length}
               </span>
             )}
@@ -172,7 +172,7 @@ export const CalendarControls: React.FC<CalendarControlsProps> = ({
                   >
                     <span
                       className={`w-4 h-4 rounded-md border flex items-center justify-center flex-shrink-0 transition-colors ${
-                        active ? 'bg-[#5C24FF] border-[#5C24FF]' : 'border-slate-300'
+                        active ? 'bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] border-[#5C24FF]' : 'border-slate-300'
                       }`}
                     >
                       {active && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
