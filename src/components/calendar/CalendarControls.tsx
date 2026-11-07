@@ -118,7 +118,7 @@ export const CalendarControls: React.FC<CalendarControlsProps> = ({
             placeholder="Search appointments, patients..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full bg-slate-50/90 border border-slate-200/80 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] transition-all"
+            className="w-full bg-slate-50/90 border border-slate-200/80 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] transition-all"
           />
         </div>
 
@@ -129,16 +129,16 @@ export const CalendarControls: React.FC<CalendarControlsProps> = ({
             aria-haspopup="true"
             className={`flex items-center gap-1.5 border px-3 py-1.5 min-h-[36px] sm:min-h-0 rounded-xl font-sora font-semibold text-xs transition-all active:scale-95 ${
               typeFilters.length
-                ? 'bg-purple-50 border-purple-200 text-[#6E56CF]'
+                ? 'bg-purple-50 border-purple-200 text-[#5C24FF]'
                 : 'bg-white hover:bg-slate-50 border-slate-200/90 text-slate-700'
             }`}
           >
             <SlidersHorizontal
-              className={`w-3.5 h-3.5 ${typeFilters.length ? 'text-[#6E56CF]' : 'text-slate-500'}`}
+              className={`w-3.5 h-3.5 ${typeFilters.length ? 'text-[#5C24FF]' : 'text-slate-500'}`}
             />
             <span>Filters</span>
             {typeFilters.length > 0 && (
-              <span className="bg-[#6E56CF] text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+              <span className="bg-[#5C24FF] text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
                 {typeFilters.length}
               </span>
             )}
@@ -153,7 +153,7 @@ export const CalendarControls: React.FC<CalendarControlsProps> = ({
                 {typeFilters.length > 0 && (
                   <button
                     onClick={onClearFilters}
-                    className="text-[11px] font-semibold text-[#6E56CF] hover:text-[#5E45BE]"
+                    className="text-[11px] font-semibold text-[#5C24FF] hover:text-[#4A15E8]"
                   >
                     Clear
                   </button>
@@ -172,7 +172,7 @@ export const CalendarControls: React.FC<CalendarControlsProps> = ({
                   >
                     <span
                       className={`w-4 h-4 rounded-md border flex items-center justify-center flex-shrink-0 transition-colors ${
-                        active ? 'bg-[#6E56CF] border-[#6E56CF]' : 'border-slate-300'
+                        active ? 'bg-[#5C24FF] border-[#5C24FF]' : 'border-slate-300'
                       }`}
                     >
                       {active && <Check className="w-3 h-3 text-white" strokeWidth={3} />}

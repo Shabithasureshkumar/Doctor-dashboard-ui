@@ -49,7 +49,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
   const tagColors = {
     purple: {
       bg: 'bg-purple-100',
-      text: 'text-[#6E56CF]',
+      text: 'text-[#5C24FF]',
       border: 'border-purple-200',
       cardBorder: 'hover:border-purple-300',
     },
@@ -144,7 +144,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
                     </p>
                   </div>
                 </div>
-                <button className="bg-[#6E56CF] hover:bg-[#5E45BE] text-white text-xs font-semibold px-3 py-1.5 rounded-lg">
+                <button className="bg-[#5C24FF] hover:bg-[#4A15E8] text-white text-xs font-semibold px-3 py-1.5 rounded-lg">
                   View Details
                 </button>
               </div>
@@ -178,7 +178,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
                 <span
                   className={`text-xs font-sora font-semibold ${
                     dayNum === 17
-                      ? 'w-6 h-6 rounded-full bg-[#6E56CF] text-white inline-flex items-center justify-center'
+                      ? 'w-6 h-6 rounded-full bg-[#5C24FF] text-white inline-flex items-center justify-center'
                       : 'text-slate-700'
                   }`}
                 >
@@ -192,7 +192,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
                         e.stopPropagation();
                         onSelectAppointment(a);
                       }}
-                      className="text-[10px] truncate bg-purple-50 text-[#6E56CF] px-1 py-0.5 rounded font-medium"
+                      className="text-[10px] truncate bg-purple-50 text-[#5C24FF] px-1 py-0.5 rounded font-medium"
                     >
                       {a.patientName}
                     </div>
@@ -220,7 +220,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
                 key={day.label}
                 onClick={() => onSelectDay?.(day.label)}
                 className={`flex-1 min-w-[42px] rounded-xl py-1.5 transition-all ${
-                  isActive ? 'bg-[#6E56CF] text-white shadow-sm' : 'hover:bg-slate-50 text-slate-700'
+                  isActive ? 'bg-[#5C24FF] text-white shadow-sm' : 'hover:bg-slate-50 text-slate-700'
                 }`}
                 aria-pressed={isActive}
               >
@@ -233,7 +233,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
                 </span>
                 <span className="font-sora font-bold text-sm block mt-0.5">{day.num}</span>
                 {day.isToday && !isActive && (
-                  <span className="w-1 h-1 rounded-full bg-[#6E56CF] mx-auto block mt-0.5" />
+                  <span className="w-1 h-1 rounded-full bg-[#5C24FF] mx-auto block mt-0.5" />
                 )}
               </button>
             );
@@ -277,7 +277,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
                             {apt.avatarInitials}
                           </div>
                           <div className="min-w-0 flex-1">
-                            <span className="font-sora font-semibold text-xs text-slate-800 block truncate group-hover/card:text-[#6E56CF] transition-colors leading-tight">
+                            <span className="font-sora font-semibold text-xs text-slate-800 block truncate group-hover/card:text-[#5C24FF] transition-colors leading-tight">
                               {apt.patientName}
                             </span>
                             <span className="flex items-center gap-1 text-[10px] text-slate-400 mt-0.5">
@@ -318,7 +318,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
             </span>
             <div className="mt-1 flex justify-center">
               {day.isToday ? (
-                <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#6E56CF] text-white flex items-center justify-center font-sora font-bold text-xs sm:text-sm shadow-sm">
+                <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#5C24FF] text-white flex items-center justify-center font-sora font-bold text-xs sm:text-sm shadow-sm">
                   {day.num}
                 </span>
               ) : (
@@ -382,7 +382,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
                             </div>
 
                             <div className="min-w-0 flex-1">
-                              <span className="font-sora font-semibold text-[11px] sm:text-xs text-slate-800 block truncate group-hover/card:text-[#6E56CF] transition-colors leading-tight">
+                              <span className="font-sora font-semibold text-[11px] sm:text-xs text-slate-800 block truncate group-hover/card:text-[#5C24FF] transition-colors leading-tight">
                                 {apt.patientName}
                               </span>
                               <span className="flex items-center gap-1 text-[9px] sm:text-[10px] text-slate-400 mt-0.5">

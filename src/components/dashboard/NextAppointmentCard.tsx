@@ -23,7 +23,7 @@ export const NextAppointmentCard: React.FC<NextAppointmentCardProps> = ({
           <Clock className="w-5 h-5 text-slate-400 flex-shrink-0" />
           <h3 className="font-sora font-bold text-base sm:text-lg whitespace-nowrap">Next Appointment</h3>
         </div>
-        <span className="inline-flex items-center gap-1 bg-purple-50 text-[#6E56CF] px-2.5 py-1 rounded-full text-[10px] font-semibold whitespace-nowrap flex-shrink-0">
+        <span className="inline-flex items-center gap-1 bg-purple-50 text-[#5C24FF] px-2.5 py-1 rounded-full text-[10px] font-semibold whitespace-nowrap flex-shrink-0">
           <Video className="w-3 h-3 flex-shrink-0" />
           <span>10:30 AM · Video Call</span>
         </span>
@@ -42,17 +42,17 @@ export const NextAppointmentCard: React.FC<NextAppointmentCardProps> = ({
             <h4 className="font-sora font-bold text-slate-900 text-base">
               {patient.name}
             </h4>
-            <span className="bg-purple-100 text-[#6E56CF] text-[11px] font-sora font-bold px-2 py-0.5 rounded-md">
+            <span className="bg-purple-100 text-[#5C24FF] text-[11px] font-sora font-bold px-2 py-0.5 rounded-md">
               {patient.age} {patient.gender}
             </span>
           </div>
-          <p className="text-xs text-[#6E56CF] font-medium mt-0.5 mb-2">
+          <p className="text-xs text-[#5C24FF] font-medium mt-0.5 mb-2">
             {patient.condition}
           </p>
 
           {/* AI Pre-visit Summary Box */}
           <div className="bg-[#FAF8FF] border border-purple-100/90 rounded-2xl p-2.5">
-            <div className="flex items-center gap-1.5 text-[#6E56CF] font-sora font-semibold text-[11px] mb-1.5">
+            <div className="flex items-center gap-1.5 text-[#5C24FF] font-sora font-semibold text-[11px] mb-1.5">
               <Sparkles className="w-3 h-3 flex-shrink-0" />
               <span>AI Pre-visit: Summary Ready</span>
             </div>
@@ -88,7 +88,7 @@ export const NextAppointmentCard: React.FC<NextAppointmentCardProps> = ({
       <div className="flex items-center gap-2 mb-2.5">
         <button
           onClick={onJoinCall}
-          className="flex-1 flex items-center justify-center gap-2 bg-[#6E56CF] hover:bg-[#5E45BE] text-white py-2.5 px-4 rounded-xl font-sora font-semibold text-xs sm:text-sm shadow-sm transition-all active:scale-98"
+          className="flex-1 flex items-center justify-center gap-2 bg-[#5C24FF] hover:bg-[#4A15E8] text-white py-2.5 px-4 rounded-xl font-sora font-semibold text-xs sm:text-sm shadow-sm transition-all active:scale-98"
         >
           <Video className="w-4 h-4" />
           <span>Join Call</span>

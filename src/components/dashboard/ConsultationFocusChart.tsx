@@ -35,12 +35,12 @@ export const ConsultationFocusChart: React.FC = () => {
         >
           <defs>
             <linearGradient id="consultGradLarge" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#6E56CF" stopOpacity="0.75" />
+              <stop offset="0%" stopColor="#5C24FF" stopOpacity="0.75" />
               <stop offset="50%" stopColor="#8E70FF" stopOpacity="0.45" />
               <stop offset="100%" stopColor="#C4B5FD" stopOpacity="0.2" />
             </linearGradient>
             <linearGradient id="curveFillLarge" x1="0%" y1="100%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#6E56CF" stopOpacity="0.95" />
+              <stop offset="0%" stopColor="#5C24FF" stopOpacity="0.95" />
               <stop offset="100%" stopColor="#9373FF" stopOpacity="0.5" />
             </linearGradient>
           </defs>
@@ -57,7 +57,7 @@ export const ConsultationFocusChart: React.FC = () => {
                C 88 82, 112 74, 128 66
                C 141 59, 148 50, 160 52 Z"
             fill="url(#consultGradLarge)"
-            stroke="#6E56CF"
+            stroke="#5C24FF"
             strokeWidth="1.5"
             strokeOpacity="0.5"
             className="transition-all duration-300"
@@ -143,7 +143,7 @@ export const ConsultationFocusChart: React.FC = () => {
               cx={cat.x}
               cy={cat.y}
               r={activeArea === cat.name ? 5.5 : 4}
-              className="fill-[#6E56CF] stroke-white stroke-2 cursor-pointer transition-all hover:scale-125 shadow-xs"
+              className="fill-[#5C24FF] stroke-white stroke-2 cursor-pointer transition-all hover:scale-125 shadow-xs"
               onMouseEnter={() => setActiveArea(cat.name)}
               onMouseLeave={() => setActiveArea(null)}
             />

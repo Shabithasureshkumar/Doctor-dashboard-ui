@@ -14,10 +14,10 @@ export const MetricCards: React.FC<MetricCardsProps> = ({ onCardClick }) => {
         className="bg-white rounded-3xl p-5 sm:p-6 border border-slate-100 shadow-card hover:shadow-card-hover transition-all cursor-pointer group"
       >
         <div className="flex items-center justify-between mb-4">
-          <div className="w-11 h-11 rounded-2xl bg-purple-50 text-[#6E56CF] flex items-center justify-center group-hover:bg-purple-100 transition-colors">
+          <div className="w-11 h-11 rounded-2xl bg-purple-50 text-[#5C24FF] flex items-center justify-center group-hover:bg-purple-100 transition-colors">
             <Users className="w-5 h-5" />
           </div>
-          <span className="inline-flex items-center gap-0.5 text-xs font-semibold text-[#6E56CF] bg-purple-50 px-2.5 py-1 rounded-full">
+          <span className="inline-flex items-center gap-0.5 text-xs font-semibold text-[#5C24FF] bg-purple-50 px-2.5 py-1 rounded-full">
             <ArrowUp className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>8%</span>
           </span>
@@ -31,7 +31,7 @@ export const MetricCards: React.FC<MetricCardsProps> = ({ onCardClick }) => {
       {/* 2. Appointments (Featured Purple Card) */}
       <div
         onClick={() => onCardClick?.('appointments')}
-        className="bg-[#6E56CF] rounded-3xl px-5 sm:px-6 py-7 sm:py-9 text-white shadow-[0_6px_22px_rgba(110,86,207,0.35)] hover:bg-[#6247c4] transition-all cursor-pointer group"
+        className="bg-[#5C24FF] rounded-3xl px-5 sm:px-6 py-7 sm:py-9 text-white shadow-[0_6px_22px_rgba(92, 36, 255,0.35)] hover:bg-[#6247c4] transition-all cursor-pointer group"
       >
         <div className="flex items-center justify-between mb-4">
           <div className="w-11 h-11 rounded-2xl bg-white/20 text-white flex items-center justify-center backdrop-blur-xs">
@@ -54,10 +54,10 @@ export const MetricCards: React.FC<MetricCardsProps> = ({ onCardClick }) => {
         className="bg-white rounded-3xl p-5 sm:p-6 border border-slate-100 shadow-card hover:shadow-card-hover transition-all cursor-pointer group"
       >
         <div className="flex items-center justify-between mb-4">
-          <div className="w-11 h-11 rounded-2xl bg-purple-50 text-[#6E56CF] flex items-center justify-center group-hover:bg-purple-100 transition-colors">
+          <div className="w-11 h-11 rounded-2xl bg-purple-50 text-[#5C24FF] flex items-center justify-center group-hover:bg-purple-100 transition-colors">
             <FileText className="w-5 h-5" />
           </div>
-          <span className="inline-flex items-center gap-0.5 text-xs font-semibold text-[#6E56CF] bg-purple-50 px-2.5 py-1 rounded-full">
+          <span className="inline-flex items-center gap-0.5 text-xs font-semibold text-[#5C24FF] bg-purple-50 px-2.5 py-1 rounded-full">
             <ArrowUp className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>5%</span>
           </span>
@@ -74,10 +74,10 @@ export const MetricCards: React.FC<MetricCardsProps> = ({ onCardClick }) => {
         className="bg-white rounded-3xl p-5 sm:p-6 border border-slate-100 shadow-card hover:shadow-card-hover transition-all cursor-pointer group"
       >
         <div className="flex items-center justify-between mb-4">
-          <div className="w-11 h-11 rounded-2xl bg-purple-50 text-[#6E56CF] flex items-center justify-center group-hover:bg-purple-100 transition-colors">
+          <div className="w-11 h-11 rounded-2xl bg-purple-50 text-[#5C24FF] flex items-center justify-center group-hover:bg-purple-100 transition-colors">
             <Eye className="w-5 h-5" />
           </div>
-          <span className="inline-flex items-center gap-0.5 text-xs font-semibold text-[#6E56CF] bg-purple-50 px-2.5 py-1 rounded-full">
+          <span className="inline-flex items-center gap-0.5 text-xs font-semibold text-[#5C24FF] bg-purple-50 px-2.5 py-1 rounded-full">
             <ArrowUp className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>3%</span>
           </span>

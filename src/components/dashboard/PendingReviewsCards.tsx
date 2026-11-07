@@ -18,7 +18,7 @@ export const PendingReviewsCards: React.FC<PendingReviewsCardsProps> = ({
         className="bg-white rounded-3xl p-5 border border-slate-100 shadow-card hover:shadow-card-hover transition-all cursor-pointer group flex flex-1 items-center justify-between gap-3 overflow-hidden"
       >
         <div className="flex items-center gap-3.5 min-w-0">
-          <div className="w-12 h-12 rounded-2xl bg-[#6E56CF] text-white flex items-center justify-center flex-shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+          <div className="w-12 h-12 rounded-2xl bg-[#5C24FF] text-white flex items-center justify-center flex-shrink-0 shadow-sm group-hover:scale-105 transition-transform">
             <FlaskConical className="w-6 h-6" />
           </div>
 
@@ -49,7 +49,7 @@ export const PendingReviewsCards: React.FC<PendingReviewsCardsProps> = ({
         </div>
 
         <button
-          className="w-10 h-10 rounded-full bg-[#6E56CF] group-hover:bg-[#5E45BE] text-white flex items-center justify-center flex-shrink-0 transition-transform group-hover:translate-x-0.5 shadow-sm ml-1"
+          className="w-10 h-10 rounded-full bg-[#5C24FF] group-hover:bg-[#4A15E8] text-white flex items-center justify-center flex-shrink-0 transition-transform group-hover:translate-x-0.5 shadow-sm ml-1"
           aria-label="Open Lab Reviews"
         >
           <ChevronRight className="w-5 h-5" />
@@ -62,7 +62,7 @@ export const PendingReviewsCards: React.FC<PendingReviewsCardsProps> = ({
         className="bg-white rounded-3xl p-5 border border-slate-100 shadow-card hover:shadow-card-hover transition-all cursor-pointer group flex flex-1 items-center justify-between gap-3 overflow-hidden"
       >
         <div className="flex items-center gap-3.5 min-w-0">
-          <div className="w-12 h-12 rounded-2xl bg-[#6E56CF] text-white flex items-center justify-center flex-shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+          <div className="w-12 h-12 rounded-2xl bg-[#5C24FF] text-white flex items-center justify-center flex-shrink-0 shadow-sm group-hover:scale-105 transition-transform">
             <ClipboardCheck className="w-6 h-6" />
           </div>
 
@@ -93,7 +93,7 @@ export const PendingReviewsCards: React.FC<PendingReviewsCardsProps> = ({
         </div>
 
         <button
-          className="w-10 h-10 rounded-full bg-[#6E56CF] group-hover:bg-[#5E45BE] text-white flex items-center justify-center flex-shrink-0 transition-transform group-hover:translate-x-0.5 shadow-sm ml-1"
+          className="w-10 h-10 rounded-full bg-[#5C24FF] group-hover:bg-[#4A15E8] text-white flex items-center justify-center flex-shrink-0 transition-transform group-hover:translate-x-0.5 shadow-sm ml-1"
           aria-label="Open Tasks"
         >
           <ChevronRight className="w-5 h-5" />

@@ -30,7 +30,7 @@ export const VirtualVisitModal: React.FC<VirtualVisitModalProps> = ({
         <div className="relative aspect-video w-full rounded-2xl bg-slate-900 overflow-hidden flex items-center justify-center border border-slate-800">
           {cameraActive ? (
             <div className="text-center">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-[#6E56CF] to-[#9065FF] mx-auto flex items-center justify-center text-white text-2xl font-bold font-sora shadow-lg mb-3">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-[#5C24FF] to-[#9A6AFB] mx-auto flex items-center justify-center text-white text-2xl font-bold font-sora shadow-lg mb-3">
                 {patientName.split(' ').map((n) => n[0]).join('')}
               </div>
               <p className="text-white font-sora font-semibold text-sm">{patientName}</p>
@@ -51,7 +51,7 @@ export const VirtualVisitModal: React.FC<VirtualVisitModalProps> = ({
           {/* AI Live Transcribing Indicator */}
           {aiScribeActive && (
             <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-sm border border-purple-500/30 text-white text-[11px] px-2.5 py-1 rounded-full flex items-center gap-1.5">
-              <Sparkles className="w-3 h-3 text-[#A78BFA] animate-spin" />
+              <Sparkles className="w-3 h-3 text-[#9A6AFB] animate-spin" />
               <span>AI Scribe Active</span>
             </div>
           )}
@@ -87,7 +87,7 @@ export const VirtualVisitModal: React.FC<VirtualVisitModalProps> = ({
             onClick={() => setAiScribeActive(!aiScribeActive)}
             className={`px-3.5 py-2.5 rounded-full flex items-center gap-1.5 text-xs font-semibold transition-all ${
               aiScribeActive
-                ? 'bg-purple-100 text-[#6E56CF] border border-purple-200'
+                ? 'bg-purple-100 text-[#5C24FF] border border-purple-200'
                 : 'bg-slate-100 text-slate-500'
             }`}
           >

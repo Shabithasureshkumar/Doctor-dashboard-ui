@@ -20,14 +20,14 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
       <div className="flex items-start sm:items-center gap-3">
         <button
           onClick={onBackToDashboard}
-          className="w-10 h-10 rounded-xl bg-slate-100 hover:bg-purple-50 hover:text-[#6E56CF] text-slate-600 flex items-center justify-center transition-colors flex-shrink-0"
+          className="w-10 h-10 rounded-xl bg-slate-100 hover:bg-purple-50 hover:text-[#5C24FF] text-slate-600 flex items-center justify-center transition-colors flex-shrink-0"
           title="Back to Dashboard"
           aria-label="Back to Dashboard"
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
 
-        <div className="w-10 h-10 rounded-xl bg-[#6E56CF] text-white flex items-center justify-center flex-shrink-0 shadow-sm hidden sm:flex">
+        <div className="w-10 h-10 rounded-xl bg-[#5C24FF] text-white flex items-center justify-center flex-shrink-0 shadow-sm hidden sm:flex">
           <CalendarIcon className="w-5 h-5" />
         </div>
 
@@ -46,7 +46,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
       <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap justify-start sm:justify-end">
         <button
           onClick={onNewAppointment}
-          className="flex items-center gap-1.5 bg-[#6E56CF] hover:bg-[#5E45BE] text-white px-4 py-2.5 rounded-xl font-sora font-semibold text-xs sm:text-sm shadow-sm transition-all active:scale-95 whitespace-nowrap"
+          className="flex items-center gap-1.5 bg-[#5C24FF] hover:bg-[#4A15E8] text-white px-4 py-2.5 rounded-xl font-sora font-semibold text-xs sm:text-sm shadow-sm transition-all active:scale-95 whitespace-nowrap"
         >
           <Plus className="w-4 h-4" />
           <span>New Appointment</span>

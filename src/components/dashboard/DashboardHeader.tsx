@@ -38,8 +38,8 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 onClick={() => onTabChange(tab)}
                 className={`flex items-center gap-2.5 rounded-2xl font-sora transition-all duration-150 whitespace-nowrap ${
                   isActive
-                    ? 'bg-[#6E56CF] text-white px-6 py-3 font-semibold text-sm sm:text-base shadow-[0_4px_14px_rgba(110,86,207,0.3)]'
-                    : 'text-slate-700 hover:text-[#6E56CF] px-2 py-2 font-medium text-sm sm:text-base'
+                    ? 'bg-[#5C24FF] text-white px-6 py-3 font-semibold text-sm sm:text-base shadow-[0_4px_14px_rgba(92, 36, 255,0.3)]'
+                    : 'text-slate-700 hover:text-[#5C24FF] px-2 py-2 font-medium text-sm sm:text-base'
                 }`}
               >
                 {tab === 'Dashboard' && <LayoutGrid className="w-5 h-5" />}
@@ -102,7 +102,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           >
             <Bell className="w-5 h-5 text-slate-500" />
             {hasUnreadNotification && (
-              <span className="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-[#6E56CF] rounded-full ring-2 ring-white" />
+              <span className="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-[#5C24FF] rounded-full ring-2 ring-white" />
             )}
           </button>
 

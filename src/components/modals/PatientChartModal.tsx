@@ -43,13 +43,13 @@ export const PatientChartModal: React.FC<PatientChartModalProps> = ({
                 <h4 className="font-sora font-bold text-sm sm:text-base text-slate-900">
                   {patientName}
                 </h4>
-                <span className="bg-purple-100 text-[#6E56CF] text-[10px] font-sora font-bold px-2 py-0.5 rounded">
+                <span className="bg-purple-100 text-[#5C24FF] text-[10px] font-sora font-bold px-2 py-0.5 rounded">
                   61 F · MRN-849201
                 </span>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">
                 Primary Condition:{' '}
-                <strong className="text-[#6E56CF] font-semibold">Hypertension follow-up</strong>
+                <strong className="text-[#5C24FF] font-semibold">Hypertension follow-up</strong>
               </p>
             </div>
           </div>
@@ -60,7 +60,7 @@ export const PatientChartModal: React.FC<PatientChartModalProps> = ({
                 onVirtualVisit?.(patientName);
                 onClose();
               }}
-              className="bg-[#6E56CF] hover:bg-[#5E45BE] text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-xs transition-all"
+              className="bg-[#5C24FF] hover:bg-[#4A15E8] text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-xs transition-all"
             >
               Start Visit
             </button>
@@ -75,7 +75,7 @@ export const PatientChartModal: React.FC<PatientChartModalProps> = ({
               onClick={() => setActiveTab(tab)}
               className={`px-3 py-2 border-b-2 capitalize transition-colors ${
                 activeTab === tab
-                  ? 'border-[#6E56CF] text-[#6E56CF]'
+                  ? 'border-[#5C24FF] text-[#5C24FF]'
                   : 'border-transparent text-slate-500 hover:text-slate-800'
               }`}
             >
@@ -154,7 +154,7 @@ export const PatientChartModal: React.FC<PatientChartModalProps> = ({
                   onNewPrescription?.(patientName);
                   onClose();
                 }}
-                className="text-xs font-semibold text-[#6E56CF] hover:underline"
+                className="text-xs font-semibold text-[#5C24FF] hover:underline"
               >
                 Modify Rx
               </button>
@@ -207,7 +207,7 @@ export const PatientChartModal: React.FC<PatientChartModalProps> = ({
               onNewPrescription?.(patientName);
               onClose();
             }}
-            className="flex items-center gap-1.5 bg-[#6E56CF] hover:bg-[#5E45BE] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-sm transition-all"
+            className="flex items-center gap-1.5 bg-[#5C24FF] hover:bg-[#4A15E8] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-sm transition-all"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>New Prescription</span>

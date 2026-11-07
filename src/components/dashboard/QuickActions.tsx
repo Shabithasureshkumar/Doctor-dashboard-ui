@@ -34,7 +34,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
       title: 'New Virtual Visit',
       subtitle: 'Start instant call',
       icon: Video,
-      iconBg: 'bg-[#6E56CF]',
+      iconBg: 'bg-[#5C24FF]',
       onClick: onNewVirtualVisit,
     },
     {
@@ -74,7 +74,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
       title: 'Adjust Schedule',
       subtitle: 'Modify availability',
       icon: CalendarClock,
-      iconBg: 'bg-[#6E56CF]',
+      iconBg: 'bg-[#5C24FF]',
       onClick: onAdjustSchedule,
     },
   ];
@@ -88,7 +88,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
         </h3>
         <button
           onClick={onAddQuickAction || onNewPrescription}
-          className="w-7 h-7 min-w-[36px] min-h-[36px] sm:min-w-0 sm:min-h-0 rounded-full bg-[#6E56CF] hover:bg-[#5E45BE] text-white flex items-center justify-center transition-transform active:scale-95 shadow-xs"
+          className="w-7 h-7 min-w-[36px] min-h-[36px] sm:min-w-0 sm:min-h-0 rounded-full bg-[#5C24FF] hover:bg-[#4A15E8] text-white flex items-center justify-center transition-transform active:scale-95 shadow-xs"
           title="Add Action"
           aria-label="Add Action"
         >
@@ -111,7 +111,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
               >
                 <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <span className="font-sora font-semibold text-xs sm:text-[13px] text-slate-800 leading-snug group-hover:text-[#6E56CF] transition-colors">
+              <span className="font-sora font-semibold text-xs sm:text-[13px] text-slate-800 leading-snug group-hover:text-[#5C24FF] transition-colors">
                 {act.title}
               </span>
               <span className="text-[11px] text-slate-400 mt-0.5 leading-tight">

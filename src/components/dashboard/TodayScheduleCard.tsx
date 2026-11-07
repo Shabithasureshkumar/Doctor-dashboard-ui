@@ -25,7 +25,7 @@ export const TodayScheduleCard: React.FC<TodayScheduleCardProps> = ({
         </div>
         <button
           onClick={onOpenCalendar}
-          className="font-sora text-xs sm:text-sm font-semibold text-[#6E56CF] hover:text-[#5E45BE] transition-colors inline-flex items-center px-1 -mr-1 min-h-[36px] sm:min-h-0 sm:px-0 sm:mr-0"
+          className="font-sora text-xs sm:text-sm font-semibold text-[#5C24FF] hover:text-[#4A15E8] transition-colors inline-flex items-center px-1 -mr-1 min-h-[36px] sm:min-h-0 sm:px-0 sm:mr-0"
         >
           Open calendar
         </button>
@@ -50,7 +50,7 @@ export const TodayScheduleCard: React.FC<TodayScheduleCardProps> = ({
                     isCompleted
                       ? 'bg-emerald-500'
                       : isCurrent
-                      ? 'bg-[#6E56CF] ring-4 ring-purple-100'
+                      ? 'bg-[#5C24FF] ring-4 ring-purple-100'
                       : 'bg-slate-300'
                   }`}
                 />
@@ -64,7 +64,7 @@ export const TodayScheduleCard: React.FC<TodayScheduleCardProps> = ({
                 <span className="font-sora font-bold text-xs text-slate-900 whitespace-nowrap">
                   {item.patientName}
                 </span>
-                <span className="bg-purple-50 text-[#6E56CF] text-[10px] font-semibold px-1 py-0.5 rounded-md whitespace-nowrap hidden sm:inline-block flex-shrink-0">
+                <span className="bg-purple-50 text-[#5C24FF] text-[10px] font-semibold px-1 py-0.5 rounded-md whitespace-nowrap hidden sm:inline-block flex-shrink-0">
                   {item.type}
                 </span>
               </div>
@@ -96,7 +96,7 @@ export const TodayScheduleCard: React.FC<TodayScheduleCardProps> = ({
                 {isResume && (
                   <button
                     onClick={() => onResumeVisit(item.patientName)}
-                    className="bg-[#6E56CF] hover:bg-[#5E45BE] text-white text-[11px] font-sora font-semibold px-2 py-1 min-h-[36px] sm:min-h-0 rounded-xl shadow-xs transition-all active:scale-95"
+                    className="bg-[#5C24FF] hover:bg-[#4A15E8] text-white text-[11px] font-sora font-semibold px-2 py-1 min-h-[36px] sm:min-h-0 rounded-xl shadow-xs transition-all active:scale-95"
                   >
                     Resume
                   </button>
@@ -105,7 +105,7 @@ export const TodayScheduleCard: React.FC<TodayScheduleCardProps> = ({
                 {item.status === 'Join' && (
                   <button
                     onClick={() => onJoinVisit(item.patientName)}
-                    className="bg-white hover:bg-purple-50 text-[#6E56CF] border border-purple-200 text-[11px] font-sora font-semibold px-2 py-1 min-h-[36px] sm:min-h-0 rounded-xl transition-all active:scale-95"
+                    className="bg-white hover:bg-purple-50 text-[#5C24FF] border border-purple-200 text-[11px] font-sora font-semibold px-2 py-1 min-h-[36px] sm:min-h-0 rounded-xl transition-all active:scale-95"
                   >
                     Join
                   </button>

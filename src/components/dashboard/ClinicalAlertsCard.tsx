@@ -31,7 +31,7 @@ const alertStyles = {
   info: {
     bg: 'bg-[#F8F5FF]',
     border: 'border-purple-100',
-    tagColor: 'text-[#6E56CF]',
+    tagColor: 'text-[#5C24FF]',
     icon: ShieldAlert,
   },
 };
@@ -52,7 +52,7 @@ export const ClinicalAlertsCard: React.FC<ClinicalAlertsCardProps> = ({
         </div>
         <button
           onClick={onSeeAll}
-          className="font-sora text-xs sm:text-sm font-semibold text-[#6E56CF] hover:text-[#5E45BE] transition-colors inline-flex items-center px-1 -mr-1 min-h-[36px] sm:min-h-0 sm:px-0 sm:mr-0"
+          className="font-sora text-xs sm:text-sm font-semibold text-[#5C24FF] hover:text-[#4A15E8] transition-colors inline-flex items-center px-1 -mr-1 min-h-[36px] sm:min-h-0 sm:px-0 sm:mr-0"
         >
           See all
         </button>
@@ -92,7 +92,7 @@ export const ClinicalAlertsCard: React.FC<ClinicalAlertsCardProps> = ({
                 <div className="flex items-center gap-1.5">
                   <button
                     onClick={() => onOpenChart(alert.patientName)}
-                    className="bg-[#6E56CF] hover:bg-[#5E45BE] text-white text-[10px] sm:text-[11px] font-sora font-semibold px-2.5 py-1.5 min-h-[36px] sm:min-h-0 rounded-lg transition-all active:scale-95 shadow-xs whitespace-nowrap"
+                    className="bg-[#5C24FF] hover:bg-[#4A15E8] text-white text-[10px] sm:text-[11px] font-sora font-semibold px-2.5 py-1.5 min-h-[36px] sm:min-h-0 rounded-lg transition-all active:scale-95 shadow-xs whitespace-nowrap"
                   >
                     Open Chart
                   </button>

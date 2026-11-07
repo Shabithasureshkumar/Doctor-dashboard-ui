@@ -41,7 +41,7 @@ export const SearchPatientModal: React.FC<SearchPatientModalProps> = ({
             placeholder="Type patient name, MRN-XXXX, or diagnosis..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] transition-all"
+            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] transition-all"
             autoFocus
           />
         </div>
@@ -74,7 +74,7 @@ export const SearchPatientModal: React.FC<SearchPatientModalProps> = ({
                         {patient.mrn}
                       </span>
                     </div>
-                    <span className="text-xs text-[#6E56CF] font-medium block">
+                    <span className="text-xs text-[#5C24FF] font-medium block">
                       {patient.condition} · {patient.age} y/o ({patient.gender})
                     </span>
                   </div>
@@ -86,7 +86,7 @@ export const SearchPatientModal: React.FC<SearchPatientModalProps> = ({
                       onSelectPatient(patient.name);
                       onClose();
                     }}
-                    className="flex items-center gap-1 bg-[#6E56CF] hover:bg-[#5E45BE] text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-xs transition-all active:scale-95"
+                    className="flex items-center gap-1 bg-[#5C24FF] hover:bg-[#4A15E8] text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-xs transition-all active:scale-95"
                   >
                     <span>Open Chart</span>
                     <ArrowRight className="w-3.5 h-3.5" />

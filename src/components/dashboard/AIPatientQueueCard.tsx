@@ -30,7 +30,7 @@ export const AIPatientQueueCard: React.FC<AIPatientQueueCardProps> = ({
         </div>
         <button
           onClick={onViewAll}
-          className="font-sora text-xs sm:text-sm font-semibold text-[#6E56CF] hover:text-[#5E45BE] transition-colors inline-flex items-center px-1 -mr-1 min-h-[36px] sm:min-h-0 sm:px-0 sm:mr-0"
+          className="font-sora text-xs sm:text-sm font-semibold text-[#5C24FF] hover:text-[#4A15E8] transition-colors inline-flex items-center px-1 -mr-1 min-h-[36px] sm:min-h-0 sm:px-0 sm:mr-0"
         >
           View all
         </button>
@@ -84,7 +84,7 @@ export const AIPatientQueueCard: React.FC<AIPatientQueueCardProps> = ({
               </button>
               <button
                 onClick={() => onJoinPatient(patient.name)}
-                className="bg-[#6E56CF] hover:bg-[#5E45BE] text-white text-xs font-sora font-semibold px-3 py-1 min-h-[36px] sm:min-h-0 rounded-xl shadow-xs transition-all active:scale-95"
+                className="bg-[#5C24FF] hover:bg-[#4A15E8] text-white text-xs font-sora font-semibold px-3 py-1 min-h-[36px] sm:min-h-0 rounded-xl shadow-xs transition-all active:scale-95"
               >
                 Join
               </button>

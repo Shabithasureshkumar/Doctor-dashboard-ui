@@ -98,7 +98,7 @@ export const NewAppointmentModal: React.FC<NewAppointmentModalProps> = ({
               type="text"
               value={patientName}
               onChange={(e) => setPatientName(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3.5 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] focus:outline-none"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3.5 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] focus:outline-none"
               required
             />
           </div>
@@ -112,7 +112,7 @@ export const NewAppointmentModal: React.FC<NewAppointmentModalProps> = ({
             <select
               value={day}
               onChange={(e) => setDay(e.target.value as any)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] focus:outline-none"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] focus:outline-none"
             >
               <option value="MON">MON (Jun 17)</option>
               <option value="TUE">TUE (Jun 18)</option>
@@ -131,7 +131,7 @@ export const NewAppointmentModal: React.FC<NewAppointmentModalProps> = ({
             <select
               value={time}
               onChange={(e) => setTime(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] focus:outline-none"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] focus:outline-none"
             >
               <option>8:00 AM</option>
               <option>9:00 AM</option>
@@ -155,7 +155,7 @@ export const NewAppointmentModal: React.FC<NewAppointmentModalProps> = ({
           <select
             value={type}
             onChange={(e) => setType(e.target.value as any)}
-            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] focus:outline-none"
+            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] focus:outline-none"
           >
             <option value="Video Visit">Video Visit</option>
             <option value="In-person">In-person Visit</option>
@@ -174,7 +174,7 @@ export const NewAppointmentModal: React.FC<NewAppointmentModalProps> = ({
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Reason for visit or symptoms..."
-            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] focus:outline-none"
+            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] focus:outline-none"
           />
         </div>
 
@@ -188,7 +188,7 @@ export const NewAppointmentModal: React.FC<NewAppointmentModalProps> = ({
           </button>
           <button
             type="submit"
-            className="bg-[#6E56CF] hover:bg-[#5E45BE] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-sm transition-all active:scale-95"
+            className="bg-[#5C24FF] hover:bg-[#4A15E8] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-sm transition-all active:scale-95"
           >
             Confirm Appointment
           </button>

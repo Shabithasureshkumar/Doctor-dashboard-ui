@@ -13,7 +13,7 @@ export const MessagesCard: React.FC<MessagesCardProps> = ({
   onSelectMessage,
 }) => {
   const roleBadgeStyles = {
-    PATIENT: 'bg-purple-100 text-[#6E56CF]',
+    PATIENT: 'bg-purple-100 text-[#5C24FF]',
     STAFF: 'bg-blue-100 text-blue-600',
     CARDIO: 'bg-pink-100 text-pink-600',
   };
@@ -27,13 +27,13 @@ export const MessagesCard: React.FC<MessagesCardProps> = ({
           <h3 className="font-sora font-bold text-base sm:text-lg text-slate-900">
             Messages
           </h3>
-          <span className="bg-purple-100 text-[#6E56CF] text-[11px] font-sora font-bold px-2 py-0.5 rounded-full">
+          <span className="bg-purple-100 text-[#5C24FF] text-[11px] font-sora font-bold px-2 py-0.5 rounded-full">
             2 Unread
           </span>
         </div>
         <button
           onClick={onOpenInbox}
-          className="font-sora text-xs sm:text-sm font-semibold text-[#6E56CF] hover:text-[#5E45BE] transition-colors inline-flex items-center px-1 -mr-1 min-h-[36px] sm:min-h-0 sm:px-0 sm:mr-0"
+          className="font-sora text-xs sm:text-sm font-semibold text-[#5C24FF] hover:text-[#4A15E8] transition-colors inline-flex items-center px-1 -mr-1 min-h-[36px] sm:min-h-0 sm:px-0 sm:mr-0"
         >
           Open inbox
         </button>
@@ -78,7 +78,7 @@ export const MessagesCard: React.FC<MessagesCardProps> = ({
             <div className="flex items-center gap-2 flex-shrink-0">
               <span className="text-[11px] text-slate-400">{msg.timeAgo}</span>
               {msg.isUnread && (
-                <span className="w-2 h-2 rounded-full bg-[#6E56CF]" />
+                <span className="w-2 h-2 rounded-full bg-[#5C24FF]" />
               )}
             </div>
           </div>

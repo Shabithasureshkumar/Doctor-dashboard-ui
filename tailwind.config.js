@@ -13,16 +13,16 @@ export default {
       },
       colors: {
         brand: {
-          50: '#F8F6FF',
-          100: '#F0EBFE',
-          200: '#DDD4FE',
-          300: '#C2B1FD',
-          400: '#9E80FA',
-          500: '#815BF5',
-          600: '#6E56CF',
-          700: '#5C43B8',
-          800: '#4B3598',
-          900: '#3D2A7C',
+          50: '#F5F1FF',
+          100: '#EBE4FF',
+          200: '#D7CBFE',
+          300: '#BCA8FD',
+          400: '#9A6AFB',
+          500: '#7B43FF',
+          600: '#5C24FF',
+          700: '#4A15E8',
+          800: '#3A0EC2',
+          900: '#2A0994',
         },
         surface: {
           DEFAULT: '#FFFFFF',
@@ -30,11 +30,15 @@ export default {
           muted: '#F5F5FA',
         }
       },
+      backgroundImage: {
+        'brand-gradient': 'linear-gradient(135deg, #9A6AFB 0%, #5C24FF 100%)',
+        'brand-gradient-r': 'linear-gradient(90deg, #9A6AFB 0%, #5C24FF 100%)',
+      },
       boxShadow: {
-        'card': '0 2px 10px rgba(110, 86, 207, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02)',
-        'card-hover': '0 10px 25px -5px rgba(110, 86, 207, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04)',
+        'card': '0 2px 10px rgba(92, 36, 255, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02)',
+        'card-hover': '0 10px 25px -5px rgba(92, 36, 255, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04)',
         'modal': '0 20px 50px rgba(24, 20, 48, 0.18)',
-        'glow': '0 0 20px rgba(110, 86, 207, 0.35)',
+        'glow': '0 0 20px rgba(92, 36, 255, 0.35)',
       }
     },
   },

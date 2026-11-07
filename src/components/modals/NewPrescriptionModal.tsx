@@ -60,7 +60,7 @@ export const NewPrescriptionModal: React.FC<NewPrescriptionModalProps> = ({
               type="text"
               value={medication}
               onChange={(e) => setMedication(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] focus:outline-none"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] focus:outline-none"
               required
             />
           </div>
@@ -74,7 +74,7 @@ export const NewPrescriptionModal: React.FC<NewPrescriptionModalProps> = ({
                 type="text"
                 value={dosage}
                 onChange={(e) => setDosage(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] focus:outline-none"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] focus:outline-none"
                 required
               />
             </div>
@@ -86,7 +86,7 @@ export const NewPrescriptionModal: React.FC<NewPrescriptionModalProps> = ({
                 type="text"
                 value={frequency}
                 onChange={(e) => setFrequency(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] focus:outline-none"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] focus:outline-none"
                 required
               />
             </div>
@@ -101,7 +101,7 @@ export const NewPrescriptionModal: React.FC<NewPrescriptionModalProps> = ({
                 type="text"
                 value={dispense}
                 onChange={(e) => setDispense(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] focus:outline-none"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] focus:outline-none"
                 required
               />
             </div>
@@ -115,7 +115,7 @@ export const NewPrescriptionModal: React.FC<NewPrescriptionModalProps> = ({
                 max="12"
                 value={refills}
                 onChange={(e) => setRefills(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] focus:outline-none"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] focus:outline-none"
                 required
               />
             </div>
@@ -128,7 +128,7 @@ export const NewPrescriptionModal: React.FC<NewPrescriptionModalProps> = ({
             <select
               value={pharmacy}
               onChange={(e) => setPharmacy(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] focus:outline-none"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] focus:outline-none"
             >
               <option>CVS Pharmacy #4128 (Main St)</option>
               <option>Walgreens #10842 (Broadway Ave)</option>
@@ -146,7 +146,7 @@ export const NewPrescriptionModal: React.FC<NewPrescriptionModalProps> = ({
             </button>
             <button
               type="submit"
-              className="flex items-center gap-1.5 bg-[#6E56CF] hover:bg-[#5E45BE] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-sm transition-all active:scale-95"
+              className="flex items-center gap-1.5 bg-[#5C24FF] hover:bg-[#4A15E8] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-sm transition-all active:scale-95"
             >
               <Send className="w-3.5 h-3.5" />
               <span>Submit Prescription</span>

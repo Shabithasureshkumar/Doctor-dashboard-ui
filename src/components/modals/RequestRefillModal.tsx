@@ -95,7 +95,7 @@ export const RequestRefillModal: React.FC<RequestRefillModalProps> = ({
             <select
               value={patientName}
               onChange={(e) => setPatientName(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] focus:outline-none"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] focus:outline-none"
               required
             >
               {QUEUE_PATIENTS.map((p) => (
@@ -116,7 +116,7 @@ export const RequestRefillModal: React.FC<RequestRefillModalProps> = ({
             <select
               value={medication}
               onChange={(e) => handleMedChange(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] focus:outline-none"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] focus:outline-none"
               required
             >
               {commonMeds.map((m) => (
@@ -138,7 +138,7 @@ export const RequestRefillModal: React.FC<RequestRefillModalProps> = ({
                 value={dosage}
                 onChange={(e) => setDosage(e.target.value)}
                 placeholder="e.g. 10 mg once daily"
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] focus:outline-none"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] focus:outline-none"
                 required
               />
             </div>
@@ -153,7 +153,7 @@ export const RequestRefillModal: React.FC<RequestRefillModalProps> = ({
                 value={refillQuantity}
                 onChange={(e) => setRefillQuantity(e.target.value)}
                 placeholder="e.g. 30 Tablets, 90 Tablets"
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] focus:outline-none"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] focus:outline-none"
                 required
               />
             </div>
@@ -167,7 +167,7 @@ export const RequestRefillModal: React.FC<RequestRefillModalProps> = ({
             <select
               value={pharmacy}
               onChange={(e) => setPharmacy(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] focus:outline-none"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] focus:outline-none"
             >
               <option>CVS Pharmacy #4128 (Main St)</option>
               <option>Walgreens #10842 (Broadway Ave)</option>
@@ -186,7 +186,7 @@ export const RequestRefillModal: React.FC<RequestRefillModalProps> = ({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Clinical refill notes or authorization instructions..."
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF] focus:outline-none resize-none"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF] focus:outline-none resize-none"
             />
           </div>
 
@@ -201,7 +201,7 @@ export const RequestRefillModal: React.FC<RequestRefillModalProps> = ({
             </button>
             <button
               type="submit"
-              className="flex items-center gap-2 bg-[#6E56CF] hover:bg-[#5E45BE] text-white px-5 py-2.5 rounded-xl text-xs sm:text-sm font-sora font-semibold shadow-sm transition-all active:scale-95"
+              className="flex items-center gap-2 bg-[#5C24FF] hover:bg-[#4A15E8] text-white px-5 py-2.5 rounded-xl text-xs sm:text-sm font-sora font-semibold shadow-sm transition-all active:scale-95"
             >
               <RefreshCw className="w-4 h-4" />
               <span>Request Refill</span>

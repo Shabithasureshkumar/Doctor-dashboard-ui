@@ -67,7 +67,7 @@ export const AskAvaChatDrawer: React.FC<AskAvaChatDrawerProps> = ({
 
       <div className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-right duration-200">
         {/* Header */}
-        <div className="px-5 py-4 bg-gradient-to-r from-[#6E56CF] to-[#8B5CF6] text-white flex items-center justify-between shadow-xs">
+        <div className="px-5 py-4 bg-gradient-to-r from-[#5C24FF] to-[#9A6AFB] text-white flex items-center justify-between shadow-xs">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-white" />
@@ -97,7 +97,7 @@ export const AskAvaChatDrawer: React.FC<AskAvaChatDrawerProps> = ({
               className={`flex gap-2.5 ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {m.sender === 'ava' && (
-                <div className="w-7 h-7 rounded-lg bg-[#6E56CF] text-white flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div className="w-7 h-7 rounded-lg bg-[#5C24FF] text-white flex items-center justify-center flex-shrink-0 mt-0.5">
                   <Bot className="w-4 h-4" />
                 </div>
               )}
@@ -105,7 +105,7 @@ export const AskAvaChatDrawer: React.FC<AskAvaChatDrawerProps> = ({
               <div
                 className={`max-w-[80%] rounded-2xl px-3.5 py-2.5 text-xs sm:text-sm leading-relaxed ${
                   m.sender === 'user'
-                    ? 'bg-[#6E56CF] text-white rounded-br-xs font-medium'
+                    ? 'bg-[#5C24FF] text-white rounded-br-xs font-medium'
                     : 'bg-white border border-slate-200 text-slate-800 rounded-tl-xs shadow-xs'
                 }`}
               >
@@ -130,7 +130,7 @@ export const AskAvaChatDrawer: React.FC<AskAvaChatDrawerProps> = ({
                 <button
                   key={i}
                   onClick={() => handleSend(qp)}
-                  className="text-[11px] bg-white hover:bg-purple-50 hover:text-[#6E56CF] hover:border-purple-200 border border-slate-200 px-2.5 py-1 rounded-lg text-slate-600 transition-all text-left"
+                  className="text-[11px] bg-white hover:bg-purple-50 hover:text-[#5C24FF] hover:border-purple-200 border border-slate-200 px-2.5 py-1 rounded-lg text-slate-600 transition-all text-left"
                 >
                   {qp}
                 </button>
@@ -153,11 +153,11 @@ export const AskAvaChatDrawer: React.FC<AskAvaChatDrawerProps> = ({
               placeholder="Ask Ava anything about patients or schedule..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#6E56CF]/20 focus:border-[#6E56CF]"
+              className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#5C24FF]/20 focus:border-[#5C24FF]"
             />
             <button
               type="submit"
-              className="bg-[#6E56CF] hover:bg-[#5E45BE] text-white p-2.5 rounded-xl shadow-xs transition-transform active:scale-95 flex-shrink-0"
+              className="bg-[#5C24FF] hover:bg-[#4A15E8] text-white p-2.5 rounded-xl shadow-xs transition-transform active:scale-95 flex-shrink-0"
               title="Send message"
             >
               <Send className="w-4 h-4" />

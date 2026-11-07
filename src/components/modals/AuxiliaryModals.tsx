@@ -90,7 +90,7 @@ export const ReferPatientModal: React.FC<{
             <button type="button" onClick={onClose} className="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl">
               Cancel
             </button>
-            <button type="submit" className="bg-[#6E56CF] hover:bg-[#5E45BE] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-xs">
+            <button type="submit" className="bg-[#5C24FF] hover:bg-[#4A15E8] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-xs">
               Transmit Referral
             </button>
           </div>
@@ -162,7 +162,7 @@ export const AdjustScheduleModal: React.FC<{
                   onClose();
                 }, 1000);
               }}
-              className="bg-[#6E56CF] hover:bg-[#5E45BE] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-xs"
+              className="bg-[#5C24FF] hover:bg-[#4A15E8] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-xs"
             >
               Save Changes
             </button>
@@ -194,21 +194,21 @@ export const ExportModal: React.FC<{
         <p className="text-xs text-slate-600">Choose export format for today's schedule and encounters:</p>
         <div className="space-y-2">
           <label className="flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
-            <input type="radio" name="export-fmt" defaultChecked className="accent-[#6E56CF]" />
+            <input type="radio" name="export-fmt" defaultChecked className="accent-[#5C24FF]" />
             <div>
               <span className="font-sora font-semibold text-xs text-slate-900 block">PDF Summary Report</span>
               <span className="text-[10px] text-slate-400">Includes charts, vitals overview, and alerts</span>
             </div>
           </label>
           <label className="flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
-            <input type="radio" name="export-fmt" className="accent-[#6E56CF]" />
+            <input type="radio" name="export-fmt" className="accent-[#5C24FF]" />
             <div>
               <span className="font-sora font-semibold text-xs text-slate-900 block">CSV / Excel Spreadsheet</span>
               <span className="text-[10px] text-slate-400">Raw appointment metrics and patient counts</span>
             </div>
           </label>
           <label className="flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
-            <input type="radio" name="export-fmt" className="accent-[#6E56CF]" />
+            <input type="radio" name="export-fmt" className="accent-[#5C24FF]" />
             <div>
               <span className="font-sora font-semibold text-xs text-slate-900 block">iCal / Calendar File</span>
               <span className="text-[10px] text-slate-400">Sync with Outlook, Apple, or Google Calendar</span>
@@ -222,7 +222,7 @@ export const ExportModal: React.FC<{
           </button>
           <button
             onClick={handleExport}
-            className="flex items-center gap-1.5 bg-[#6E56CF] hover:bg-[#5E45BE] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-xs"
+            className="flex items-center gap-1.5 bg-[#5C24FF] hover:bg-[#4A15E8] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-xs"
           >
             <Download className="w-3.5 h-3.5" />
             <span>{downloading ? 'Preparing...' : 'Download File'}</span>
@@ -264,7 +264,7 @@ export const TasksModal: React.FC<{
                 type="checkbox"
                 checked={task.done}
                 onChange={() => toggleTask(task.id)}
-                className="w-4 h-4 rounded accent-[#6E56CF] cursor-pointer"
+                className="w-4 h-4 rounded accent-[#5C24FF] cursor-pointer"
               />
               <span className={`text-xs ${task.done ? 'line-through text-slate-400' : 'text-slate-800 font-medium'}`}>
                 {task.text}

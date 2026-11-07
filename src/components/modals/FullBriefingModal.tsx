@@ -25,7 +25,7 @@ export const FullBriefingModal: React.FC<FullBriefingModalProps> = ({
       <div className="space-y-4">
         {/* Executive Summary */}
         <div className="p-3.5 rounded-xl bg-purple-50/80 border border-purple-100 flex items-start gap-3">
-          <Sparkles className="w-5 h-5 text-[#6E56CF] flex-shrink-0 mt-0.5" />
+          <Sparkles className="w-5 h-5 text-[#5C24FF] flex-shrink-0 mt-0.5" />
           <div className="space-y-1">
             <h4 className="font-sora font-semibold text-xs sm:text-sm text-slate-900">
               Executive AI Synthesis
@@ -68,7 +68,7 @@ export const FullBriefingModal: React.FC<FullBriefingModalProps> = ({
           {/* Priority 2 */}
           <div className="p-3 bg-purple-50/60 border border-purple-100 rounded-xl flex items-center justify-between gap-3">
             <div>
-              <span className="font-sora font-bold text-xs text-[#6E56CF] block">
+              <span className="font-sora font-bold text-xs text-[#5C24FF] block">
                 2. Sarah Johnson Pre-Visit Preparation
               </span>
               <p className="text-[11px] text-slate-600">
@@ -80,7 +80,7 @@ export const FullBriefingModal: React.FC<FullBriefingModalProps> = ({
                 onOpenChart('Sarah Johnson');
                 onClose();
               }}
-              className="bg-[#6E56CF] hover:bg-[#5E45BE] text-white text-xs font-semibold px-3 py-1.5 rounded-lg whitespace-nowrap shadow-xs"
+              className="bg-[#5C24FF] hover:bg-[#4A15E8] text-white text-xs font-semibold px-3 py-1.5 rounded-lg whitespace-nowrap shadow-xs"
             >
               Open Chart
             </button>

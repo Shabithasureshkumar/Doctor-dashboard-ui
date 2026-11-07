@@ -75,7 +75,7 @@ export const AIScribeModal: React.FC<AIScribeModalProps> = ({
         <div className="space-y-3 max-h-80 overflow-y-auto pr-1">
           {/* S */}
           <div className="p-3 bg-slate-50/70 border border-slate-200/80 rounded-xl">
-            <h5 className="font-sora font-bold text-xs text-[#6E56CF] uppercase tracking-wider mb-1">
+            <h5 className="font-sora font-bold text-xs text-[#5C24FF] uppercase tracking-wider mb-1">
               Subjective (S)
             </h5>
             <p className="text-xs text-slate-700 leading-relaxed">{soapNote.subjective}</p>
@@ -83,7 +83,7 @@ export const AIScribeModal: React.FC<AIScribeModalProps> = ({
 
           {/* O */}
           <div className="p-3 bg-slate-50/70 border border-slate-200/80 rounded-xl">
-            <h5 className="font-sora font-bold text-xs text-[#6E56CF] uppercase tracking-wider mb-1">
+            <h5 className="font-sora font-bold text-xs text-[#5C24FF] uppercase tracking-wider mb-1">
               Objective (O)
             </h5>
             <p className="text-xs text-slate-700 leading-relaxed">{soapNote.objective}</p>
@@ -91,7 +91,7 @@ export const AIScribeModal: React.FC<AIScribeModalProps> = ({
 
           {/* A */}
           <div className="p-3 bg-slate-50/70 border border-slate-200/80 rounded-xl">
-            <h5 className="font-sora font-bold text-xs text-[#6E56CF] uppercase tracking-wider mb-1">
+            <h5 className="font-sora font-bold text-xs text-[#5C24FF] uppercase tracking-wider mb-1">
               Assessment (A)
             </h5>
             <p className="text-xs text-slate-700 whitespace-pre-line leading-relaxed">
@@ -101,7 +101,7 @@ export const AIScribeModal: React.FC<AIScribeModalProps> = ({
 
           {/* P */}
           <div className="p-3 bg-slate-50/70 border border-slate-200/80 rounded-xl">
-            <h5 className="font-sora font-bold text-xs text-[#6E56CF] uppercase tracking-wider mb-1">
+            <h5 className="font-sora font-bold text-xs text-[#5C24FF] uppercase tracking-wider mb-1">
               Plan (P)
             </h5>
             <p className="text-xs text-slate-700 whitespace-pre-line leading-relaxed">
@@ -129,7 +129,7 @@ export const AIScribeModal: React.FC<AIScribeModalProps> = ({
             </button>
             <button
               onClick={handleSave}
-              className="flex items-center gap-1.5 bg-[#6E56CF] hover:bg-[#5E45BE] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-sm transition-all active:scale-95"
+              className="flex items-center gap-1.5 bg-[#5C24FF] hover:bg-[#4A15E8] text-white px-4 py-2 rounded-xl text-xs font-sora font-semibold shadow-sm transition-all active:scale-95"
             >
               {saved ? <Check className="w-3.5 h-3.5" /> : <Save className="w-3.5 h-3.5" />}
               <span>{saved ? 'Saved' : 'Save to Patient Chart'}</span>
