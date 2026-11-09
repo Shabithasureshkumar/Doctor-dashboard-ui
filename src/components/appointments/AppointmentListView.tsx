@@ -32,6 +32,8 @@ import {
   TimelineAppointmentItem,
 } from '../../mockData/appointmentListData';
 import { DashboardHeader } from '../dashboard/DashboardHeader';
+import { CancelAppointmentModal } from './CancelAppointmentModal';
+import { RescheduleAppointmentModal } from './RescheduleAppointmentModal';
 import { TabType } from '../../types';
 
 interface AppointmentListViewProps {
@@ -72,6 +74,12 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
   const [selectedDate, setSelectedDate] = useState('Wed, Nov 10, 2026');
   const [dateIndex, setDateIndex] = useState(0);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Modal States for Cancel & Reschedule
+  const [selectedAppointmentForCancel, setSelectedAppointmentForCancel] =
+    useState<DetailedAppointment | null>(null);
+  const [selectedAppointmentForReschedule, setSelectedAppointmentForReschedule] =
+    useState<DetailedAppointment | null>(null);
 
   const dates = ['Wed, Nov 10, 2026', 'Thu, Nov 11, 2026', 'Fri, Nov 12, 2026', 'Mon, Nov 15, 2026'];
 
@@ -149,20 +157,54 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
     }
   };
 
-  const handleReschedule = (apt: DetailedAppointment) => {
-    showToast(`Reschedule requested for ${apt.patientName}. Slot picker opened.`);
-    onOpenAdjustSchedule();
+  const handleOpenReschedule = (apt: DetailedAppointment) => {
+    setSelectedAppointmentForReschedule(apt);
   };
 
-  const handleCancelAppointment = (aptId: string, name: string) => {
+  const handleOpenCancel = (apt: DetailedAppointment) => {
+    setSelectedAppointmentForCancel(apt);
+  };
+
+  const handleConfirmCancel = (aptId: string, reason: string) => {
+    const apt = appointments.find((a) => a.id === aptId);
+    const name = apt?.patientName || 'Patient';
     setAppointments((prev) =>
       prev.map((a) =>
         a.id === aptId
-          ? { ...a, category: 'cancelled' as const, countdown: 'Cancelled just now', statusBadge: 'Cancelled' }
+          ? {
+              ...a,
+              category: 'cancelled' as const,
+              countdown: `Cancelled: ${reason}`,
+              statusBadge: 'Cancelled',
+            }
           : a
       )
     );
-    showToast(`Appointment for ${name} has been cancelled.`);
+    showToast(`Appointment for ${name} cancelled (${reason})`);
+  };
+
+  const handleConfirmReschedule = (
+    aptId: string,
+    newDate: string,
+    newTime: string,
+    reason?: string
+  ) => {
+    const apt = appointments.find((a) => a.id === aptId);
+    const name = apt?.patientName || 'Patient';
+    setAppointments((prev) =>
+      prev.map((a) =>
+        a.id === aptId
+          ? {
+              ...a,
+              time: newTime,
+              countdown: `Rescheduled to ${newTime}`,
+              statusBadge: 'Rescheduled',
+            }
+          : a
+      )
+    );
+    const noteText = reason ? ` • Reason: ${reason}` : '';
+    showToast(`Appointment for ${name} rescheduled to ${newDate} at ${newTime}${noteText}`);
   };
 
   // Helper for Clinical Reason Icons
@@ -673,7 +715,7 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
                               <span>Start</span>
                             </button>
                             <button
-                              onClick={() => handleReschedule(apt)}
+                              onClick={() => handleOpenReschedule(apt)}
                               className="flex items-center gap-1 px-3 py-1.5 bg-slate-100 hover:bg-slate-200/80 text-slate-700 rounded-xl text-xs font-medium transition-colors"
                               title="Reschedule Visit"
                             >
@@ -681,7 +723,7 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
                               <span>Reschedule</span>
                             </button>
                             <button
-                              onClick={() => handleCancelAppointment(apt.id, apt.patientName)}
+                              onClick={() => handleOpenCancel(apt)}
                               className="flex items-center gap-1 px-2.5 py-1.5 text-rose-600 hover:bg-rose-50 rounded-xl text-xs font-medium transition-colors"
                               title="Cancel Appointment"
                             >
@@ -711,6 +753,26 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Interactive Cancel Modal */}
+      <CancelAppointmentModal
+        isOpen={!!selectedAppointmentForCancel}
+        onClose={() => setSelectedAppointmentForCancel(null)}
+        appointment={selectedAppointmentForCancel}
+        onConfirmCancel={handleConfirmCancel}
+        onRescheduleInstead={(apt) => {
+          setSelectedAppointmentForCancel(null);
+          setSelectedAppointmentForReschedule(apt);
+        }}
+      />
+
+      {/* Interactive Reschedule Modal with Manual Time & Reason Entry */}
+      <RescheduleAppointmentModal
+        isOpen={!!selectedAppointmentForReschedule}
+        onClose={() => setSelectedAppointmentForReschedule(null)}
+        appointment={selectedAppointmentForReschedule}
+        onConfirmReschedule={handleConfirmReschedule}
+      />
 
       {/* Floating Toast */}
       {toastMessage && (
