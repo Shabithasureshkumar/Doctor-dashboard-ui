@@ -381,7 +381,6 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
               currentStep={currentStep}
               doctorGender={doctorGender}
               onToggleGender={setDoctorGender}
-              doctorName={formData.lastName}
             />
           </div>
 
