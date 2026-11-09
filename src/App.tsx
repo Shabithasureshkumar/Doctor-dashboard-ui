@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { DoctorRegistrationFlow, DoctorRegistrationData } from './components/registration/DoctorRegistrationFlow';
 import { DoctorDashboardView } from './components/dashboard/DoctorDashboardView';
 import { CalendarView } from './components/calendar/CalendarView';
 import { VirtualVisitModal } from './components/modals/VirtualVisitModal';
@@ -21,9 +20,8 @@ import { Appointment } from './types';
 import { CALENDAR_APPOINTMENTS } from './mockData';
 
 export function App() {
-  // Navigation View State: 'registration' | 'dashboard' | 'calendar'
-  const [currentView, setCurrentView] = useState<'registration' | 'dashboard' | 'calendar'>('registration');
-  const [_registeredDoctor, setRegisteredDoctor] = useState<DoctorRegistrationData | null>(null);
+  // Navigation View State: 'dashboard' | 'calendar'
+  const [currentView, setCurrentView] = useState<'dashboard' | 'calendar'>('dashboard');
   const [appointments, setAppointments] = useState<Appointment[]>(CALENDAR_APPOINTMENTS);
 
   // Selected Patient for Contextual Modals
@@ -95,16 +93,7 @@ export function App() {
   return (
     <div className="min-h-screen bg-[#F8F9FE] text-slate-800 antialiased selection:bg-purple-200 selection:text-purple-900">
       {/* Active Screen View */}
-      {currentView === 'registration' ? (
-        <DoctorRegistrationFlow
-          onComplete={(data) => {
-            setRegisteredDoctor(data);
-            showToast(`Welcome Dr. ${data.lastName || 'Doctor'}! Registration complete.`);
-            setCurrentView('dashboard');
-          }}
-          onSkip={() => setCurrentView('dashboard')}
-        />
-      ) : currentView === 'dashboard' ? (
+      {currentView === 'dashboard' ? (
         <DoctorDashboardView
           onNavigateToCalendar={() => setCurrentView('calendar')}
           onOpenVirtualVisit={handleOpenVirtualVisit}
