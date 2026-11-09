@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { DoctorDashboardView } from './components/dashboard/DoctorDashboardView';
 import { CalendarView } from './components/calendar/CalendarView';
+import { BillingView } from './components/billing/BillingView';
 import { VirtualVisitModal } from './components/modals/VirtualVisitModal';
 import { SearchPatientModal } from './components/modals/SearchPatientModal';
 import { NewPrescriptionModal } from './components/modals/NewPrescriptionModal';
@@ -20,8 +21,8 @@ import { Appointment } from './types';
 import { CALENDAR_APPOINTMENTS } from './mockData';
 
 export function App() {
-  // Navigation View State: 'dashboard' | 'calendar'
-  const [currentView, setCurrentView] = useState<'dashboard' | 'calendar'>('dashboard');
+  // Navigation View State: 'dashboard' | 'calendar' | 'billing'
+  const [currentView, setCurrentView] = useState<'dashboard' | 'calendar' | 'billing'>('dashboard');
   const [appointments, setAppointments] = useState<Appointment[]>(CALENDAR_APPOINTMENTS);
 
   // Selected Patient for Contextual Modals
@@ -96,6 +97,7 @@ export function App() {
       {currentView === 'dashboard' ? (
         <DoctorDashboardView
           onNavigateToCalendar={() => setCurrentView('calendar')}
+          onNavigateToBilling={() => setCurrentView('billing')}
           onOpenVirtualVisit={handleOpenVirtualVisit}
           onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
           onOpenNewPrescription={handleOpenNewPrescription}
@@ -108,7 +110,7 @@ export function App() {
           onOpenExport={() => setIsExportOpen(true)}
           onOpenAskAva={() => setIsAskAvaOpen(true)}
         />
-      ) : (
+      ) : currentView === 'calendar' ? (
         <CalendarView
           onBackToDashboard={() => setCurrentView('dashboard')}
           onNewAppointment={handleOpenNewAppointment}
@@ -119,6 +121,11 @@ export function App() {
           onRefillRequest={() => setIsRequestRefillOpen(true)}
           onOpenAskAva={() => setIsAskAvaOpen(true)}
           appointments={appointments}
+        />
+      ) : (
+        <BillingView
+          onBackToDashboard={() => setCurrentView('dashboard')}
+          onNavigateToCalendar={() => setCurrentView('calendar')}
         />
       )}
 
