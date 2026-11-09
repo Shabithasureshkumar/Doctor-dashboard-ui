@@ -42,6 +42,7 @@ interface AppointmentListViewProps {
   onOpenPatientChart: (patientName: string) => void;
   onOpenNewAppointment: () => void;
   onNavigateToBilling: () => void;
+  onNavigateToPatients?: () => void;
   onNavigateToCalendarGrid: () => void;
   onOpenSearchPatient: () => void;
   onOpenFullBriefing: () => void;
@@ -56,6 +57,7 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
   onOpenPatientChart,
   onOpenNewAppointment,
   onNavigateToBilling,
+  onNavigateToPatients,
   onNavigateToCalendarGrid,
   onOpenSearchPatient,
   onOpenFullBriefing,
@@ -258,7 +260,10 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
   const handleTabChange = (tab: TabType) => {
     if (tab === 'Dashboard') onBackToDashboard();
     else if (tab === 'Billing') onNavigateToBilling();
-    else if (tab === 'Patient') onOpenSearchPatient();
+    else if (tab === 'Patient') {
+      if (onNavigateToPatients) onNavigateToPatients();
+      else onOpenSearchPatient();
+    }
     else if (tab === 'Reports') onOpenFullBriefing();
     else if (tab === 'Chats') onOpenAskAva();
   };
