@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DoctorDuolingoCompanionGuide } from './DoctorDuolingoCompanionGuide';
+import { MednevoAIDoctorPanel } from './MednevoAIDoctorPanel';
 import {
   Stethoscope,
   Building2,
@@ -93,6 +93,7 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
   onSkip,
 }) => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [doctorGender, setDoctorGender] = useState<'female' | 'male'>('female');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('SecureDoc#2026');
@@ -371,11 +372,21 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
         </div>
       </header>
 
-      {/* ──────────────── Main Content Canvas (Full Viewport Width with Duolingo AI Doctor Guide on the Side) ──────────────── */}
-      <main className="w-full flex-1 px-4 sm:px-6 lg:px-10 xl:px-12 py-6 sm:py-8 flex flex-col justify-center">
-        <div className="w-full flex flex-col xl:flex-row items-start gap-8">
-          {/* Main Registration Steps Canvas */}
-          <div className="flex-1 w-full min-w-0">
+      {/* ──────────────── Main Content Canvas: Left AI Doctor Panel + Right Registration Form ──────────────── */}
+      <main className="w-full flex-1 px-4 sm:px-6 lg:px-8 xl:px-12 py-6">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-10 items-start">
+          {/* ────────────── LEFT SIDE: AI Doctor Character Panel (Character Sheet Reference) ────────────── */}
+          <div className="lg:col-span-5 xl:col-span-4 lg:sticky lg:top-24 bg-gradient-to-br from-white via-purple-50/50 to-purple-100/40 rounded-3xl border-2 border-purple-200/90 p-5 sm:p-6 shadow-[0_16px_50px_rgba(154,106,251,0.16)] flex flex-col justify-between">
+            <MednevoAIDoctorPanel
+              currentStep={currentStep}
+              doctorGender={doctorGender}
+              onToggleGender={setDoctorGender}
+              doctorName={formData.lastName}
+            />
+          </div>
+
+          {/* ────────────── RIGHT SIDE: Registration Form Panel ────────────── */}
+          <div className="lg:col-span-7 xl:col-span-8 w-full min-w-0 bg-white/80 backdrop-blur-md rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-card">
             {/* SCREEN 01: Choose Your Professional Journey */}
             {currentStep === 1 && (
               <div className="space-y-8 animate-in fade-in duration-200">
@@ -2002,11 +2013,6 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
             </div>
           </div>
         )}
-          </div>
-
-          {/* Sticky Side AI Doctor Companion Guide (Duolingo-style) */}
-          <div className="w-full xl:w-[350px] 2xl:w-[390px] xl:sticky xl:top-24 flex-shrink-0 self-start">
-            <DoctorDuolingoCompanionGuide step={currentStep} doctorName={formData.lastName} />
           </div>
         </div>
       </main>
