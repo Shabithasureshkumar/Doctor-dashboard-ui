@@ -44,9 +44,9 @@ export const BillingServicesTab: React.FC<BillingServicesTabProps> = ({
   const activeCount = useMemo(() => services.filter((s) => s.isActive).length, [services]);
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
+    <div className="w-full flex-1 flex flex-col space-y-5 animate-in fade-in duration-200">
       {/* 1. Summary Cards Strip (matches top stat row in Screen 6) */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full flex-shrink-0">
         <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-purple-100 text-[#5C24FF] flex items-center justify-center flex-shrink-0">
             <Stethoscope className="w-6 h-6" />
@@ -94,7 +94,7 @@ export const BillingServicesTab: React.FC<BillingServicesTabProps> = ({
       </div>
 
       {/* 2. Filter Bar & Add Service Action */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 sm:p-5">
+      <div className="w-full bg-white rounded-2xl border border-slate-100 shadow-sm p-4 sm:p-5 flex-shrink-0">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           {/* Category Tabs */}
           <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
@@ -141,7 +141,7 @@ export const BillingServicesTab: React.FC<BillingServicesTabProps> = ({
       </div>
 
       {/* 3. Services Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 w-full flex-1">
         {filteredServices.map((service) => (
           <div
             key={service.id}

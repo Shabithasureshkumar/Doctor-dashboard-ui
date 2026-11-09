@@ -36,9 +36,9 @@ export const BillingOverviewTab: React.FC<BillingOverviewTabProps> = ({
   const recentInvoices = invoices.slice(0, 5);
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
+    <div className="w-full flex-1 flex flex-col space-y-5 animate-in fade-in duration-200">
       {/* 1. Action Required Banner (matches top warning banner in reference Screen 1) */}
-      <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200/90 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+      <div className="w-full bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200/90 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm flex-shrink-0">
         <div className="flex items-start sm:items-center gap-3.5">
           <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center flex-shrink-0">
             <AlertTriangle className="w-5 h-5 text-amber-600" />
@@ -166,7 +166,7 @@ export const BillingOverviewTab: React.FC<BillingOverviewTabProps> = ({
       </div>
 
       {/* 3. Recent Invoices Section */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
+      <div className="w-full flex-1 flex flex-col bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-slate-100 gap-3">
           <div>
             <h3 className="font-sora font-bold text-base sm:text-lg text-slate-900">

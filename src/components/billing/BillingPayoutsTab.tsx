@@ -28,11 +28,11 @@ export const BillingPayoutsTab: React.FC<BillingPayoutsTabProps> = ({
   );
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
+    <div className="w-full flex-1 flex flex-col space-y-5 animate-in fade-in duration-200">
       {/* 1. Top Section: Sleek Mednevo Clinician Card + Payout Analytics (matches Screen 5) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        {/* Left: Premium Mednevo Clinician Card (5 cols) */}
-        <div className="lg:col-span-5 bg-gradient-to-br from-[#8C52FF] via-[#6828FA] to-[#4A11D8] text-white rounded-3xl p-6 sm:p-7 shadow-[0_12px_32px_rgba(104,40,250,0.35)] relative overflow-hidden flex flex-col justify-between min-h-[260px]">
+      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-5 flex-shrink-0">
+        {/* Left: Premium Mednevo Clinician Card */}
+        <div className="lg:col-span-5 2xl:col-span-4 bg-gradient-to-br from-[#8C52FF] via-[#6828FA] to-[#4A11D8] text-white rounded-3xl p-6 sm:p-7 shadow-[0_12px_32px_rgba(104,40,250,0.35)] relative overflow-hidden flex flex-col justify-between min-h-[260px]">
           {/* Subtle decorative glowing circles */}
           <div className="absolute -right-12 -top-12 w-48 h-48 rounded-full bg-white/10 blur-2xl pointer-events-none" />
           <div className="absolute -left-12 -bottom-12 w-48 h-48 rounded-full bg-black/15 blur-2xl pointer-events-none" />
@@ -90,8 +90,8 @@ export const BillingPayoutsTab: React.FC<BillingPayoutsTabProps> = ({
           </div>
         </div>
 
-        {/* Right: Goals & Financial Progress (7 cols) */}
-        <div className="lg:col-span-7 bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-7 flex flex-col justify-between">
+        {/* Right: Goals & Financial Progress */}
+        <div className="lg:col-span-7 2xl:col-span-8 bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-7 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
@@ -177,8 +177,8 @@ export const BillingPayoutsTab: React.FC<BillingPayoutsTabProps> = ({
       </div>
 
       {/* 2. Payout Transfer History Table */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden p-5">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-slate-100 gap-3">
+      <div className="w-full flex-1 flex flex-col bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden p-5">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-slate-100 gap-3 flex-shrink-0">
           <div>
             <h3 className="font-sora font-bold text-base sm:text-lg text-slate-900">
               Payout & Transfer History
@@ -197,7 +197,7 @@ export const BillingPayoutsTab: React.FC<BillingPayoutsTabProps> = ({
           </button>
         </div>
 
-        <div className="overflow-x-auto mt-3">
+        <div className="w-full flex-1 overflow-x-auto mt-3">
           <table className="w-full text-left text-xs sm:text-sm">
             <thead className="text-slate-400 font-inter text-xs border-b border-slate-100 uppercase tracking-wider">
               <tr>

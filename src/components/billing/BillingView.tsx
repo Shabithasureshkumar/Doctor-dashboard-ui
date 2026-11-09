@@ -182,154 +182,152 @@ export const BillingView: React.FC<BillingViewProps> = ({
   ];
 
   return (
-    <div className="min-h-screen bg-[#F8F9FE] text-slate-800 p-4 sm:p-6 lg:p-8 font-inter">
-      <div className="max-w-[1400px] mx-auto space-y-6">
-        {/* Top Navigation Header */}
-        <header className="w-full bg-white rounded-2xl p-4 sm:p-5 border border-slate-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-          {/* Left: Brand + Back Button + Title */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={onBackToDashboard}
-              className="w-10 h-10 rounded-xl bg-slate-100 hover:bg-purple-50 hover:text-[#5C24FF] text-slate-600 flex items-center justify-center transition-colors flex-shrink-0"
-              title="Back to Dashboard"
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </button>
+    <div className="w-full min-h-screen bg-[#F8F9FE] text-slate-800 px-4 sm:px-6 lg:px-8 2xl:px-10 py-3 sm:py-5 space-y-4 sm:space-y-5 flex flex-col font-inter">
+      {/* Top Navigation Header */}
+      <header className="w-full bg-white rounded-2xl p-4 sm:p-5 border border-slate-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4 flex-shrink-0">
+        {/* Left: Brand + Back Button + Title */}
+        <div className="flex items-center gap-3">
+          <button
+            onClick={onBackToDashboard}
+            className="w-10 h-10 rounded-xl bg-slate-100 hover:bg-purple-50 hover:text-[#5C24FF] text-slate-600 flex items-center justify-center transition-colors flex-shrink-0"
+            title="Back to Dashboard"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
 
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#9A6AFB] to-[#5C24FF] text-white flex items-center justify-center flex-shrink-0 shadow-[0_2px_8px_rgba(154,106,251,0.3)]">
-              <CreditCard className="w-5 h-5" />
-            </div>
-
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="font-sora font-bold text-lg sm:text-xl text-slate-900 leading-tight">
-                  Billing & Financial Management
-                </h1>
-                <span className="hidden sm:inline-flex text-[10px] font-bold uppercase tracking-wider bg-purple-100 text-[#5C24FF] px-2 py-0.5 rounded-full">
-                  Doctor Portal
-                </span>
-              </div>
-              <p className="text-xs text-slate-500 mt-0.5">
-                Claims clearinghouse, direct patient invoices, instant payouts & clinical fee schedule
-              </p>
-            </div>
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#9A6AFB] to-[#5C24FF] text-white flex items-center justify-center flex-shrink-0 shadow-[0_2px_8px_rgba(154,106,251,0.3)]">
+            <CreditCard className="w-5 h-5" />
           </div>
 
-          {/* Right: Quick actions & Doctor profile */}
-          <div className="flex items-center gap-3 justify-end">
-            <button
-              onClick={() => setIsCreateInvoiceOpen(true)}
-              className="flex items-center gap-1.5 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white px-4 py-2.5 rounded-xl font-sora font-semibold text-xs sm:text-sm shadow-[0_4px_14px_rgba(154,106,251,0.35)] hover:opacity-95 transition-all active:scale-95 whitespace-nowrap"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Create Invoice</span>
-            </button>
-
-            <div className="flex items-center gap-2 pl-3 border-l border-slate-200">
-              <img
-                src={CURRENT_DOCTOR.avatarUrl}
-                alt={CURRENT_DOCTOR.name}
-                className="w-9 h-9 rounded-full object-cover border border-slate-200"
-              />
-              <div className="hidden lg:block text-left">
-                <div className="text-xs font-bold text-slate-800">{CURRENT_DOCTOR.name}</div>
-                <div className="text-[11px] text-slate-400">{CURRENT_DOCTOR.role}</div>
-              </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h1 className="font-sora font-bold text-lg sm:text-xl text-slate-900 leading-tight">
+                Billing & Financial Management
+              </h1>
+              <span className="hidden sm:inline-flex text-[10px] font-bold uppercase tracking-wider bg-purple-100 text-[#5C24FF] px-2 py-0.5 rounded-full">
+                Doctor Portal
+              </span>
             </div>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Claims clearinghouse, direct patient invoices, instant payouts & clinical fee schedule
+            </p>
           </div>
-        </header>
-
-        {/* Sub-Navigation Tabs Bar (The 6 Screens in the user's reference) */}
-        <div className="w-full bg-white rounded-2xl p-2 border border-slate-100 shadow-sm overflow-x-auto scrollbar-none">
-          <nav className="flex items-center gap-1 sm:gap-2 min-w-max">
-            {subTabs.map((tab) => {
-              const isActive = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-sora text-xs sm:text-sm font-semibold transition-all ${
-                    isActive
-                      ? 'bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white shadow-[0_4px_12px_rgba(154,106,251,0.3)]'
-                      : 'text-slate-600 hover:text-[#5C24FF] hover:bg-purple-50/60'
-                  }`}
-                >
-                  {tab.icon}
-                  <span>{tab.label}</span>
-                </button>
-              );
-            })}
-          </nav>
         </div>
 
-        {/* Tab Subview Content */}
-        <main>
-          {activeTab === 'overview' && (
-            <BillingOverviewTab
-              kpis={kpis}
-              invoices={invoices}
-              onNavigateTab={(tab) => setActiveTab(tab)}
-              onOpenCreateInvoice={() => setIsCreateInvoiceOpen(true)}
-              onOpenInstantPayout={() => setIsInstantPayoutOpen(true)}
-              onSelectInvoice={(inv) => setSelectedInvoice(inv)}
-              onSendReminder={handleSendReminder}
-            />
-          )}
+        {/* Right: Quick actions & Doctor profile */}
+        <div className="flex items-center gap-3 justify-end">
+          <button
+            onClick={() => setIsCreateInvoiceOpen(true)}
+            className="flex items-center gap-1.5 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white px-4 py-2.5 rounded-xl font-sora font-semibold text-xs sm:text-sm shadow-[0_4px_14px_rgba(154,106,251,0.35)] hover:opacity-95 transition-all active:scale-95 whitespace-nowrap"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Create Invoice</span>
+          </button>
 
-          {activeTab === 'invoices' && (
-            <BillingInvoicesTab
-              invoices={invoices}
-              onOpenCreateInvoice={() => setIsCreateInvoiceOpen(true)}
-              onSelectInvoice={(inv) => setSelectedInvoice(inv)}
-              onSendReminder={handleSendReminder}
-              onDownloadInvoice={handleDownloadInvoice}
+          <div className="flex items-center gap-2 pl-3 border-l border-slate-200">
+            <img
+              src={CURRENT_DOCTOR.avatarUrl}
+              alt={CURRENT_DOCTOR.name}
+              className="w-9 h-9 rounded-full object-cover border border-slate-200"
             />
-          )}
+            <div className="hidden lg:block text-left">
+              <div className="text-xs font-bold text-slate-800">{CURRENT_DOCTOR.name}</div>
+              <div className="text-[11px] text-slate-400">{CURRENT_DOCTOR.role}</div>
+            </div>
+          </div>
+        </div>
+      </header>
 
-          {activeTab === 'payments' && (
-            <BillingPaymentsTab
-              transactions={transactions}
-              onViewReceipt={(txn) => showToast(`Receipt for ${txn.transactionRef} downloaded`)}
-              onExportLedger={() => showToast('Exporting transaction ledger CSV...')}
-            />
-          )}
-
-          {activeTab === 'claims' && (
-            <BillingClaimsTab
-              claims={claims}
-              onOpenSubmitClaim={() => setIsSubmitClaimOpen(true)}
-              onResubmitClaim={handleResubmitClaim}
-              onViewClaimDetails={(c) =>
-                showToast(`Viewing CMS-1500 form for claim ${c.claimNumber}`)
-              }
-            />
-          )}
-
-          {activeTab === 'payouts' && (
-            <BillingPayoutsTab
-              kpis={kpis}
-              payouts={payouts}
-              onOpenInstantPayout={() => setIsInstantPayoutOpen(true)}
-              onDownloadTaxStatement={() => showToast('Generating 1099-K tax statement PDF...')}
-            />
-          )}
-
-          {activeTab === 'services' && (
-            <BillingServicesTab
-              services={services}
-              onOpenAddService={() => {
-                setServiceToEdit(null);
-                setIsAddServiceOpen(true);
-              }}
-              onEditService={(srv) => {
-                setServiceToEdit(srv);
-                setIsAddServiceOpen(true);
-              }}
-              onToggleActive={handleToggleServiceActive}
-            />
-          )}
-        </main>
+      {/* Sub-Navigation Tabs Bar (The 6 Screens in the user's reference) */}
+      <div className="w-full bg-white rounded-2xl p-2 border border-slate-100 shadow-sm overflow-x-auto scrollbar-none flex-shrink-0">
+        <nav className="flex items-center gap-1 sm:gap-2 min-w-max">
+          {subTabs.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-sora text-xs sm:text-sm font-semibold transition-all ${
+                  isActive
+                    ? 'bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white shadow-[0_4px_12px_rgba(154,106,251,0.3)]'
+                    : 'text-slate-600 hover:text-[#5C24FF] hover:bg-purple-50/60'
+                }`}
+              >
+                {tab.icon}
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </nav>
       </div>
+
+      {/* Tab Subview Content - Expands Full Width & Height */}
+      <main className="w-full flex-1 flex flex-col">
+        {activeTab === 'overview' && (
+          <BillingOverviewTab
+            kpis={kpis}
+            invoices={invoices}
+            onNavigateTab={(tab) => setActiveTab(tab)}
+            onOpenCreateInvoice={() => setIsCreateInvoiceOpen(true)}
+            onOpenInstantPayout={() => setIsInstantPayoutOpen(true)}
+            onSelectInvoice={(inv) => setSelectedInvoice(inv)}
+            onSendReminder={handleSendReminder}
+          />
+        )}
+
+        {activeTab === 'invoices' && (
+          <BillingInvoicesTab
+            invoices={invoices}
+            onOpenCreateInvoice={() => setIsCreateInvoiceOpen(true)}
+            onSelectInvoice={(inv) => setSelectedInvoice(inv)}
+            onSendReminder={handleSendReminder}
+            onDownloadInvoice={handleDownloadInvoice}
+          />
+        )}
+
+        {activeTab === 'payments' && (
+          <BillingPaymentsTab
+            transactions={transactions}
+            onViewReceipt={(txn) => showToast(`Receipt for ${txn.transactionRef} downloaded`)}
+            onExportLedger={() => showToast('Exporting transaction ledger CSV...')}
+          />
+        )}
+
+        {activeTab === 'claims' && (
+          <BillingClaimsTab
+            claims={claims}
+            onOpenSubmitClaim={() => setIsSubmitClaimOpen(true)}
+            onResubmitClaim={handleResubmitClaim}
+            onViewClaimDetails={(c) =>
+              showToast(`Viewing CMS-1500 form for claim ${c.claimNumber}`)
+            }
+          />
+        )}
+
+        {activeTab === 'payouts' && (
+          <BillingPayoutsTab
+            kpis={kpis}
+            payouts={payouts}
+            onOpenInstantPayout={() => setIsInstantPayoutOpen(true)}
+            onDownloadTaxStatement={() => showToast('Generating 1099-K tax statement PDF...')}
+          />
+        )}
+
+        {activeTab === 'services' && (
+          <BillingServicesTab
+            services={services}
+            onOpenAddService={() => {
+              setServiceToEdit(null);
+              setIsAddServiceOpen(true);
+            }}
+            onEditService={(srv) => {
+              setServiceToEdit(srv);
+              setIsAddServiceOpen(true);
+            }}
+            onToggleActive={handleToggleServiceActive}
+          />
+        )}
+      </main>
 
       {/* Interactive Modals */}
       <CreateInvoiceModal

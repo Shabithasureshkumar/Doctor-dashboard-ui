@@ -70,9 +70,9 @@ export const BillingInvoicesTab: React.FC<BillingInvoicesTabProps> = ({
   };
 
   return (
-    <div className="space-y-5 animate-in fade-in duration-200">
+    <div className="w-full flex-1 flex flex-col space-y-5 animate-in fade-in duration-200">
       {/* 1. Header with Filters & Search */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 sm:p-5">
+      <div className="w-full bg-white rounded-2xl border border-slate-100 shadow-sm p-4 sm:p-5 flex-shrink-0">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           {/* Status Filter Tabs */}
           <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
@@ -150,8 +150,8 @@ export const BillingInvoicesTab: React.FC<BillingInvoicesTabProps> = ({
       </div>
 
       {/* 2. Invoices Table */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
+      <div className="w-full flex-1 flex flex-col bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+        <div className="w-full flex-1 overflow-x-auto">
           <table className="w-full text-left text-xs sm:text-sm">
             <thead className="bg-slate-50/80 border-b border-slate-100 text-slate-400 uppercase tracking-wider text-[11px] font-inter">
               <tr>
