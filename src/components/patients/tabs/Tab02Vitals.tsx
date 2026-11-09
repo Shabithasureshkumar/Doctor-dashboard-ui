@@ -1,19 +1,16 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import {
   Activity,
-  HeartPulse,
   Heart,
   Droplets,
   Thermometer,
-  Scale,
-  Ruler,
-  Wind,
+  Zap,
+  Flag,
+  Moon,
   Plus,
   Download,
   X,
   Edit2,
-  ArrowUpRight,
-  ArrowDownRight,
 } from 'lucide-react';
 import { VitalMeasurement } from '../../../types/clinical';
 import { MOCK_VITALS_HISTORY } from '../../../mockData/clinicalDetailsData';
@@ -45,7 +42,6 @@ export const Tab02Vitals: React.FC<Tab02VitalsProps> = ({ patient, onToast }) =>
 
   // Latest reading
   const current = vitalsList[0];
-  const previous = vitalsList[1] || current;
 
   const handleAddVital = (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,12 +89,6 @@ export const Tab02Vitals: React.FC<Tab02VitalsProps> = ({ patient, onToast }) =>
   const handleExportCSV = () => {
     onToast(`Exporting ${vitalsList.length} vital records to CSV format...`);
   };
-
-  const bpComparison = useMemo(() => {
-    const diffSys = current.systolic - previous.systolic;
-    const diffDia = current.diastolic - previous.diastolic;
-    return { diffSys, diffDia };
-  }, [current, previous]);
 
   return (
     <div className="space-y-5 animate-in fade-in duration-200">
@@ -154,170 +144,446 @@ export const Tab02Vitals: React.FC<Tab02VitalsProps> = ({ patient, onToast }) =>
         </div>
       </div>
 
-      {/* 8 Primary Vitals Metric Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 sm:gap-4">
-        {/* 1. Blood Pressure */}
-        <div className="bg-white rounded-3xl p-4 sm:p-5 border border-slate-100 shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-slate-500 text-xs">
-            <span className="font-medium">Blood Pressure</span>
-            <div className="w-8 h-8 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center">
-              <HeartPulse className="w-4 h-4" />
+      {/* 8 Primary Vitals Metric Cards (Matching Screen 2 Visual Design) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+        {/* Card 1: Heart Rate */}
+        <div className="bg-white rounded-[24px] p-4 sm:p-4.5 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] hover:border-purple-200 transition-all flex flex-col justify-between group">
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Heart className="w-4 h-4 text-rose-500 fill-rose-50 flex-shrink-0" />
+                <h4 className="font-sora font-bold text-slate-900 text-sm">Heart Rate</h4>
+              </div>
+              <span className="bg-[#EBFDF5] text-[#059669] text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
+                Normal
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between text-[11px] text-slate-500">
+              <span className="truncate max-w-[130px] sm:max-w-[140px]">Autonomic rhythm calm &amp; balanced</span>
+              <span className="bg-[#F3EEFF] text-[#7C3AED] text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">
+                Norm 60–100
+              </span>
+            </div>
+
+            {/* ECG Waveform Line */}
+            <div className="w-full h-4 my-1 flex items-center">
+              <svg className="w-full h-3.5" viewBox="0 0 200 14" fill="none">
+                <path
+                  d="M0 7 H80 L84 3 L88 11 L92 1 L96 13 L100 7 H200"
+                  stroke="#F43F5E"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </div>
           </div>
-          <div className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900">
-            {current.systolic} / {current.diastolic}
-            <span className="text-xs font-normal text-slate-400 ml-1">mmHg</span>
-          </div>
-          <div className="flex items-center justify-between text-[11px]">
-            <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">
-              ● {current.status}
-            </span>
-            <span className="text-slate-500 flex items-center">
-              {bpComparison.diffSys <= 0 ? (
-                <ArrowDownRight className="w-3 h-3 text-emerald-600 inline" />
-              ) : (
-                <ArrowUpRight className="w-3 h-3 text-rose-600 inline" />
-              )}
-              {Math.abs(bpComparison.diffSys)} mmHg vs prev
-            </span>
+
+          <div className="flex items-end justify-between pt-1">
+            <div>
+              <div className="flex items-baseline">
+                <span className="font-sora font-extrabold text-2xl sm:text-[26px] text-slate-900 tracking-tight">
+                  {current.heartRate || 72}
+                </span>
+                <span className="text-xs font-semibold text-slate-400 ml-1.5 uppercase">BPM</span>
+              </div>
+              <div className="text-[11px] font-semibold text-[#D97706] flex items-center gap-1 mt-0.5">
+                <span>▲</span>
+                <span>+4% from last week</span>
+              </div>
+            </div>
+
+            <div className="flex-shrink-0 -mb-1 -mr-1">
+              <img
+                src="/vitals/device_heart_rate.png"
+                alt="Heart Rate"
+                className="w-14 h-14 sm:w-16 sm:h-16 object-contain pointer-events-none select-none transition-transform duration-200 group-hover:scale-105"
+              />
+            </div>
           </div>
         </div>
 
-        {/* 2. Heart Rate */}
-        <div className="bg-white rounded-3xl p-4 sm:p-5 border border-slate-100 shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-slate-500 text-xs">
-            <span className="font-medium">Heart Rate</span>
-            <div className="w-8 h-8 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center">
-              <Heart className="w-4 h-4" />
+        {/* Card 2: Blood Pressure */}
+        <div className="bg-white rounded-[24px] p-4 sm:p-4.5 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] hover:border-purple-200 transition-all flex flex-col justify-between group">
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Zap className="w-4 h-4 text-amber-500 fill-amber-50 flex-shrink-0" />
+                <h4 className="font-sora font-bold text-slate-900 text-sm">Blood Pressure</h4>
+              </div>
+              <span className="bg-[#FEF6E7] text-[#D97706] text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
+                Borderline
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between text-[11px] text-slate-500">
+              <span className="truncate max-w-[130px] sm:max-w-[140px]">Vascular tone steady • Peripheral flow smoo...</span>
+              <span className="bg-[#F3EEFF] text-[#7C3AED] text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">
+                Target &lt;120/80
+              </span>
+            </div>
+
+            {/* Amber Wave Line */}
+            <div className="w-full h-4 my-1 flex items-center">
+              <svg className="w-full h-3.5" viewBox="0 0 200 14" fill="none">
+                <path
+                  d="M0 7 Q25 2, 50 7 T100 7 T150 7 T200 7"
+                  stroke="#F59E0B"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                />
+              </svg>
             </div>
           </div>
-          <div className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900">
-            {current.heartRate}
-            <span className="text-xs font-normal text-slate-400 ml-1">bpm</span>
-          </div>
-          <div className="flex items-center justify-between text-[11px]">
-            <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">
-              ● Regular Sinus
-            </span>
-            <span className="text-slate-400">Ref: 60 - 100</span>
+
+          <div className="flex items-end justify-between pt-1">
+            <div>
+              <div className="flex items-baseline">
+                <span className="font-sora font-extrabold text-2xl sm:text-[26px] text-slate-900 tracking-tight">
+                  {current.systolic || 132}/{current.diastolic || 86}
+                </span>
+                <span className="text-xs font-semibold text-slate-400 ml-1.5">mmHg</span>
+              </div>
+              <div className="text-[11px] font-semibold text-[#D97706] flex items-center gap-1 mt-0.5">
+                <span>▲</span>
+                <span>+2% from last week</span>
+              </div>
+            </div>
+
+            <div className="flex-shrink-0 -mb-1 -mr-1">
+              <img
+                src="/vitals/device_blood_pressure.png"
+                alt="Blood Pressure"
+                className="w-14 h-14 sm:w-16 sm:h-16 object-contain pointer-events-none select-none transition-transform duration-200 group-hover:scale-105"
+              />
+            </div>
           </div>
         </div>
 
-        {/* 3. SpO2 */}
-        <div className="bg-white rounded-3xl p-4 sm:p-5 border border-slate-100 shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-slate-500 text-xs">
-            <span className="font-medium">SpO₂ Oxygen</span>
-            <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
-              <Droplets className="w-4 h-4" />
+        {/* Card 3: Blood Oxygen */}
+        <div className="bg-white rounded-[24px] p-4 sm:p-4.5 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] hover:border-purple-200 transition-all flex flex-col justify-between group">
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Droplets className="w-4 h-4 text-sky-500 fill-sky-50 flex-shrink-0" />
+                <h4 className="font-sora font-bold text-slate-900 text-sm">Blood Oxygen</h4>
+              </div>
+              <span className="bg-[#EBFDF5] text-[#059669] text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
+                Normal
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between text-[11px] text-slate-500">
+              <span className="truncate max-w-[130px] sm:max-w-[140px]">Optimal cellular oxygen perfusion</span>
+              <span className="bg-[#F3EEFF] text-[#7C3AED] text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">
+                Optimal 95–100%
+              </span>
+            </div>
+
+            {/* Blue Gradient Progress Bar */}
+            <div className="w-full h-1.5 my-2.5 bg-slate-100 rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-600"
+                style={{ width: `${current.spo2 || 98}%` }}
+              />
             </div>
           </div>
-          <div className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900">
-            {current.spo2}
-            <span className="text-xs font-normal text-slate-400 ml-1">%</span>
-          </div>
-          <div className="flex items-center justify-between text-[11px]">
-            <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">
-              ● Room Air
-            </span>
-            <span className="text-slate-400">Target &gt; 95%</span>
+
+          <div className="flex items-end justify-between pt-1">
+            <div>
+              <div className="flex items-baseline">
+                <span className="font-sora font-extrabold text-2xl sm:text-[26px] text-slate-900 tracking-tight">
+                  {current.spo2 || 98}
+                </span>
+                <span className="text-xs font-semibold text-slate-400 ml-1.5">%</span>
+              </div>
+              <div className="text-[11px] font-semibold text-[#059669] flex items-center gap-1 mt-0.5">
+                <span>▲</span>
+                <span>+1% from last week</span>
+              </div>
+            </div>
+
+            <div className="flex-shrink-0 -mb-1 -mr-1">
+              <img
+                src="/vitals/device_blood_oxygen.png"
+                alt="Blood Oxygen"
+                className="w-14 h-14 sm:w-16 sm:h-16 object-contain pointer-events-none select-none transition-transform duration-200 group-hover:scale-105"
+              />
+            </div>
           </div>
         </div>
 
-        {/* 4. Temperature */}
-        <div className="bg-white rounded-3xl p-4 sm:p-5 border border-slate-100 shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-slate-500 text-xs">
-            <span className="font-medium">Temperature</span>
-            <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
-              <Thermometer className="w-4 h-4" />
+        {/* Card 4: Temperature */}
+        <div className="bg-white rounded-[24px] p-4 sm:p-4.5 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] hover:border-purple-200 transition-all flex flex-col justify-between group">
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Thermometer className="w-4 h-4 text-purple-500 flex-shrink-0" />
+                <h4 className="font-sora font-bold text-slate-900 text-sm">Temperature</h4>
+              </div>
+              <span className="bg-[#EBFDF5] text-[#059669] text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
+                Normal
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between text-[11px] text-slate-500">
+              <span className="truncate max-w-[130px] sm:max-w-[140px]">Thermal homeostasis in equilibrium</span>
+              <span className="bg-[#F3EEFF] text-[#7C3AED] text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">
+                Norm 97.8–99.1°
+              </span>
+            </div>
+
+            {/* Pink/Purple Gradient Bar */}
+            <div className="w-full h-1.5 my-2.5 bg-slate-100 rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-pink-400 via-rose-400 to-purple-600"
+                style={{ width: '68%' }}
+              />
             </div>
           </div>
-          <div className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900">
-            {current.temperatureF}°F
-            <span className="text-xs font-normal text-slate-400 ml-1">({current.temperatureC}°C)</span>
-          </div>
-          <div className="flex items-center justify-between text-[11px]">
-            <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">
-              ● Afebrile
-            </span>
-            <span className="text-slate-400">Oral probe</span>
+
+          <div className="flex items-end justify-between pt-1">
+            <div>
+              <div className="flex items-baseline">
+                <span className="font-sora font-extrabold text-2xl sm:text-[26px] text-slate-900 tracking-tight">
+                  {current.temperatureF || 98.6}
+                </span>
+                <span className="text-xs font-semibold text-slate-400 ml-1.5">°F</span>
+              </div>
+              <div className="text-[11px] font-semibold text-[#059669] flex items-center gap-1 mt-0.5">
+                <span>▲</span>
+                <span>Stable</span>
+              </div>
+            </div>
+
+            <div className="flex-shrink-0 -mb-1 -mr-1">
+              <img
+                src="/vitals/device_temperature.png"
+                alt="Temperature"
+                className="w-14 h-14 sm:w-16 sm:h-16 object-contain pointer-events-none select-none transition-transform duration-200 group-hover:scale-105"
+              />
+            </div>
           </div>
         </div>
 
-        {/* 5. Weight */}
-        <div className="bg-white rounded-3xl p-4 sm:p-5 border border-slate-100 shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-slate-500 text-xs">
-            <span className="font-medium">Weight</span>
-            <div className="w-8 h-8 rounded-xl bg-purple-50 text-[#5C24FF] flex items-center justify-center">
-              <Scale className="w-4 h-4" />
+        {/* Card 5: Blood Weight */}
+        <div className="bg-white rounded-[24px] p-4 sm:p-4.5 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] hover:border-purple-200 transition-all flex flex-col justify-between group">
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Droplets className="w-4 h-4 text-blue-500 fill-blue-50 flex-shrink-0" />
+                <h4 className="font-sora font-bold text-slate-900 text-sm">Blood Weight</h4>
+              </div>
+              <span className="bg-[#EBFDF5] text-[#059669] text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
+                Normal
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between text-[11px] text-slate-500">
+              <span className="truncate max-w-[130px] sm:max-w-[140px]">Lean mass stable • Hydration tone on target</span>
+              <span className="bg-[#F3EEFF] text-[#7C3AED] text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">
+                Target 180 lbs
+              </span>
+            </div>
+
+            {/* Blue Wave Line */}
+            <div className="w-full h-4 my-1 flex items-center">
+              <svg className="w-full h-3.5" viewBox="0 0 200 14" fill="none">
+                <path
+                  d="M0 7 Q25 3, 50 7 T100 7 T150 7 T200 7"
+                  stroke="#3B82F6"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                />
+              </svg>
             </div>
           </div>
-          <div className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900">
-            {current.weightKg}
-            <span className="text-xs font-normal text-slate-400 ml-1">kg</span>
-          </div>
-          <div className="flex items-center justify-between text-[11px]">
-            <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">
-              ↓ -2.0 kg in 60d
-            </span>
-            <span className="text-slate-400">Goal: 56 - 58 kg</span>
+
+          <div className="flex items-end justify-between pt-1">
+            <div>
+              <div className="flex items-baseline">
+                <span className="font-sora font-extrabold text-2xl sm:text-[26px] text-slate-900 tracking-tight">
+                  185
+                </span>
+                <span className="text-xs font-semibold text-slate-400 ml-1.5">mg/dL</span>
+              </div>
+              <div className="text-[11px] font-semibold text-[#059669] flex items-center gap-1 mt-0.5">
+                <span>▼</span>
+                <span>-3% from last week</span>
+              </div>
+            </div>
+
+            <div className="flex-shrink-0 -mb-1 -mr-1">
+              <img
+                src="/vitals/device_blood_weight.png"
+                alt="Blood Weight"
+                className="w-14 h-14 sm:w-16 sm:h-16 object-contain pointer-events-none select-none transition-transform duration-200 group-hover:scale-105"
+              />
+            </div>
           </div>
         </div>
 
-        {/* 6. Height */}
-        <div className="bg-white rounded-3xl p-4 sm:p-5 border border-slate-100 shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-slate-500 text-xs">
-            <span className="font-medium">Height</span>
-            <div className="w-8 h-8 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center">
-              <Ruler className="w-4 h-4" />
+        {/* Card 6: Blood Glucose */}
+        <div className="bg-white rounded-[24px] p-4 sm:p-4.5 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] hover:border-purple-200 transition-all flex flex-col justify-between group">
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Activity className="w-4 h-4 text-rose-500 flex-shrink-0" />
+                <h4 className="font-sora font-bold text-slate-900 text-sm">Blood Glucose</h4>
+              </div>
+              <span className="bg-[#EBFDF5] text-[#059669] text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
+                Normal
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between text-[11px] text-slate-500">
+              <span className="truncate max-w-[130px] sm:max-w-[140px]">Gentle post-meal glycemic variance</span>
+              <span className="bg-[#F3EEFF] text-[#7C3AED] text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">
+                Norm 70–110
+              </span>
+            </div>
+
+            {/* Magenta Wave Line */}
+            <div className="w-full h-4 my-1 flex items-center">
+              <svg className="w-full h-3.5" viewBox="0 0 200 14" fill="none">
+                <path
+                  d="M0 7 Q25 2, 50 7 T100 7 T150 7 T200 7"
+                  stroke="#EC4899"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                />
+              </svg>
             </div>
           </div>
-          <div className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900">
-            {current.heightCm}
-            <span className="text-xs font-normal text-slate-400 ml-1">cm</span>
-          </div>
-          <div className="flex items-center justify-between text-[11px]">
-            <span className="text-slate-600 font-medium">5 ft 4 in</span>
-            <span className="text-slate-400">Adult Stadiometer</span>
+
+          <div className="flex items-end justify-between pt-1">
+            <div>
+              <div className="flex items-baseline">
+                <span className="font-sora font-extrabold text-2xl sm:text-[26px] text-slate-900 tracking-tight">
+                  110
+                </span>
+                <span className="text-xs font-semibold text-slate-400 ml-1.5">mg/dL</span>
+              </div>
+              <div className="text-[11px] font-semibold text-[#059669] flex items-center gap-1 mt-0.5">
+                <span>▼</span>
+                <span>-5% from last week</span>
+              </div>
+            </div>
+
+            <div className="flex-shrink-0 -mb-1 -mr-1">
+              <img
+                src="/vitals/device_blood_glucose.png"
+                alt="Blood Glucose"
+                className="w-14 h-14 sm:w-16 sm:h-16 object-contain pointer-events-none select-none transition-transform duration-200 group-hover:scale-105"
+              />
+            </div>
           </div>
         </div>
 
-        {/* 7. BMI */}
-        <div className="bg-white rounded-3xl p-4 sm:p-5 border border-slate-100 shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-slate-500 text-xs">
-            <span className="font-medium">Body Mass Index</span>
-            <div className="w-8 h-8 rounded-xl bg-purple-50 text-[#5C24FF] flex items-center justify-center">
-              <Activity className="w-4 h-4" />
+        {/* Card 7: Activity */}
+        <div className="bg-white rounded-[24px] p-4 sm:p-4.5 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] hover:border-purple-200 transition-all flex flex-col justify-between group">
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Flag className="w-4 h-4 text-amber-500 fill-amber-50 flex-shrink-0" />
+                <h4 className="font-sora font-bold text-slate-900 text-sm">Activity</h4>
+              </div>
+              <span className="bg-[#FEF6E7] text-[#D97706] text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
+                Moderate
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between text-[11px] text-slate-500">
+              <span className="truncate max-w-[130px] sm:max-w-[140px]">84% of daily goal • Joint cadence energiz...</span>
+              <span className="bg-[#F3EEFF] text-[#7C3AED] text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">
+                Goal 10,000 steps
+              </span>
+            </div>
+
+            {/* Orange Progress Bar */}
+            <div className="w-full h-1.5 my-2.5 bg-slate-100 rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-500"
+                style={{ width: '84%' }}
+              />
             </div>
           </div>
-          <div className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900">
-            {current.bmi}
-            <span className="text-xs font-normal text-slate-400 ml-1">kg/m²</span>
-          </div>
-          <div className="flex items-center justify-between text-[11px]">
-            <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">
-              ● Healthy Range
-            </span>
-            <span className="text-slate-400">Ref: 18.5 - 24.9</span>
+
+          <div className="flex items-end justify-between pt-1">
+            <div>
+              <div className="flex items-baseline">
+                <span className="font-sora font-extrabold text-2xl sm:text-[26px] text-slate-900 tracking-tight">
+                  8,420
+                </span>
+                <span className="text-xs font-semibold text-slate-400 ml-1.5">steps</span>
+              </div>
+              <div className="text-[11px] font-semibold text-[#D97706] flex items-center gap-1 mt-0.5">
+                <span>▲</span>
+                <span>84% of daily goal</span>
+              </div>
+            </div>
+
+            <div className="flex-shrink-0 -mb-1 -mr-1">
+              <img
+                src="/vitals/device_activity.png"
+                alt="Activity"
+                className="w-14 h-14 sm:w-16 sm:h-16 object-contain pointer-events-none select-none transition-transform duration-200 group-hover:scale-105"
+              />
+            </div>
           </div>
         </div>
 
-        {/* 8. Respiratory Rate */}
-        <div className="bg-white rounded-3xl p-4 sm:p-5 border border-slate-100 shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-slate-500 text-xs">
-            <span className="font-medium">Respiratory Rate</span>
-            <div className="w-8 h-8 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center">
-              <Wind className="w-4 h-4" />
+        {/* Card 8: Sleep */}
+        <div className="bg-white rounded-[24px] p-4 sm:p-4.5 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] hover:border-purple-200 transition-all flex flex-col justify-between group">
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Moon className="w-4 h-4 text-purple-500 fill-purple-50 flex-shrink-0" />
+                <h4 className="font-sora font-bold text-slate-900 text-sm">Sleep</h4>
+              </div>
+              <span className="bg-[#EBFDF5] text-[#059669] text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
+                Good
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between text-[11px] text-slate-500">
+              <span className="truncate max-w-[130px] sm:max-w-[140px]">Slow-wave REM restorative delta +30m</span>
+              <span className="bg-[#F3EEFF] text-[#7C3AED] text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">
+                Target 7–9 hrs
+              </span>
+            </div>
+
+            {/* Purple Gradient Progress Bar */}
+            <div className="w-full h-1.5 my-2.5 bg-slate-100 rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-purple-500 to-indigo-600"
+                style={{ width: '80%' }}
+              />
             </div>
           </div>
-          <div className="font-sora font-extrabold text-xl sm:text-2xl text-slate-900">
-            {current.respiratoryRate}
-            <span className="text-xs font-normal text-slate-400 ml-1">breaths/min</span>
-          </div>
-          <div className="flex items-center justify-between text-[11px]">
-            <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">
-              ● Eupneic
-            </span>
-            <span className="text-slate-400">Ref: 12 - 20</span>
+
+          <div className="flex items-end justify-between pt-1">
+            <div>
+              <div className="flex items-baseline">
+                <span className="font-sora font-extrabold text-2xl sm:text-[26px] text-slate-900 tracking-tight">
+                  7.15
+                </span>
+                <span className="text-xs font-semibold text-slate-400 ml-1.5">hrs</span>
+              </div>
+              <div className="text-[11px] font-semibold text-[#7C3AED] flex items-center gap-1 mt-0.5">
+                <span>▲</span>
+                <span>+30 min from last week</span>
+              </div>
+            </div>
+
+            <div className="flex-shrink-0 -mb-1 -mr-1">
+              <img
+                src="/vitals/device_sleep.png"
+                alt="Sleep"
+                className="w-14 h-14 sm:w-16 sm:h-16 object-contain pointer-events-none select-none transition-transform duration-200 group-hover:scale-105"
+              />
+            </div>
           </div>
         </div>
       </div>
