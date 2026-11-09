@@ -138,6 +138,7 @@ export function App() {
           onOpenPatientChart={handleOpenPatientChart}
           onOpenNewAppointment={() => setIsNewAppointmentOpen(true)}
           onOpenNewPrescription={handleOpenNewPrescription}
+          onOpenAIScribe={handleOpenAIScribe}
           onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
           onOpenFullBriefing={() => setIsFullBriefingOpen(true)}
           onOpenAskAva={() => setIsAskAvaOpen(true)}
