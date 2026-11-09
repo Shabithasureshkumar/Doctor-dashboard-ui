@@ -1,8 +1,9 @@
 import React from 'react';
-import { ArrowLeft, Calendar as CalendarIcon, Plus, Clock, Download } from 'lucide-react';
+import { ArrowLeft, Calendar as CalendarIcon, Plus, Clock, Download, List } from 'lucide-react';
 
 interface CalendarHeaderProps {
   onBackToDashboard: () => void;
+  onNavigateToList?: () => void;
   onNewAppointment: () => void;
   onBlockTime: () => void;
   onExport: () => void;
@@ -10,6 +11,7 @@ interface CalendarHeaderProps {
 
 export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   onBackToDashboard,
+  onNavigateToList,
   onNewAppointment,
   onBlockTime,
   onExport,
@@ -44,6 +46,17 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
 
       {/* Right: Actions */}
       <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap justify-start sm:justify-end">
+        {onNavigateToList && (
+          <button
+            onClick={onNavigateToList}
+            className="flex items-center gap-1.5 bg-purple-50 hover:bg-purple-100 text-[#5C24FF] border border-purple-200/90 px-3.5 py-2.5 rounded-xl font-sora font-semibold text-xs sm:text-sm transition-all active:scale-95 whitespace-nowrap"
+            title="Switch to Appointment List View"
+          >
+            <List className="w-4 h-4 text-[#5C24FF]" />
+            <span>List View</span>
+          </button>
+        )}
+
         <button
           onClick={onNewAppointment}
           className="flex items-center gap-1.5 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white px-4 py-2.5 rounded-xl font-sora font-semibold text-xs sm:text-sm shadow-[0_4px_14px_rgba(154,106,251,0.35)] transition-all active:scale-95 whitespace-nowrap"

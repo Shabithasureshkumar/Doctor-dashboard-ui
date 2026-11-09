@@ -9,6 +9,7 @@ import { Appointment, AppointmentType, CalendarViewType } from '../../types';
 
 interface CalendarViewProps {
   onBackToDashboard: () => void;
+  onNavigateToList?: () => void;
   onNewAppointment: (day?: string, time?: string) => void;
   onBlockTime: () => void;
   onExport: () => void;
@@ -21,6 +22,7 @@ interface CalendarViewProps {
 
 export const CalendarView: React.FC<CalendarViewProps> = ({
   onBackToDashboard,
+  onNavigateToList,
   onNewAppointment,
   onBlockTime,
   onExport,
@@ -89,6 +91,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
       {/* 1. Header */}
       <CalendarHeader
         onBackToDashboard={onBackToDashboard}
+        onNavigateToList={onNavigateToList}
         onNewAppointment={() => onNewAppointment()}
         onBlockTime={onBlockTime}
         onExport={onExport}

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { DoctorDashboardView } from './components/dashboard/DoctorDashboardView';
+import { AppointmentListView } from './components/appointments/AppointmentListView';
 import { CalendarView } from './components/calendar/CalendarView';
 import { BillingView } from './components/billing/BillingView';
 import { VirtualVisitModal } from './components/modals/VirtualVisitModal';
@@ -21,8 +22,8 @@ import { Appointment } from './types';
 import { CALENDAR_APPOINTMENTS } from './mockData';
 
 export function App() {
-  // Navigation View State: 'dashboard' | 'calendar' | 'billing'
-  const [currentView, setCurrentView] = useState<'dashboard' | 'calendar' | 'billing'>('dashboard');
+  // Navigation View State: 'dashboard' | 'appointments' | 'calendar' | 'billing'
+  const [currentView, setCurrentView] = useState<'dashboard' | 'appointments' | 'calendar' | 'billing'>('dashboard');
   const [appointments, setAppointments] = useState<Appointment[]>(CALENDAR_APPOINTMENTS);
 
   // Selected Patient for Contextual Modals
@@ -96,6 +97,7 @@ export function App() {
       {/* Active Screen View */}
       {currentView === 'dashboard' ? (
         <DoctorDashboardView
+          onNavigateToAppointments={() => setCurrentView('appointments')}
           onNavigateToCalendar={() => setCurrentView('calendar')}
           onNavigateToBilling={() => setCurrentView('billing')}
           onOpenVirtualVisit={handleOpenVirtualVisit}
@@ -110,9 +112,24 @@ export function App() {
           onOpenExport={() => setIsExportOpen(true)}
           onOpenAskAva={() => setIsAskAvaOpen(true)}
         />
+      ) : currentView === 'appointments' ? (
+        <AppointmentListView
+          onBackToDashboard={() => setCurrentView('dashboard')}
+          onOpenVirtualVisit={handleOpenVirtualVisit}
+          onOpenPatientChart={handleOpenPatientChart}
+          onOpenNewAppointment={() => setIsNewAppointmentOpen(true)}
+          onNavigateToBilling={() => setCurrentView('billing')}
+          onNavigateToCalendarGrid={() => setCurrentView('calendar')}
+          onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
+          onOpenFullBriefing={() => setIsFullBriefingOpen(true)}
+          onOpenAskAva={() => setIsAskAvaOpen(true)}
+          onOpenTasks={() => setIsTasksOpen(true)}
+          onOpenAdjustSchedule={() => setIsAdjustScheduleOpen(true)}
+        />
       ) : currentView === 'calendar' ? (
         <CalendarView
           onBackToDashboard={() => setCurrentView('dashboard')}
+          onNavigateToList={() => setCurrentView('appointments')}
           onNewAppointment={handleOpenNewAppointment}
           onBlockTime={() => setIsAdjustScheduleOpen(true)}
           onExport={() => setIsExportOpen(true)}
@@ -125,7 +142,7 @@ export function App() {
       ) : (
         <BillingView
           onBackToDashboard={() => setCurrentView('dashboard')}
-          onNavigateToCalendar={() => setCurrentView('calendar')}
+          onNavigateToCalendar={() => setCurrentView('appointments')}
         />
       )}
 

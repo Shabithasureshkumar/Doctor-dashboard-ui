@@ -16,6 +16,7 @@ import { ClinicalAlert, TabType } from '../../types';
 
 interface DoctorDashboardViewProps {
   onNavigateToCalendar: () => void;
+  onNavigateToAppointments: () => void;
   onNavigateToBilling: () => void;
   onOpenVirtualVisit: (patientName?: string) => void;
   onOpenSearchPatient: () => void;
@@ -32,6 +33,7 @@ interface DoctorDashboardViewProps {
 
 export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
   onNavigateToCalendar,
+  onNavigateToAppointments,
   onNavigateToBilling,
   onOpenVirtualVisit,
   onOpenSearchPatient,
@@ -51,7 +53,7 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
   const handleTabChange = (tab: TabType) => {
     setActiveTab(tab);
     if (tab === 'Appointment') {
-      onNavigateToCalendar();
+      onNavigateToAppointments();
     } else if (tab === 'Patient') {
       onOpenSearchPatient();
     } else if (tab === 'Reports') {
