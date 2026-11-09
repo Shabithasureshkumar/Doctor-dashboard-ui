@@ -32,3 +32,48 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #94A3B8;
 }
+
+/* 3D Realistic Doctor Avatar & Empathy Animations */
+@keyframes doctor-float {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.015);
+  }
+}
+
+@keyframes halo-glow {
+  0%, 100% {
+    opacity: 0.55;
+    transform: scale(0.98);
+    filter: blur(24px);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.06);
+    filter: blur(32px);
+  }
+}
+
+@keyframes badge-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-doctor-float {
+  animation: doctor-float 5s ease-in-out infinite;
+}
+
+.animate-halo-glow {
+  animation: halo-glow 4s ease-in-out infinite;
+}
+
+.animate-badge-shimmer {
+  background-size: 200% 100%;
+  animation: badge-shimmer 3s infinite linear;
+}

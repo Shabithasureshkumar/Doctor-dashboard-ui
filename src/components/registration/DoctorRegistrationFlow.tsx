@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { DoctorDuolingoCompanionGuide } from './DoctorDuolingoCompanionGuide';
 import {
   Stethoscope,
   Building2,
@@ -370,27 +371,30 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
         </div>
       </header>
 
-      {/* ──────────────── Main Content Canvas (Full Viewport Width) ──────────────── */}
-      <main className="w-full flex-1 px-4 sm:px-8 lg:px-12 xl:px-16 py-6 sm:py-8 flex flex-col justify-center">
-        {/* SCREEN 01: Choose Your Professional Journey */}
-        {currentStep === 1 && (
-          <div className="space-y-8 animate-in fade-in duration-200">
-            {/* Hero Header */}
-            <div className="text-center max-w-3xl mx-auto space-y-2.5">
-              <span className="inline-flex items-center gap-1.5 text-xs font-sora font-bold text-[#5C24FF] bg-gradient-to-r from-[#9A6AFB]/15 to-[#5C24FF]/15 border border-[#9A6AFB]/30 px-3.5 py-1 rounded-full uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5 text-[#5C24FF]" />
-                Step 1 of 8 · Welcome to Mednevo
-              </span>
-              <h2 className="font-sora font-extrabold text-2xl sm:text-4xl text-slate-900 tracking-tight leading-tight">
-                Join Mednevo as a Healthcare Provider
-              </h2>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
-                Select your clinical classification to customize your credentialing pipeline,
-                AI-assisted consultations, and patient referral routing.
-              </p>
-            </div>
+      {/* ──────────────── Main Content Canvas (Full Viewport Width with Duolingo AI Doctor Guide on the Side) ──────────────── */}
+      <main className="w-full flex-1 px-4 sm:px-6 lg:px-10 xl:px-12 py-6 sm:py-8 flex flex-col justify-center">
+        <div className="w-full flex flex-col xl:flex-row items-start gap-8">
+          {/* Main Registration Steps Canvas */}
+          <div className="flex-1 w-full min-w-0">
+            {/* SCREEN 01: Choose Your Professional Journey */}
+            {currentStep === 1 && (
+              <div className="space-y-8 animate-in fade-in duration-200">
+                {/* Hero Header */}
+                <div className="text-center max-w-3xl mx-auto space-y-2.5">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-sora font-bold text-[#5C24FF] bg-gradient-to-r from-[#9A6AFB]/15 to-[#5C24FF]/15 border border-[#9A6AFB]/30 px-3.5 py-1 rounded-full uppercase tracking-wider">
+                    <Sparkles className="w-3.5 h-3.5 text-[#5C24FF]" />
+                    Step 1 of 8 · Welcome to Mednevo
+                  </span>
+                  <h2 className="font-sora font-extrabold text-2xl sm:text-4xl text-slate-900 tracking-tight leading-tight">
+                    Join Mednevo as a Healthcare Provider
+                  </h2>
+                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
+                    Select your clinical classification to customize your credentialing pipeline,
+                    AI-assisted consultations, and patient referral routing.
+                  </p>
+                </div>
 
-            {/* Provider Type Selection Cards */}
+                {/* Provider Type Selection Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
               {[
                 {
@@ -521,7 +525,7 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
 
         {/* SCREEN 02: Your Professional Identity Starts Here (Split Layout) */}
         {currentStep === 2 && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center animate-in fade-in duration-200">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start animate-in fade-in duration-200">
             {/* Left Column: Security & Privacy Showcase */}
             <div className="lg:col-span-5 bg-gradient-to-br from-[#9A6AFB]/10 via-purple-50 to-[#5C24FF]/10 rounded-3xl p-6 sm:p-8 border border-purple-100/80 space-y-6">
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#9A6AFB] to-[#5C24FF] flex items-center justify-center text-white shadow-lg">
@@ -1998,6 +2002,13 @@ export const DoctorRegistrationFlow: React.FC<DoctorRegistrationFlowProps> = ({
             </div>
           </div>
         )}
+          </div>
+
+          {/* Sticky Side AI Doctor Companion Guide (Duolingo-style) */}
+          <div className="w-full xl:w-[350px] 2xl:w-[390px] xl:sticky xl:top-24 flex-shrink-0 self-start">
+            <DoctorDuolingoCompanionGuide step={currentStep} doctorName={formData.lastName} />
+          </div>
+        </div>
       </main>
 
       {/* ──────────────── Bottom Navigation Toolbar (Full Width) ──────────────── */}
