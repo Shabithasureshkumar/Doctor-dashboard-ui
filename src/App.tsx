@@ -170,6 +170,10 @@ export function App() {
           onNavigateToBilling={() => setCurrentView('billing')}
           onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
           onOpenTasks={() => setIsTasksOpen(true)}
+          onLogout={() => {
+            setToastMessage('Signed out of Mednevo Doctor Portal.');
+            setCurrentView('dashboard');
+          }}
         />
       ) : (
         <BillingView

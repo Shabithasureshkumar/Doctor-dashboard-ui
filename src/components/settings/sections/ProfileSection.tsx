@@ -15,6 +15,11 @@ import {
   Plus,
   X,
   Edit3,
+  LogOut,
+  Trash2,
+  AlertTriangle,
+  Laptop,
+  ShieldAlert,
 } from 'lucide-react';
 import { DoctorProfile } from '../../../types/settings';
 
@@ -23,6 +28,8 @@ interface ProfileSectionProps {
   onChange: (updated: Partial<DoctorProfile>) => void;
   onSave: () => void;
   onToast: (msg: string) => void;
+  onOpenSignOut?: () => void;
+  onOpenDeleteAccount?: () => void;
 }
 
 export const ProfileSection: React.FC<ProfileSectionProps> = ({
@@ -30,6 +37,8 @@ export const ProfileSection: React.FC<ProfileSectionProps> = ({
   onChange,
   onSave,
   onToast,
+  onOpenSignOut,
+  onOpenDeleteAccount,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newLanguageInput, setNewLanguageInput] = useState('');
@@ -117,17 +126,30 @@ export const ProfileSection: React.FC<ProfileSectionProps> = ({
           </div>
         </div>
 
-        <button
-          onClick={() => setIsEditing(!isEditing)}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl font-sora font-semibold text-xs sm:text-sm transition-all whitespace-nowrap self-start md:self-center ${
-            isEditing
-              ? 'bg-purple-100 text-[#5C24FF]'
-              : 'border border-slate-200 hover:border-purple-200 text-slate-700 hover:text-[#5C24FF] hover:bg-purple-50/50'
-          }`}
-        >
-          <Edit3 className="w-4 h-4" />
-          <span>{isEditing ? 'Editing Mode Active' : 'Edit Profile'}</span>
-        </button>
+        <div className="flex items-center gap-2.5 self-start md:self-center flex-wrap">
+          <button
+            onClick={() => setIsEditing(!isEditing)}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl font-sora font-semibold text-xs sm:text-sm transition-all whitespace-nowrap ${
+              isEditing
+                ? 'bg-purple-100 text-[#5C24FF]'
+                : 'border border-slate-200 hover:border-purple-200 text-slate-700 hover:text-[#5C24FF] hover:bg-purple-50/50'
+            }`}
+          >
+            <Edit3 className="w-4 h-4" />
+            <span>{isEditing ? 'Editing Mode Active' : 'Edit Profile'}</span>
+          </button>
+          {onOpenSignOut && (
+            <button
+              type="button"
+              onClick={onOpenSignOut}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-2xl border border-slate-200 hover:border-rose-200 text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 font-sora font-semibold text-xs sm:text-sm transition-all whitespace-nowrap shadow-sm active:scale-95"
+              title="Sign out of active doctor session"
+            >
+              <LogOut className="w-4 h-4 text-rose-500" />
+              <span>Sign Out</span>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* 2. Personal & Professional Information Form */}
@@ -373,6 +395,109 @@ export const ProfileSection: React.FC<ProfileSectionProps> = ({
           >
             Save Profile
           </button>
+        </div>
+      </div>
+
+      {/* 3. Account Management & Danger Zone */}
+      <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-5">
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <h3 className="font-sora font-bold text-base sm:text-lg text-slate-900 flex items-center gap-2">
+              <ShieldAlert className="w-5 h-5 text-rose-500" />
+              <span>Account Session &amp; Danger Zone</span>
+            </h3>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Manage your active physician workstation sessions or request permanent account deletion
+            </p>
+          </div>
+          <span className="text-[11px] font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+            NPI: 1487920194 • Verified
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 pt-1">
+          {/* Card A: Active Session & Sign Out */}
+          <div className="p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-purple-50/20 border border-slate-200/80 flex flex-col justify-between gap-4">
+            <div className="space-y-2.5">
+              <div className="flex items-center justify-between">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-100/80 text-emerald-800">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  Active Physician Session
+                </span>
+                <span className="text-[11px] text-slate-400 font-mono">ID: SES-89241</span>
+              </div>
+
+              <div>
+                <h4 className="font-sora font-bold text-sm text-slate-900 flex items-center gap-1.5">
+                  <Laptop className="w-4 h-4 text-[#5C24FF]" />
+                  Workstation Terminal Sign Out
+                </h4>
+                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                  Currently active on <strong className="text-slate-800">Windows 11 Chrome (Boston Clinic Hub)</strong>. Sign out if you are stepping away from a shared clinical terminal.
+                </p>
+              </div>
+
+              <div className="text-[11px] text-slate-500 bg-white/80 p-2.5 rounded-xl border border-slate-200/60 space-y-1">
+                <div className="flex justify-between">
+                  <span>Auto-lock inactivity timer:</span>
+                  <strong className="text-slate-700">15 minutes (HIPAA)</strong>
+                </div>
+                <div className="flex justify-between">
+                  <span>Last authentication:</span>
+                  <strong className="text-slate-700">Today, 08:30 AM EST</strong>
+                </div>
+              </div>
+            </div>
+
+            {onOpenSignOut && (
+              <button
+                type="button"
+                onClick={onOpenSignOut}
+                className="w-full py-2.5 px-4 rounded-xl border border-slate-300 hover:border-slate-400 bg-white hover:bg-slate-50 text-slate-700 font-sora font-semibold text-xs transition-all flex items-center justify-center gap-2 shadow-sm active:scale-[0.99]"
+              >
+                <LogOut className="w-4 h-4 text-slate-600" />
+                <span>Sign Out of Mednevo Portal</span>
+              </button>
+            )}
+          </div>
+
+          {/* Card B: Danger Zone - Delete Doctor Account */}
+          <div className="p-5 rounded-2xl bg-gradient-to-br from-rose-50/40 to-red-50/20 border border-rose-200 flex flex-col justify-between gap-4">
+            <div className="space-y-2.5">
+              <div className="flex items-center justify-between">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-100 text-rose-800 border border-rose-200">
+                  <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />
+                  Danger Zone
+                </span>
+                <span className="text-[11px] text-rose-600 font-medium">Permanent Action</span>
+              </div>
+
+              <div>
+                <h4 className="font-sora font-bold text-sm text-slate-900 flex items-center gap-1.5">
+                  <Trash2 className="w-4 h-4 text-rose-600" />
+                  Delete Doctor Account
+                </h4>
+                <p className="text-xs text-rose-950/80 mt-1 leading-relaxed">
+                  Permanently terminate your physician portal profile, release scheduling calendar, and revoke DEA prescribing access.
+                </p>
+              </div>
+
+              <div className="text-[11px] text-rose-900/90 bg-rose-100/60 p-2.5 rounded-xl border border-rose-200/60 leading-relaxed">
+                <strong>HIPAA Retention Notice:</strong> Completed patient charts, notes, and past encounter logs will remain securely archived for 7 years per regulatory mandates.
+              </div>
+            </div>
+
+            {onOpenDeleteAccount && (
+              <button
+                type="button"
+                onClick={onOpenDeleteAccount}
+                className="w-full py-2.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-sora font-semibold text-xs transition-all flex items-center justify-center gap-2 shadow-sm hover:shadow-md active:scale-[0.99]"
+              >
+                <Trash2 className="w-4 h-4" />
+                <span>Delete Doctor Account</span>
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

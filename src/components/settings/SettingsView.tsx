@@ -37,6 +37,8 @@ import { HelpSupportSection } from './sections/HelpSupportSection';
 import { ChangePasswordModal } from './modals/ChangePasswordModal';
 import { Configure2FAModal } from './modals/Configure2FAModal';
 import { DeactivateAccountModal } from './modals/DeactivateAccountModal';
+import { DeleteAccountModal } from './modals/DeleteAccountModal';
+import { SignOutModal } from './modals/SignOutModal';
 import { UnsavedChangesModal } from './modals/UnsavedChangesModal';
 
 interface SettingsViewProps {
@@ -46,6 +48,7 @@ interface SettingsViewProps {
   onNavigateToBilling?: () => void;
   onOpenSearchPatient?: () => void;
   onOpenTasks?: () => void;
+  onLogout?: () => void;
 }
 
 const SETTINGS_STORAGE_KEY = 'mednevo_doctor_settings_v1';
@@ -57,6 +60,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   onNavigateToBilling,
   onOpenSearchPatient,
   onOpenTasks,
+  onLogout,
 }) => {
   // Load saved state or default
   const [settings, setSettings] = useState<DoctorSettingsState>(() => {
@@ -77,6 +81,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [is2FAModalOpen, setIs2FAModalOpen] = useState(false);
   const [isDeactivateModalOpen, setIsDeactivateModalOpen] = useState(false);
+  const [isDeleteAccountModalOpen, setIsDeleteAccountModalOpen] = useState(false);
+  const [isSignOutModalOpen, setIsSignOutModalOpen] = useState(false);
   const [isUnsavedModalOpen, setIsUnsavedModalOpen] = useState(false);
   const [pendingNavAction, setPendingNavAction] = useState<(() => void) | null>(null);
 
@@ -386,6 +392,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               }}
               onSave={handleSaveAll}
               onToast={showToast}
+              onOpenSignOut={() => setIsSignOutModalOpen(true)}
+              onOpenDeleteAccount={() => setIsDeleteAccountModalOpen(true)}
             />
           )}
 
@@ -532,6 +540,37 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         onClose={() => setIsDeactivateModalOpen(false)}
         onConfirm={() => {
           showToast('Account deactivation request submitted to Compliance. Status pending.');
+        }}
+      />
+
+      <DeleteAccountModal
+        isOpen={isDeleteAccountModalOpen}
+        onClose={() => setIsDeleteAccountModalOpen(false)}
+        onConfirm={() => {
+          try {
+            localStorage.removeItem(SETTINGS_STORAGE_KEY);
+          } catch {
+            // ignore
+          }
+          showToast('Doctor account deleted and archived per HIPAA compliance.');
+          if (onLogout) {
+            onLogout();
+          } else {
+            onBackToDashboard();
+          }
+        }}
+      />
+
+      <SignOutModal
+        isOpen={isSignOutModalOpen}
+        onClose={() => setIsSignOutModalOpen(false)}
+        onConfirm={() => {
+          showToast('Signed out of Dr. David Brock’s active workstation session.');
+          if (onLogout) {
+            onLogout();
+          } else {
+            onBackToDashboard();
+          }
         }}
       />
 
