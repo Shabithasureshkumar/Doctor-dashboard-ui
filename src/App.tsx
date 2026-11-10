@@ -4,6 +4,7 @@ import { AppointmentListView } from './components/appointments/AppointmentListVi
 import { PatientsView } from './components/patients/PatientsView';
 import { CalendarView } from './components/calendar/CalendarView';
 import { BillingView } from './components/billing/BillingView';
+import { SettingsView } from './components/settings/SettingsView';
 import { VirtualVisitModal } from './components/modals/VirtualVisitModal';
 import { SearchPatientModal } from './components/modals/SearchPatientModal';
 import { NewPrescriptionModal } from './components/modals/NewPrescriptionModal';
@@ -23,8 +24,8 @@ import { Appointment } from './types';
 import { CALENDAR_APPOINTMENTS } from './mockData';
 
 export function App() {
-  // Navigation View State: 'dashboard' | 'appointments' | 'patients' | 'calendar' | 'billing'
-  const [currentView, setCurrentView] = useState<'dashboard' | 'appointments' | 'patients' | 'calendar' | 'billing'>('dashboard');
+  // Navigation View State: 'dashboard' | 'appointments' | 'patients' | 'calendar' | 'billing' | 'settings'
+  const [currentView, setCurrentView] = useState<'dashboard' | 'appointments' | 'patients' | 'calendar' | 'billing' | 'settings'>('dashboard');
   const [appointments, setAppointments] = useState<Appointment[]>(CALENDAR_APPOINTMENTS);
 
   // Selected Patient for Contextual Modals
@@ -108,6 +109,7 @@ export function App() {
           onOpenReferPatient={handleOpenReferPatient}
           onOpenAIScribe={handleOpenAIScribe}
           onOpenAdjustSchedule={() => setIsAdjustScheduleOpen(true)}
+          onOpenSettings={() => setCurrentView('settings')}
           onOpenPatientChart={handleOpenPatientChart}
           onOpenFullBriefing={() => setIsFullBriefingOpen(true)}
           onOpenTasks={() => setIsTasksOpen(true)}
@@ -128,6 +130,7 @@ export function App() {
           onOpenAskAva={() => setIsAskAvaOpen(true)}
           onOpenTasks={() => setIsTasksOpen(true)}
           onOpenAdjustSchedule={() => setIsAdjustScheduleOpen(true)}
+          onOpenSettings={() => setCurrentView('settings')}
         />
       ) : currentView === 'patients' ? (
         <PatientsView
@@ -144,6 +147,7 @@ export function App() {
           onOpenAskAva={() => setIsAskAvaOpen(true)}
           onOpenTasks={() => setIsTasksOpen(true)}
           onOpenAdjustSchedule={() => setIsAdjustScheduleOpen(true)}
+          onOpenSettings={() => setCurrentView('settings')}
         />
       ) : currentView === 'calendar' ? (
         <CalendarView
@@ -158,10 +162,20 @@ export function App() {
           onOpenAskAva={() => setIsAskAvaOpen(true)}
           appointments={appointments}
         />
+      ) : currentView === 'settings' ? (
+        <SettingsView
+          onBackToDashboard={() => setCurrentView('dashboard')}
+          onNavigateToAppointments={() => setCurrentView('appointments')}
+          onNavigateToPatients={() => setCurrentView('patients')}
+          onNavigateToBilling={() => setCurrentView('billing')}
+          onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
+          onOpenTasks={() => setIsTasksOpen(true)}
+        />
       ) : (
         <BillingView
           onBackToDashboard={() => setCurrentView('dashboard')}
           onNavigateToCalendar={() => setCurrentView('appointments')}
+          onOpenSettings={() => setCurrentView('settings')}
         />
       )}
 

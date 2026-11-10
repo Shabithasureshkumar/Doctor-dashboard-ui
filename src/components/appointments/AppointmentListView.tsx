@@ -49,6 +49,7 @@ interface AppointmentListViewProps {
   onOpenAskAva: () => void;
   onOpenTasks: () => void;
   onOpenAdjustSchedule: () => void;
+  onOpenSettings?: () => void;
 }
 
 export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
@@ -64,6 +65,7 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
   onOpenAskAva,
   onOpenTasks,
   onOpenAdjustSchedule,
+  onOpenSettings,
 }) => {
   const [appointments, setAppointments] = useState<DetailedAppointment[]>(
     INITIAL_DETAILED_APPOINTMENTS
@@ -276,7 +278,7 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
         onTabChange={handleTabChange}
         onSearchClick={onOpenSearchPatient}
         onOpenNotifications={onOpenTasks}
-        onOpenSettings={onOpenAdjustSchedule}
+        onOpenSettings={onOpenSettings || onOpenAdjustSchedule}
       />
 
       {/* 2. Top Bar: Heading + Date Selector + View Switcher + Add Button */}

@@ -7,6 +7,7 @@ import {
   Wallet,
   Settings2,
   ArrowLeft,
+  Settings,
 } from 'lucide-react';
 import {
   BillingKPIs,
@@ -41,11 +42,13 @@ import { CURRENT_DOCTOR } from '../../mockData';
 interface BillingViewProps {
   onBackToDashboard: () => void;
   onNavigateToCalendar?: () => void;
+  onOpenSettings?: () => void;
 }
 
 export const BillingView: React.FC<BillingViewProps> = ({
   onBackToDashboard,
   onNavigateToCalendar: _onNavigateToCalendar,
+  onOpenSettings,
 }) => {
   // Active Sub-Tab
   const [activeTab, setActiveTab] = useState<BillingTabType>('overview');
@@ -213,8 +216,18 @@ export const BillingView: React.FC<BillingViewProps> = ({
           </div>
         </div>
 
-        {/* Right: Doctor profile */}
+        {/* Right: Settings & Doctor profile */}
         <div className="flex items-center gap-3 justify-end">
+          {onOpenSettings && (
+            <button
+              onClick={onOpenSettings}
+              className="w-10 h-10 rounded-xl bg-slate-100 hover:bg-purple-50 hover:text-[#5C24FF] text-slate-600 flex items-center justify-center transition-colors"
+              title="Doctor Settings"
+            >
+              <Settings className="w-5 h-5" />
+            </button>
+          )}
+
           <div className="flex items-center gap-2">
             <img
               src={CURRENT_DOCTOR.avatarUrl}

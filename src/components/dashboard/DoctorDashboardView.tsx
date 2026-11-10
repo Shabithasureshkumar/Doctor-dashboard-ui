@@ -25,6 +25,7 @@ interface DoctorDashboardViewProps {
   onOpenReferPatient: (patientName?: string) => void;
   onOpenAIScribe: (patientName?: string) => void;
   onOpenAdjustSchedule: () => void;
+  onOpenSettings?: () => void;
   onOpenPatientChart: (patientName: string) => void;
   onOpenFullBriefing: () => void;
   onOpenTasks: () => void;
@@ -43,6 +44,7 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
   onOpenReferPatient,
   onOpenAIScribe,
   onOpenAdjustSchedule,
+  onOpenSettings,
   onOpenPatientChart,
   onOpenFullBriefing,
   onOpenTasks,
@@ -79,7 +81,7 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
         onTabChange={handleTabChange}
         onSearchClick={onOpenSearchPatient}
         onOpenNotifications={onOpenTasks}
-        onOpenSettings={onOpenAdjustSchedule}
+        onOpenSettings={onOpenSettings || onOpenAdjustSchedule}
       />
 
       {/* 2. Doctor Greeting & Top Level Actions */}

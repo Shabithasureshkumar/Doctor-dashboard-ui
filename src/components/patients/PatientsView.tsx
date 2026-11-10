@@ -79,6 +79,7 @@ interface PatientsViewProps {
   onOpenAskAva: () => void;
   onOpenTasks: () => void;
   onOpenAdjustSchedule: () => void;
+  onOpenSettings?: () => void;
 }
 
 export const PatientsView: React.FC<PatientsViewProps> = ({
@@ -95,6 +96,7 @@ export const PatientsView: React.FC<PatientsViewProps> = ({
   onOpenAskAva,
   onOpenTasks,
   onOpenAdjustSchedule,
+  onOpenSettings,
 }) => {
   const [patients, setPatients] = useState<PatientRecord[]>(INITIAL_PATIENTS_LIST);
   const [selectedPatientId, setSelectedPatientId] = useState<string>('p-1');
@@ -222,7 +224,7 @@ export const PatientsView: React.FC<PatientsViewProps> = ({
         onTabChange={handleTabChange}
         onSearchClick={onOpenSearchPatient}
         onOpenNotifications={onOpenTasks}
-        onOpenSettings={onOpenAdjustSchedule}
+        onOpenSettings={onOpenSettings || onOpenAdjustSchedule}
       />
 
       {/* 2. Top Title Bar: Heading + Add Patient Button */}
