@@ -227,19 +227,21 @@ export const ChatView: React.FC<ChatViewProps> = ({
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#F8F9FE] text-slate-800 px-4 sm:px-6 lg:px-8 2xl:px-10 py-3 sm:py-5 space-y-4 sm:space-y-5 flex flex-col font-inter">
+    <div className="w-full h-screen bg-[#F8F9FE] text-slate-800 px-4 sm:px-6 lg:px-8 2xl:px-10 py-3 sm:py-4 flex flex-col font-inter overflow-hidden">
       {/* 1. Global Mednevo Header */}
-      <DashboardHeader
-        activeTab="Chats"
-        onTabChange={handleTabChange}
-        onSearchClick={onOpenSearchPatient}
-        onOpenNotifications={onOpenTasks}
-        onOpenSettings={onOpenSettings}
-      />
+      <div className="flex-shrink-0">
+        <DashboardHeader
+          activeTab="Chats"
+          onTabChange={handleTabChange}
+          onSearchClick={onOpenSearchPatient}
+          onOpenNotifications={onOpenTasks}
+          onOpenSettings={onOpenSettings}
+        />
+      </div>
 
       {/* 2. Top Title Bar & Breadcrumbs */}
-      <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3 flex-shrink-0 pt-0.5">
-        <div className="space-y-1">
+      <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3 flex-shrink-0 py-2">
+        <div className="space-y-0.5">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-xs text-slate-400 font-medium">
             <button
@@ -249,7 +251,7 @@ export const ChatView: React.FC<ChatViewProps> = ({
               Dashboard
             </button>
             <span>/</span>
-            <span className="text-[#5C24FF] font-semibold">Messages &amp; Telehealth Chat</span>
+            <span className="text-[#5C24FF] font-semibold">Chat</span>
           </div>
 
           <div className="flex items-center gap-3">
@@ -263,7 +265,7 @@ export const ChatView: React.FC<ChatViewProps> = ({
 
             <div>
               <h1 className="font-sora font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight flex items-center gap-2.5">
-                <span>Clinical Messages</span>
+                <span>Chat</span>
                 <span className="hidden sm:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 text-[11px] font-bold">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
                   HIPAA End-to-End Encrypted
@@ -288,12 +290,12 @@ export const ChatView: React.FC<ChatViewProps> = ({
       </div>
 
       {/* 3. Three-Column Main Chat Layout */}
-      <div className="w-full flex-1 min-h-[620px] h-[calc(100vh-210px)] max-h-[880px]">
+      <div className="w-full flex-1 min-h-0 pb-3 overflow-hidden">
         {/* Desktop & Tablet Layout (>= lg) */}
         <div className="hidden lg:grid grid-cols-12 gap-5 h-full w-full">
           {/* Left Column: Conversation List (3.5 cols if right panel open, else 4 cols) */}
           <div
-            className={`h-full transition-all duration-300 ${
+            className={`h-full overflow-hidden transition-all duration-300 ${
               isContextPanelOpen ? 'col-span-4 xl:col-span-3' : 'col-span-4'
             }`}
           >
@@ -314,7 +316,7 @@ export const ChatView: React.FC<ChatViewProps> = ({
 
           {/* Middle Column: Active Chat Area */}
           <div
-            className={`h-full transition-all duration-300 ${
+            className={`h-full overflow-hidden transition-all duration-300 ${
               isContextPanelOpen ? 'col-span-8 xl:col-span-6' : 'col-span-8'
             }`}
           >
@@ -344,7 +346,7 @@ export const ChatView: React.FC<ChatViewProps> = ({
 
           {/* Right Column: Patient Context Panel (collapsible, 3 cols) */}
           {isContextPanelOpen && activeConversation && (
-            <div className="hidden xl:block xl:col-span-3 h-full animate-in fade-in slide-in-from-right-4 duration-200">
+            <div className="hidden xl:block xl:col-span-3 h-full overflow-hidden animate-in fade-in slide-in-from-right-4 duration-200">
               <PatientContextPanel
                 patient={activeConversation.patientContext}
                 onOpenPatientChart={onOpenPatientChart}
@@ -357,9 +359,9 @@ export const ChatView: React.FC<ChatViewProps> = ({
         </div>
 
         {/* Mobile View (< lg) */}
-        <div className="lg:hidden h-full w-full">
+        <div className="lg:hidden h-full w-full overflow-hidden">
           {!mobileViewingChat ? (
-            <div className="h-full">
+            <div className="h-full overflow-hidden">
               <ConversationList
                 conversations={conversations}
                 selectedId={selectedId}
@@ -375,9 +377,9 @@ export const ChatView: React.FC<ChatViewProps> = ({
               />
             </div>
           ) : (
-            <div className="h-full flex flex-col relative">
+            <div className="h-full flex flex-col relative overflow-hidden">
               {/* Back to list bar on mobile */}
-              <div className="pb-2 flex items-center justify-between">
+              <div className="pb-2 flex-shrink-0 flex items-center justify-between">
                 <button
                   onClick={() => setMobileViewingChat(false)}
                   className="flex items-center gap-1.5 text-xs font-bold text-[#5C24FF] bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-xs"
@@ -387,7 +389,7 @@ export const ChatView: React.FC<ChatViewProps> = ({
                 </button>
               </div>
 
-              <div className="flex-1 min-h-0">
+              <div className="flex-1 min-h-0 overflow-hidden">
                 {activeConversation && (
                   <ActiveChatPanel
                     conversation={activeConversation}
