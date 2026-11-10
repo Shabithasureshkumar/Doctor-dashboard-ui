@@ -320,10 +320,11 @@ export const PatientsView: React.FC<PatientsViewProps> = ({
       </div>
 
       {/* 4. Main Two-Column Split Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 w-full flex-1">
-        {/* Left Column: Search & Patient List */}
-        <div className="lg:col-span-4 2xl:col-span-3 bg-white rounded-3xl border border-slate-100 shadow-sm p-4 sm:p-5 flex flex-col space-y-4">
-          <div className="flex items-center justify-between">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 w-full items-start">
+        {/* Left Column: Search & Patient List (Static Sticky Sidebar with internal scrolling & fixed bottom pagination) */}
+        <div className="lg:col-span-4 2xl:col-span-3 lg:sticky lg:top-4 lg:self-start bg-white rounded-3xl border border-slate-100 shadow-sm p-4 sm:p-5 flex flex-col h-[calc(100vh-2rem)] max-h-[calc(100vh-2rem)] overflow-hidden">
+          {/* Static Header */}
+          <div className="flex items-center justify-between pb-1 flex-shrink-0">
             <h3 className="font-sora font-bold text-base text-slate-900">
               Patient List <span className="text-xs text-slate-400 font-normal">({filteredPatients.length})</span>
             </h3>
@@ -336,8 +337,8 @@ export const PatientsView: React.FC<PatientsViewProps> = ({
             </button>
           </div>
 
-          {/* Search Box */}
-          <div className="relative">
+          {/* Static Search Box */}
+          <div className="relative pt-2 pb-3 flex-shrink-0">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
@@ -348,8 +349,8 @@ export const PatientsView: React.FC<PatientsViewProps> = ({
             />
           </div>
 
-          {/* Patient Cards List */}
-          <div className="space-y-2.5 overflow-y-auto max-h-[560px] pr-1">
+          {/* Patient Cards List (Scrollable Internally) */}
+          <div className="space-y-2.5 overflow-y-auto flex-1 min-h-0 pr-1.5 custom-scrollbar">
             {filteredPatients.map((patient) => {
               const isSelected = patient.id === selectedPatientId;
               return (
@@ -398,8 +399,8 @@ export const PatientsView: React.FC<PatientsViewProps> = ({
             })}
           </div>
 
-          {/* Pagination */}
-          <div className="pt-2 flex items-center justify-between text-xs text-slate-500 border-t border-slate-100">
+          {/* Static Bottom Pagination */}
+          <div className="pt-3 mt-auto flex-shrink-0 flex items-center justify-between text-xs text-slate-500 border-t border-slate-100 bg-white">
             <button className="w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center hover:bg-slate-100 text-slate-500">
               <ChevronLeft className="w-3.5 h-3.5" />
             </button>
@@ -425,7 +426,7 @@ export const PatientsView: React.FC<PatientsViewProps> = ({
         </div>
 
         {/* Right Column: Patient 360 Workspace with Persistent Patient Profile Header */}
-        <div className="lg:col-span-8 2xl:col-span-9 space-y-4">
+        <div className="lg:col-span-8 2xl:col-span-9 space-y-4 min-w-0">
           {/* Patient Top Identity Header (Meets All Section 2 Specifications) */}
           <div className="bg-white rounded-3xl border border-slate-100 shadow-sm p-5 sm:p-6 space-y-4">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -528,8 +529,8 @@ export const PatientsView: React.FC<PatientsViewProps> = ({
             </div>
           </div>
 
-          {/* 13 Options Navigation Ribbon (Matches Reference Design Exactly) */}
-          <div className="bg-white rounded-full p-1.5 sm:p-2 border border-slate-200/80 shadow-sm overflow-x-auto scrollbar-none w-full">
+          {/* 13 Options Navigation Ribbon (Sticky at top while scrolling) */}
+          <div className="bg-white/95 backdrop-blur-md rounded-full p-1.5 sm:p-2 border border-slate-200/80 shadow-xs overflow-x-auto scrollbar-none w-full sticky top-3 z-30 transition-all">
             <div className="flex items-center gap-1 sm:gap-1.5 min-w-max px-1">
               {subTabs.map((tab) => {
                 const isActive = activeSubTab === tab.id;
