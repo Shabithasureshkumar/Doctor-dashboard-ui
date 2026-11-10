@@ -49,6 +49,7 @@ interface SettingsViewProps {
   onOpenSearchPatient?: () => void;
   onOpenTasks?: () => void;
   onLogout?: () => void;
+  onNavigateToChats?: () => void;
 }
 
 const SETTINGS_STORAGE_KEY = 'mednevo_doctor_settings_v1';
@@ -61,6 +62,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   onOpenSearchPatient,
   onOpenTasks,
   onLogout,
+  onNavigateToChats,
 }) => {
   // Load saved state or default
   const [settings, setSettings] = useState<DoctorSettingsState>(() => {
@@ -133,7 +135,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     else if (tab === 'Patient') handleSafeNavigation(() => onNavigateToPatients?.());
     else if (tab === 'Billing') handleSafeNavigation(() => onNavigateToBilling?.());
     else if (tab === 'Reports') showToast('Clinical Analytics & Performance Reports module');
-    else if (tab === 'Chats') showToast('Opening Ava Telehealth & Patient Messenger...');
+    else if (tab === 'Chats') {
+      if (onNavigateToChats) handleSafeNavigation(onNavigateToChats);
+      else showToast('Opening Clinical Messages...');
+    }
   };
 
   // Sidebar Menu Items

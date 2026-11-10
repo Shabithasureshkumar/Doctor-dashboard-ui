@@ -5,6 +5,7 @@ import { PatientsView } from './components/patients/PatientsView';
 import { CalendarView } from './components/calendar/CalendarView';
 import { BillingView } from './components/billing/BillingView';
 import { SettingsView } from './components/settings/SettingsView';
+import { ChatView } from './components/chat/ChatView';
 import { VirtualVisitModal } from './components/modals/VirtualVisitModal';
 import { SearchPatientModal } from './components/modals/SearchPatientModal';
 import { NewPrescriptionModal } from './components/modals/NewPrescriptionModal';
@@ -24,8 +25,8 @@ import { Appointment } from './types';
 import { CALENDAR_APPOINTMENTS } from './mockData';
 
 export function App() {
-  // Navigation View State: 'dashboard' | 'appointments' | 'patients' | 'calendar' | 'billing' | 'settings'
-  const [currentView, setCurrentView] = useState<'dashboard' | 'appointments' | 'patients' | 'calendar' | 'billing' | 'settings'>('dashboard');
+  // Navigation View State: 'dashboard' | 'appointments' | 'patients' | 'calendar' | 'billing' | 'settings' | 'chats'
+  const [currentView, setCurrentView] = useState<'dashboard' | 'appointments' | 'patients' | 'calendar' | 'billing' | 'settings' | 'chats'>('dashboard');
   const [appointments, setAppointments] = useState<Appointment[]>(CALENDAR_APPOINTMENTS);
 
   // Selected Patient for Contextual Modals
@@ -103,6 +104,7 @@ export function App() {
           onNavigateToPatients={() => setCurrentView('patients')}
           onNavigateToCalendar={() => setCurrentView('calendar')}
           onNavigateToBilling={() => setCurrentView('billing')}
+          onNavigateToChats={() => setCurrentView('chats')}
           onOpenVirtualVisit={handleOpenVirtualVisit}
           onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
           onOpenNewPrescription={handleOpenNewPrescription}
@@ -124,6 +126,7 @@ export function App() {
           onOpenNewAppointment={() => setIsNewAppointmentOpen(true)}
           onNavigateToBilling={() => setCurrentView('billing')}
           onNavigateToPatients={() => setCurrentView('patients')}
+          onNavigateToChats={() => setCurrentView('chats')}
           onNavigateToCalendarGrid={() => setCurrentView('calendar')}
           onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
           onOpenFullBriefing={() => setIsFullBriefingOpen(true)}
@@ -137,6 +140,7 @@ export function App() {
           onBackToDashboard={() => setCurrentView('dashboard')}
           onNavigateToAppointments={() => setCurrentView('appointments')}
           onNavigateToBilling={() => setCurrentView('billing')}
+          onNavigateToChats={() => setCurrentView('chats')}
           onOpenVirtualVisit={handleOpenVirtualVisit}
           onOpenPatientChart={handleOpenPatientChart}
           onOpenNewAppointment={() => setIsNewAppointmentOpen(true)}
@@ -168,11 +172,28 @@ export function App() {
           onNavigateToAppointments={() => setCurrentView('appointments')}
           onNavigateToPatients={() => setCurrentView('patients')}
           onNavigateToBilling={() => setCurrentView('billing')}
+          onNavigateToChats={() => setCurrentView('chats')}
           onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
           onOpenTasks={() => setIsTasksOpen(true)}
           onLogout={() => {
             setToastMessage('Signed out of Mednevo Doctor Portal.');
             setCurrentView('dashboard');
+          }}
+        />
+      ) : currentView === 'chats' ? (
+        <ChatView
+          onBackToDashboard={() => setCurrentView('dashboard')}
+          onNavigateToAppointments={() => setCurrentView('appointments')}
+          onNavigateToPatients={() => setCurrentView('patients')}
+          onNavigateToBilling={() => setCurrentView('billing')}
+          onOpenSettings={() => setCurrentView('settings')}
+          onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
+          onOpenTasks={() => setIsTasksOpen(true)}
+          onOpenPatientChart={handleOpenPatientChart}
+          onOpenVirtualVisit={handleOpenVirtualVisit}
+          onOpenSchedule={(patientName) => {
+            setSelectedPatient(patientName);
+            setIsNewAppointmentOpen(true);
           }}
         />
       ) : (

@@ -80,6 +80,7 @@ interface PatientsViewProps {
   onOpenTasks: () => void;
   onOpenAdjustSchedule: () => void;
   onOpenSettings?: () => void;
+  onNavigateToChats?: () => void;
 }
 
 export const PatientsView: React.FC<PatientsViewProps> = ({
@@ -97,6 +98,7 @@ export const PatientsView: React.FC<PatientsViewProps> = ({
   onOpenTasks,
   onOpenAdjustSchedule,
   onOpenSettings,
+  onNavigateToChats,
 }) => {
   const [patients, setPatients] = useState<PatientRecord[]>(INITIAL_PATIENTS_LIST);
   const [selectedPatientId, setSelectedPatientId] = useState<string>('p-1');
@@ -196,7 +198,10 @@ export const PatientsView: React.FC<PatientsViewProps> = ({
     else if (tab === 'Appointment') onNavigateToAppointments();
     else if (tab === 'Billing') onNavigateToBilling();
     else if (tab === 'Reports') onOpenAskAva();
-    else if (tab === 'Chats') onOpenAskAva();
+    else if (tab === 'Chats') {
+      if (onNavigateToChats) onNavigateToChats();
+      else onOpenAskAva();
+    }
   };
 
   // 13 Sub-tabs matching the reference image exactly

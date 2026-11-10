@@ -50,6 +50,7 @@ interface AppointmentListViewProps {
   onOpenTasks: () => void;
   onOpenAdjustSchedule: () => void;
   onOpenSettings?: () => void;
+  onNavigateToChats?: () => void;
 }
 
 export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
@@ -66,6 +67,7 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
   onOpenTasks,
   onOpenAdjustSchedule,
   onOpenSettings,
+  onNavigateToChats,
 }) => {
   const [appointments, setAppointments] = useState<DetailedAppointment[]>(
     INITIAL_DETAILED_APPOINTMENTS
@@ -267,7 +269,10 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
       else onOpenSearchPatient();
     }
     else if (tab === 'Reports') onOpenFullBriefing();
-    else if (tab === 'Chats') onOpenAskAva();
+    else if (tab === 'Chats') {
+      if (onNavigateToChats) onNavigateToChats();
+      else onOpenAskAva();
+    }
   };
 
   return (

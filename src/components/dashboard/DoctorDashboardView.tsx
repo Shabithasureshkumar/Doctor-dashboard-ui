@@ -31,6 +31,7 @@ interface DoctorDashboardViewProps {
   onOpenTasks: () => void;
   onOpenExport: () => void;
   onOpenAskAva: () => void;
+  onNavigateToChats?: () => void;
 }
 
 export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
@@ -50,6 +51,7 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
   onOpenTasks,
   onOpenExport,
   onOpenAskAva,
+  onNavigateToChats,
 }) => {
   const [activeTab, setActiveTab] = useState<TabType>('Dashboard');
   const [alerts, setAlerts] = useState<ClinicalAlert[]>(INITIAL_ALERTS);
@@ -63,7 +65,11 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
     } else if (tab === 'Reports') {
       onOpenFullBriefing();
     } else if (tab === 'Chats') {
-      onOpenAskAva();
+      if (onNavigateToChats) {
+        onNavigateToChats();
+      } else {
+        onOpenAskAva();
+      }
     } else if (tab === 'Billing') {
       onNavigateToBilling();
     }
