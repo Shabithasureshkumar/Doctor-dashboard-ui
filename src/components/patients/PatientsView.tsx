@@ -530,15 +530,15 @@ export const PatientsView: React.FC<PatientsViewProps> = ({
           </div>
 
           {/* 13 Options Navigation Ribbon (Sticky at top while scrolling) */}
-          <div className="bg-white/95 backdrop-blur-md rounded-full p-1.5 sm:p-2 border border-slate-200/80 shadow-xs overflow-x-auto scrollbar-none w-full sticky top-3 z-30 transition-all">
-            <div className="flex items-center gap-1 sm:gap-1.5 min-w-max px-1">
+          <div className="bg-white/95 backdrop-blur-md rounded-full p-1 sm:p-1.5 border border-slate-200/80 shadow-xs overflow-x-auto scrollbar-none w-full sticky top-3 z-30 transition-all scroll-smooth">
+            <div className="flex items-center gap-1 sm:gap-1.5 min-w-max px-2">
               {subTabs.map((tab) => {
                 const isActive = activeSubTab === tab.id;
                 return (
                   <button
                     key={tab.id}
                     onClick={() => setActiveSubTab(tab.id as PatientSubTab)}
-                    className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-[13px] font-medium transition-all whitespace-nowrap ${
+                    className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
                       isActive
                         ? 'bg-[#7F47FA] text-white shadow-[0_2px_10px_rgba(127,71,250,0.35)]'
                         : 'text-slate-700 hover:text-[#5C24FF] hover:bg-purple-50/60'
