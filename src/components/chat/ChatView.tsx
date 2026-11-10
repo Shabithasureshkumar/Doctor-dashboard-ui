@@ -239,42 +239,28 @@ export const ChatView: React.FC<ChatViewProps> = ({
         />
       </div>
 
-      {/* 2. Top Title Bar & Breadcrumbs */}
+      {/* 2. Top Title Bar */}
       <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3 flex-shrink-0 py-2">
-        <div className="space-y-0.5">
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-xs text-slate-400 font-medium">
-            <button
-              onClick={onBackToDashboard}
-              className="hover:text-[#5C24FF] transition-colors"
-            >
-              Dashboard
-            </button>
-            <span>/</span>
-            <span className="text-[#5C24FF] font-semibold">Chat</span>
-          </div>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={onBackToDashboard}
+            className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-[#5C24FF] hover:border-purple-200 flex items-center justify-center transition-colors shadow-xs"
+            title="Return to Dashboard"
+          >
+            <ArrowLeft className="w-4 h-4" />
+          </button>
 
-          <div className="flex items-center gap-3">
-            <button
-              onClick={onBackToDashboard}
-              className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-[#5C24FF] hover:border-purple-200 flex items-center justify-center transition-colors shadow-xs"
-              title="Return to Dashboard"
-            >
-              <ArrowLeft className="w-4 h-4" />
-            </button>
-
-            <div>
-              <h1 className="font-sora font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight flex items-center gap-2.5">
-                <span>Chat</span>
-                <span className="hidden sm:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 text-[11px] font-bold">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                  HIPAA End-to-End Encrypted
-                </span>
-              </h1>
-              <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-                Direct physician communication, document exchange, and asynchronous patient triage
-              </p>
-            </div>
+          <div>
+            <h1 className="font-sora font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight flex items-center gap-2.5">
+              <span>Chat</span>
+              <span className="hidden sm:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 text-[11px] font-bold">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                HIPAA End-to-End Encrypted
+              </span>
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+              Direct physician communication, document exchange, and asynchronous patient triage
+            </p>
           </div>
         </div>
 

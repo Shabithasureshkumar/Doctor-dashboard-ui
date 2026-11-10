@@ -220,38 +220,24 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         isSettingsActive={true}
       />
 
-      {/* 2. Settings Breadcrumb & Top Bar */}
+      {/* 2. Settings Top Bar */}
       <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-4 flex-shrink-0 pt-1">
-        <div className="space-y-1">
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-xs text-slate-400 font-medium">
-            <button
-              onClick={() => handleSafeNavigation(onBackToDashboard)}
-              className="hover:text-[#5C24FF] transition-colors"
-            >
-              Dashboard
-            </button>
-            <span>/</span>
-            <span className="text-[#5C24FF] font-semibold">Settings</span>
-          </div>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => handleSafeNavigation(onBackToDashboard)}
+            className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-[#5C24FF] hover:border-purple-200 flex items-center justify-center transition-colors shadow-xs"
+            title="Return to Dashboard"
+          >
+            <ArrowLeft className="w-4 h-4" />
+          </button>
 
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => handleSafeNavigation(onBackToDashboard)}
-              className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-[#5C24FF] hover:border-purple-200 flex items-center justify-center transition-colors shadow-xs"
-              title="Return to Dashboard"
-            >
-              <ArrowLeft className="w-4 h-4" />
-            </button>
-
-            <div>
-              <h1 className="font-sora font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight">
-                Settings
-              </h1>
-              <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-                Manage your professional profile, preferences and account security.
-              </p>
-            </div>
+          <div>
+            <h1 className="font-sora font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight">
+              Settings
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+              Manage your professional profile, preferences and account security.
+            </p>
           </div>
         </div>
 
