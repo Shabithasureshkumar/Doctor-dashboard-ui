@@ -127,14 +127,26 @@ export const PeriodLogsTable: React.FC<{ onViewAll?: () => void }> = ({ onViewAl
                   <td className="py-2.5">
                     {log.symptoms.length > 0 ? (
                       <div className="flex items-center gap-1.5 flex-wrap">
-                        {log.symptoms.map((s, i) => (
-                          <span
-                            key={i}
-                            className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-medium"
-                          >
-                            {s}
-                          </span>
-                        ))}
+                        {log.symptoms.map((s, i) => {
+                          const tagStyle =
+                            s === 'Cramps'
+                              ? 'bg-rose-50 text-rose-600 border border-rose-100'
+                              : s === 'Bloating'
+                              ? 'bg-purple-50 text-purple-600 border border-purple-100'
+                              : s === 'Fatigue'
+                              ? 'bg-blue-50 text-blue-600 border border-blue-100'
+                              : s === 'Headache'
+                              ? 'bg-sky-50 text-sky-600 border border-sky-100'
+                              : 'bg-slate-100 text-slate-700';
+                          return (
+                            <span
+                              key={i}
+                              className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${tagStyle}`}
+                            >
+                              {s}
+                            </span>
+                          );
+                        })}
                       </div>
                     ) : (
                       <span className="text-slate-300">-</span>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Flower2, Plus, Sparkles, X } from 'lucide-react';
+import { Flower2, X } from 'lucide-react';
 import { PatientRecord } from '../../../mockData/patientsData';
 import { PeriodMetricsHeader } from './periods/PeriodMetricsHeader';
 import { CycleCalendarCard } from './periods/CycleCalendarCard';
@@ -58,48 +58,8 @@ export const Tab13Periods: React.FC<Tab13PeriodsProps> = ({ patient, onToast }) 
   };
 
   return (
-    <div className="space-y-4 sm:space-y-4.5 animate-in fade-in duration-200">
-      {/* Top Action Bar */}
-      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center">
-            <Flower2 className="w-5 h-5" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h3 className="font-sora font-extrabold text-base text-slate-900">
-                Periods &amp; Menstrual Cycle Health
-              </h3>
-              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-600 border border-rose-100">
-                Active Cycle Sync
-              </span>
-            </div>
-            <p className="text-xs text-slate-500">
-              Biometric cycle telemetry, ovulation windows, and patient-reported symptoms for {patient.name}
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => onToast('AI Cycle Analysis generated: Regular cycle with confirmed ovulation window.')}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-purple-200 bg-purple-50 text-[#5C24FF] hover:bg-purple-100 text-xs font-semibold transition-colors"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>AI Cycle Analysis</span>
-          </button>
-
-          <button
-            onClick={() => setIsLogModalOpen(true)}
-            className="flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white font-sora font-semibold text-xs rounded-xl shadow-sm hover:opacity-95 transition-all"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Log Cycle Data</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Row 1: Top 6 Overview Metric Cards */}
+    <div className="space-y-3.5 sm:space-y-4 animate-in fade-in duration-200">
+      {/* Row 1: Top 6 Overview Metric Cards Matching Reference Image Exactly */}
       <PeriodMetricsHeader
         onInfoClick={() => onToast('Menstruation phase started on Jun 01, 2026. Expected duration: 5 days.')}
       />

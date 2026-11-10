@@ -67,12 +67,11 @@ export const PatientNotesSharingCard: React.FC<{ onToast?: (msg: string) => void
         </div>
 
         {/* Action Button */}
-        <div className="pt-4 mt-2">
+        <div className="pt-3 mt-1">
           <button
             onClick={() => setIsPermissionsOpen(true)}
-            className="w-full py-2.5 px-4 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white font-sora font-semibold text-xs rounded-xl shadow-sm hover:opacity-95 transition-all flex items-center justify-center gap-1.5"
+            className="w-full py-2.5 px-4 bg-[#6333F6] hover:bg-[#5324E0] text-white font-sora font-semibold text-xs rounded-xl shadow-xs transition-all flex items-center justify-center"
           >
-            <ShieldCheck className="w-4 h-4" />
             <span>View Sharing Permissions</span>
           </button>
         </div>
