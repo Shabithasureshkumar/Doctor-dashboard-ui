@@ -9,8 +9,11 @@ import {
   X,
   Smile,
   ShieldCheck,
+  UploadCloud,
 } from 'lucide-react';
 import { ChatAttachment } from '../../types/chat';
+import { FileDropzone, DroppedFileInfo } from '../common/FileDropzone';
+import { Modal } from '../common/Modal';
 
 interface ChatComposerProps {
   onSendMessage: (text: string, attachments?: ChatAttachment[]) => void;
@@ -30,6 +33,8 @@ export const ChatComposer: React.FC<ChatComposerProps> = ({
 }) => {
   const [text, setText] = useState('');
   const [isAttachMenuOpen, setIsAttachMenuOpen] = useState(false);
+  const [isDropModalOpen, setIsDropModalOpen] = useState(false);
+  const [droppedModalFile, setDroppedModalFile] = useState<DroppedFileInfo | null>(null);
   const [stagedAttachments, setStagedAttachments] = useState<ChatAttachment[]>([]);
   const [showTemplates, setShowTemplates] = useState(false);
 
@@ -55,6 +60,34 @@ export const ChatComposer: React.FC<ChatComposerProps> = ({
       e.preventDefault();
       handleSend();
     }
+  };
+
+  const handleConfirmDroppedFile = () => {
+    if (!droppedModalFile) return;
+
+    const ext = droppedModalFile.name.split('.').pop()?.toLowerCase();
+    const type: ChatAttachment['type'] =
+      ext === 'jpg' || ext === 'jpeg' || ext === 'png'
+        ? 'image'
+        : selectedAttachType;
+
+    const newAtt: ChatAttachment = {
+      id: `att-${Date.now()}`,
+      type,
+      fileName: droppedModalFile.name,
+      fileSize: droppedModalFile.sizeFormatted,
+      badge:
+        type === 'prescription'
+          ? 'e-Rx Verified'
+          : type === 'lab_report'
+          ? 'Diagnostic Lab Report'
+          : 'HIPAA Document',
+    };
+
+    setStagedAttachments((prev) => [...prev, newAtt]);
+    onToast(`Attached: ${droppedModalFile.name}`);
+    setIsDropModalOpen(false);
+    setDroppedModalFile(null);
   };
 
   const handleTriggerFileSelect = (type: ChatAttachment['type']) => {
@@ -177,9 +210,26 @@ export const ChatComposer: React.FC<ChatComposerProps> = ({
           </button>
 
           {isAttachMenuOpen && (
-            <div className="absolute bottom-12 left-0 z-30 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 p-2 space-y-1 animate-in fade-in zoom-in-95">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2 py-1 block">
-                Share Healthcare Record
+            <div className="absolute bottom-12 left-0 z-30 w-60 bg-white rounded-2xl shadow-xl border border-slate-100 p-2 space-y-1.5 animate-in fade-in zoom-in-95">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsAttachMenuOpen(false);
+                  setIsDropModalOpen(true);
+                }}
+                className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs text-white bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] transition-all text-left shadow-2xs font-semibold hover:opacity-95 active:scale-98"
+              >
+                <div className="w-7 h-7 rounded-lg bg-white/20 text-white flex items-center justify-center flex-shrink-0">
+                  <UploadCloud className="w-4 h-4" />
+                </div>
+                <div>
+                  <span className="font-bold block">Drop / Browse File...</span>
+                  <span className="text-[10px] text-white/80">PDF, DICOM, JPG, PNG</span>
+                </div>
+              </button>
+
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2 pt-1 block">
+                Quick Category Attach
               </span>
 
               <button
@@ -285,6 +335,115 @@ export const ChatComposer: React.FC<ChatComposerProps> = ({
           <Send className="w-4 h-4 ml-0.5" />
         </button>
       </div>
+
+      {/* Drop / Browse File Modal */}
+      <Modal
+        isOpen={isDropModalOpen}
+        onClose={() => {
+          setIsDropModalOpen(false);
+          setDroppedModalFile(null);
+        }}
+        title="Attach Document or Medical Report"
+        subtitle="Secure HIPAA asynchronous file dispatch to patient"
+        maxWidth="lg"
+      >
+        <div className="space-y-4 font-inter text-xs">
+          <div>
+            <label className="block font-semibold text-slate-700 mb-1">Attachment Category</label>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <button
+                type="button"
+                onClick={() => setSelectedAttachType('pdf')}
+                className={`p-2.5 rounded-xl border text-center transition-all ${
+                  selectedAttachType === 'pdf'
+                    ? 'bg-purple-50 border-[#5C24FF] text-[#5C24FF] font-semibold'
+                    : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                }`}
+              >
+                <FileText className="w-4 h-4 mx-auto mb-1 text-purple-600" />
+                <span className="block text-[11px]">PDF Report</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setSelectedAttachType('lab_report')}
+                className={`p-2.5 rounded-xl border text-center transition-all ${
+                  selectedAttachType === 'lab_report'
+                    ? 'bg-emerald-50 border-emerald-500 text-emerald-700 font-semibold'
+                    : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                }`}
+              >
+                <Activity className="w-4 h-4 mx-auto mb-1 text-emerald-600" />
+                <span className="block text-[11px]">Lab Results</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setSelectedAttachType('prescription')}
+                className={`p-2.5 rounded-xl border text-center transition-all ${
+                  selectedAttachType === 'prescription'
+                    ? 'bg-rose-50 border-rose-500 text-rose-700 font-semibold'
+                    : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                }`}
+              >
+                <Pill className="w-4 h-4 mx-auto mb-1 text-rose-600" />
+                <span className="block text-[11px]">e-Rx</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setSelectedAttachType('image')}
+                className={`p-2.5 rounded-xl border text-center transition-all ${
+                  selectedAttachType === 'image'
+                    ? 'bg-blue-50 border-blue-500 text-blue-700 font-semibold'
+                    : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                }`}
+              >
+                <ImageIcon className="w-4 h-4 mx-auto mb-1 text-blue-600" />
+                <span className="block text-[11px]">Scan / Photo</span>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label className="block font-semibold text-slate-700 mb-1.5">Upload File</label>
+            <FileDropzone
+              selectedFile={droppedModalFile}
+              onFileSelect={(f) => setDroppedModalFile(f)}
+              label="Drop a file or browse files"
+              helperText="Supports PDF, DICOM, JPG, PNG up to 25 MB"
+            />
+          </div>
+
+          <div className="pt-2 flex items-center justify-between border-t border-slate-100">
+            <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              <span>HIPAA Encrypted</span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsDropModalOpen(false);
+                  setDroppedModalFile(null);
+                }}
+                className="px-4 py-2 border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 font-medium"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={!droppedModalFile}
+                onClick={handleConfirmDroppedFile}
+                className="px-5 py-2 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white font-sora font-semibold rounded-xl shadow-md disabled:opacity-40 disabled:cursor-not-allowed hover:opacity-95 transition-all"
+              >
+                Attach to Chat
+              </button>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

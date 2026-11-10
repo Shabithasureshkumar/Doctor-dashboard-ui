@@ -71,13 +71,58 @@ export const PatientChartModal: React.FC<PatientChartModalProps> = ({
     }, 3500);
   };
 
-  // Find corresponding patient record by name or fallback to Sarah Johnson
+  // Find corresponding patient record by name or synthesize a dynamic record matching the clicked patient
   const patient: PatientRecord = useMemo(() => {
     if (!patientName) return INITIAL_PATIENTS_LIST[0];
+    const cleanName = patientName.trim().toLowerCase();
     const found = INITIAL_PATIENTS_LIST.find(
-      (p) => p.name.toLowerCase() === patientName.toLowerCase()
+      (p) => p.name.toLowerCase() === cleanName || cleanName.includes(p.name.toLowerCase()) || p.name.toLowerCase().includes(cleanName)
     );
-    return found || INITIAL_PATIENTS_LIST[0];
+    if (found) return found;
+
+    // Fallback: create dynamic patient record matching the clicked patient so they are never misidentified
+    const hash = Math.abs(cleanName.split('').reduce((acc, c) => acc + c.charCodeAt(0), 10200));
+    return {
+      id: `p-${cleanName.replace(/\s+/g, '-')}`,
+      patientId: `PT${hash.toString().slice(0, 5)}`,
+      name: patientName,
+      age: 42,
+      gender: 'Female',
+      status: 'Active',
+      avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=160',
+      phone: '+1 (555) 345-6789',
+      email: `${cleanName.replace(/\s+/g, '.')}@example.com`,
+      location: 'New York, NY',
+      dob: 'May 14, 1984 (42 years)',
+      bloodGroup: 'O+',
+      height: '168 cm',
+      weight: '66 kg',
+      bmi: '23.4 (Normal)',
+      bmiStatus: 'Normal',
+      medicalConditions: ['General Consultation', 'Routine Follow-up'],
+      allergies: ['No Known Drug Allergies (NKDA)'],
+      medications: [{ name: 'Multivitamin Formula', dosage: '1 Tab (OD)' }],
+      recentVisit: {
+        date: 'Nov 08, 2026',
+        type: 'General Consultation',
+        reason: 'Periodic clinical evaluation and vitals review',
+      },
+      nextAppointment: {
+        date: 'Nov 14, 2026',
+        time: '10:30 AM',
+        mode: 'Video Consultation',
+      },
+      vitals: {
+        bp: '120 / 78 mmHg',
+        bpStatus: 'Normal',
+        heartRate: 72,
+        heartRateStatus: 'Normal',
+        spo2: 99,
+        spo2Status: 'Normal',
+        weight: '66 kg',
+        weightTrend: 'Stable',
+      },
+    };
   }, [patientName]);
 
   // 13 Navigation Tabs identical to the reference design
@@ -195,30 +240,57 @@ export const PatientChartModal: React.FC<PatientChartModalProps> = ({
 
           {/* Context Badges: Allergy Warning, Last Visit, Next Appointment */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2.5 border-t border-slate-100 text-xs">
-            <div className="p-2 bg-emerald-50/60 rounded-xl border border-emerald-100 flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-              <div>
-                <span className="text-[10px] text-slate-400 font-bold uppercase block leading-tight">Allergy Warning</span>
-                <span className="font-semibold text-emerald-800 text-[11px]">No Known Drug Allergies (NKDA)</span>
+            {patient.allergies &&
+            patient.allergies.length > 0 &&
+            !patient.allergies.some(
+              (a) =>
+                a.toLowerCase().includes('no known') ||
+                a.toLowerCase().includes('nkda') ||
+                a.toLowerCase().includes('none')
+            ) ? (
+              <div className="p-2 bg-amber-50/80 rounded-xl border border-amber-200 flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                <div className="min-w-0">
+                  <span className="text-[10px] text-amber-700 font-bold uppercase block leading-tight">
+                    ⚠️ Critical Allergy Warning
+                  </span>
+                  <span className="font-semibold text-amber-900 text-[11px] truncate block">
+                    {patient.allergies.join(', ')}
+                  </span>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="p-2 bg-emerald-50/60 rounded-xl border border-emerald-100 flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                <div className="min-w-0">
+                  <span className="text-[10px] text-slate-400 font-bold uppercase block leading-tight">
+                    Allergy Warning
+                  </span>
+                  <span className="font-semibold text-emerald-800 text-[11px] truncate block">
+                    No Known Drug Allergies (NKDA)
+                  </span>
+                </div>
+              </div>
+            )}
 
             <div className="p-2 bg-slate-50 rounded-xl border border-slate-100 flex items-center gap-2">
               <Clock className="w-4 h-4 text-purple-600 flex-shrink-0" />
-              <div>
+              <div className="min-w-0">
                 <span className="text-[10px] text-slate-400 font-bold uppercase block leading-tight">Last Visit Date</span>
-                <span className="font-semibold text-slate-800 text-[11px]">
-                  {patient.recentVisit.date} ({patient.recentVisit.type})
+                <span className="font-semibold text-slate-800 text-[11px] truncate block">
+                  {patient.recentVisit?.date || 'Nov 10, 2026'} ({patient.recentVisit?.type || 'Consultation'})
                 </span>
               </div>
             </div>
 
             <div className="p-2 bg-purple-50/60 rounded-xl border border-purple-100 flex items-center gap-2">
               <Calendar className="w-4 h-4 text-[#5C24FF] flex-shrink-0" />
-              <div>
+              <div className="min-w-0">
                 <span className="text-[10px] text-[#5C24FF] font-bold uppercase block leading-tight">Next Appointment</span>
-                <span className="font-semibold text-slate-900 text-[11px]">
-                  {patient.nextAppointment?.date} at {patient.nextAppointment?.time}
+                <span className="font-semibold text-slate-900 text-[11px] truncate block">
+                  {patient.nextAppointment
+                    ? `${patient.nextAppointment.date} at ${patient.nextAppointment.time}`
+                    : 'Nov 16, 2026 at 10:00 AM'}
                 </span>
               </div>
             </div>

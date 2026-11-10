@@ -165,8 +165,8 @@ export const Tab01AISummary: React.FC<Tab01AISummaryProps> = ({
             </div>
           </div>
           <div>
-            <span className="font-sora font-bold text-xl text-slate-900">Optimal</span>
-            <p className="text-[10px] text-slate-500">BP 118/76 • HR 72 bpm</p>
+            <span className="font-sora font-bold text-xl text-slate-900">{patient.vitals.bpStatus || 'Optimal'}</span>
+            <p className="text-[10px] text-slate-500">BP {patient.vitals.bp} • HR {patient.vitals.heartRate} bpm</p>
           </div>
         </div>
 
@@ -203,25 +203,36 @@ export const Tab01AISummary: React.FC<Tab01AISummaryProps> = ({
               </div>
 
               <div className="space-y-2 pt-2 text-xs">
-                <div className="p-2.5 bg-purple-50/50 rounded-2xl border border-purple-100/60 flex items-center justify-between">
-                  <div>
-                    <span className="font-bold text-slate-900 block text-xs">Essential (Primary) Hypertension</span>
-                    <span className="text-slate-500 text-[11px]">ICD-10: I10 • Stably controlled on oral therapy</span>
+                {patient.medicalConditions && patient.medicalConditions.length > 0 ? (
+                  patient.medicalConditions.map((condition, idx) => (
+                    <div
+                      key={condition}
+                      className="p-2.5 bg-purple-50/50 rounded-2xl border border-purple-100/60 flex items-center justify-between"
+                    >
+                      <div>
+                        <span className="font-bold text-slate-900 block text-xs">{condition}</span>
+                        <span className="text-slate-500 text-[11px]">
+                          {idx === 0
+                            ? 'Primary Diagnosis • Active therapeutic management'
+                            : 'Secondary Diagnosis • Stable clinical surveillance'}
+                        </span>
+                      </div>
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100">
+                        Controlled
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  <div className="p-2.5 bg-purple-50/50 rounded-2xl border border-purple-100/60 flex items-center justify-between">
+                    <div>
+                      <span className="font-bold text-slate-900 block text-xs">General Health Review</span>
+                      <span className="text-slate-500 text-[11px]">No active chronic diagnoses</span>
+                    </div>
+                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100">
+                      Normal
+                    </span>
                   </div>
-                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100">
-                    Controlled
-                  </span>
-                </div>
-
-                <div className="p-2.5 bg-purple-50/50 rounded-2xl border border-purple-100/60 flex items-center justify-between">
-                  <div>
-                    <span className="font-bold text-slate-900 block text-xs">Polycystic Ovarian Syndrome (PCOS)</span>
-                    <span className="text-slate-500 text-[11px]">ICD-10: E28.2 • Regularized ovulatory cycles</span>
-                  </div>
-                  <span className="text-[10px] font-bold text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded-full border border-purple-100">
-                    Managed
-                  </span>
-                </div>
+                )}
               </div>
             </div>
           </div>
@@ -258,9 +269,22 @@ export const Tab01AISummary: React.FC<Tab01AISummaryProps> = ({
 
             <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs mt-2">
               <span className="text-slate-500 font-medium text-[11px]">Allergies:</span>
-              <span className="font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full text-[11px] border border-emerald-100">
-                ✓ No Known Drug Allergies (NKDA)
-              </span>
+              {patient.allergies &&
+              patient.allergies.length > 0 &&
+              !patient.allergies.some(
+                (a) =>
+                  a.toLowerCase().includes('no known') ||
+                  a.toLowerCase().includes('nkda') ||
+                  a.toLowerCase().includes('none')
+              ) ? (
+                <span className="font-semibold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full text-[11px] border border-amber-200">
+                  ⚠️ {patient.allergies.join(', ')}
+                </span>
+              ) : (
+                <span className="font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full text-[11px] border border-emerald-100">
+                  ✓ No Known Drug Allergies (NKDA)
+                </span>
+              )}
             </div>
           </div>
         </div>

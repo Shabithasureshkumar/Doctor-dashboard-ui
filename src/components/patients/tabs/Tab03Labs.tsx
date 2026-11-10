@@ -14,6 +14,7 @@ import {
 import { LabResultItem, ClinicalStatus } from '../../../types/clinical';
 import { MOCK_LAB_RESULTS } from '../../../mockData/clinicalDetailsData';
 import { PatientRecord } from '../../../mockData/patientsData';
+import { FileDropzone, DroppedFileInfo } from '../../common/FileDropzone';
 
 interface Tab03LabsProps {
   patient: PatientRecord;
@@ -28,6 +29,7 @@ export const Tab03Labs: React.FC<Tab03LabsProps> = ({ patient, onToast }) => {
   // Modals
   const [selectedReport, setSelectedReport] = useState<LabResultItem | null>(null);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<DroppedFileInfo | null>(null);
   const [uploadTestName, setUploadTestName] = useState('');
   const [uploadCategory, setUploadCategory] = useState<LabResultItem['category']>('CBC');
   const [uploadResult, setUploadResult] = useState('');
@@ -70,24 +72,26 @@ export const Tab03Labs: React.FC<Tab03LabsProps> = ({ patient, onToast }) => {
 
   const handleUploadSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const displayName = uploadTestName.trim() || (uploadedFile ? uploadedFile.name.replace(/\.[^/.]+$/, '') : 'Diagnostic Lab Panel');
     const newLab: LabResultItem = {
       id: `lab-${Date.now()}`,
-      testName: uploadTestName,
+      testName: displayName,
       category: uploadCategory,
-      result: uploadResult,
+      result: uploadResult || 'Attached',
       unit: uploadUnit,
       referenceRange: uploadRange,
       status: 'Normal',
       collectionDate: 'Today',
       reportDate: 'Today',
       orderingDoctor: 'Dr. Elena Vance, MD',
-      laboratoryName: 'Mednevo Central Diagnostics',
+      laboratoryName: uploadedFile ? `Attached: ${uploadedFile.name} (${uploadedFile.sizeFormatted})` : 'Mednevo Central Diagnostics',
     };
     setLabResults([newLab, ...labResults]);
     setIsUploadOpen(false);
     setUploadTestName('');
     setUploadResult('');
-    onToast(`Lab report for ${newLab.testName} uploaded and integrated.`);
+    setUploadedFile(null);
+    onToast(`Lab report "${displayName}" uploaded and integrated successfully.`);
   };
 
   const getStatusBadge = (status: ClinicalStatus) => {
@@ -393,16 +397,34 @@ export const Tab03Labs: React.FC<Tab03LabsProps> = ({ patient, onToast }) => {
               </button>
             </div>
 
-            <form onSubmit={handleUploadSubmit} className="p-5 space-y-3.5 text-xs">
+            <form onSubmit={handleUploadSubmit} className="p-5 space-y-3.5 text-xs max-h-[80vh] overflow-y-auto">
+              {/* File Dropzone */}
+              <div>
+                <label className="block font-semibold text-slate-700 mb-1.5">
+                  Lab Document / Report File
+                </label>
+                <FileDropzone
+                  selectedFile={uploadedFile}
+                  onFileSelect={(f) => {
+                    setUploadedFile(f);
+                    if (f && !uploadTestName) {
+                      setUploadTestName(f.name.replace(/\.[^/.]+$/, ''));
+                    }
+                  }}
+                  label="Drop a file or browse files"
+                  helperText="Supports PDF, DICOM, JPG, PNG up to 25 MB"
+                />
+              </div>
+
               <div>
                 <label className="block font-semibold text-slate-700 mb-1">Test Name</label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Serum Ferritin"
+                  placeholder="e.g. Complete Blood Count (CBC) or Lipid Profile"
                   value={uploadTestName}
                   onChange={(e) => setUploadTestName(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-[#5C24FF]/20"
                 />
               </div>
 
@@ -411,7 +433,7 @@ export const Tab03Labs: React.FC<Tab03LabsProps> = ({ patient, onToast }) => {
                 <select
                   value={uploadCategory}
                   onChange={(e) => setUploadCategory(e.target.value as any)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-[#5C24FF]/20"
                 >
                   <option value="CBC">Complete Blood Count (CBC)</option>
                   <option value="Blood Glucose">Blood Glucose</option>
@@ -427,24 +449,22 @@ export const Tab03Labs: React.FC<Tab03LabsProps> = ({ patient, onToast }) => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Result</label>
+                  <label className="block font-semibold text-slate-700 mb-1">Result Value</label>
                   <input
                     type="text"
-                    required
-                    placeholder="e.g. 85"
+                    placeholder="e.g. 14.2 (or see attached)"
                     value={uploadResult}
                     onChange={(e) => setUploadResult(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-[#5C24FF]/20"
                   />
                 </div>
                 <div>
                   <label className="block font-semibold text-slate-700 mb-1">Unit</label>
                   <input
                     type="text"
-                    required
                     value={uploadUnit}
                     onChange={(e) => setUploadUnit(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-[#5C24FF]/20"
                   />
                 </div>
               </div>
@@ -453,26 +473,28 @@ export const Tab03Labs: React.FC<Tab03LabsProps> = ({ patient, onToast }) => {
                 <label className="block font-semibold text-slate-700 mb-1">Reference Range</label>
                 <input
                   type="text"
-                  required
                   value={uploadRange}
                   onChange={(e) => setUploadRange(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-[#5C24FF]/20"
                 />
               </div>
 
               <div className="pt-2 flex items-center justify-end gap-3">
                 <button
                   type="button"
-                  onClick={() => setIsUploadOpen(false)}
+                  onClick={() => {
+                    setIsUploadOpen(false);
+                    setUploadedFile(null);
+                  }}
                   className="px-4 py-2 border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 font-medium"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-[#5C24FF] text-white font-sora font-semibold rounded-xl shadow-md"
+                  className="px-5 py-2 bg-[#5C24FF] text-white font-sora font-semibold rounded-xl shadow-md hover:bg-[#501fe0] transition-colors"
                 >
-                  Save & Verify
+                  Save &amp; Verify Report
                 </button>
               </div>
             </form>

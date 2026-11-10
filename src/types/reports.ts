@@ -50,7 +50,7 @@ export interface MedicalReport {
   patientId: string; // e.g. "PT10256"
   patientName: string;
   patientAge: number;
-  patientGender: 'Male' | 'Female';
+  patientGender: 'Male' | 'Female' | 'Other';
   patientBloodGroup: string;
   patientAvatar: string;
   type: ReportType;

@@ -3,6 +3,7 @@ import {
   Search,
   Filter,
   Download,
+  Upload,
   BarChart3,
   Eye,
   Share2,
@@ -29,6 +30,7 @@ import { ReportPendingStrip } from './ReportPendingStrip';
 import { ReportAnalyticsSection } from './ReportAnalyticsSection';
 import { ReportFilterModal } from './ReportFilterModal';
 import { ReportExportModal } from './ReportExportModal';
+import { ReportUploadModal } from './ReportUploadModal';
 import { ReportDetailsDrawer } from './ReportDetailsDrawer';
 
 interface ReportsViewProps {
@@ -62,6 +64,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
   // Modals / Drawers
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [selectedReport, setSelectedReport] = useState<MedicalReport | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -163,6 +166,11 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
     setCurrentPage(1);
     setIsFilterModalOpen(false);
     showToast('Filters reset to default.');
+  };
+
+  const handleUploadReport = (newReport: MedicalReport) => {
+    setReports((prev) => [newReport, ...prev]);
+    setCurrentPage(1);
   };
 
   // Filter calculations
@@ -315,6 +323,16 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
           >
             <BarChart3 className="w-4 h-4 text-[#5C24FF]" />
             <span className="hidden sm:inline">Analytics</span>
+          </button>
+
+          {/* Upload Report Button */}
+          <button
+            onClick={() => setIsUploadModalOpen(true)}
+            className="flex items-center gap-2 px-3.5 py-2.5 rounded-2xl bg-purple-50 hover:bg-purple-100 text-[#5C24FF] border border-purple-200/90 font-sora font-semibold text-xs sm:text-sm shadow-2xs transition-all active:scale-95"
+            title="Upload new patient diagnostic report"
+          >
+            <Upload className="w-4 h-4 text-[#5C24FF]" />
+            <span>Upload Report</span>
           </button>
 
           {/* Export Button */}
@@ -669,6 +687,14 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
         isOpen={isExportModalOpen}
         onClose={() => setIsExportModalOpen(false)}
         reports={filteredReports}
+        onToast={showToast}
+      />
+
+      {/* Upload Report Modal with Drag & Drop */}
+      <ReportUploadModal
+        isOpen={isUploadModalOpen}
+        onClose={() => setIsUploadModalOpen(false)}
+        onUpload={handleUploadReport}
         onToast={showToast}
       />
 

@@ -16,6 +16,7 @@ import {
 import { ImagingStudy } from '../../../types/clinical';
 import { MOCK_IMAGING_STUDIES } from '../../../mockData/clinicalDetailsData';
 import { PatientRecord } from '../../../mockData/patientsData';
+import { FileDropzone, DroppedFileInfo } from '../../common/FileDropzone';
 
 interface Tab04ImagingProps {
   patient: PatientRecord;
@@ -30,6 +31,7 @@ export const Tab04Imaging: React.FC<Tab04ImagingProps> = ({ patient, onToast }) 
   const [viewingStudy, setViewingStudy] = useState<ImagingStudy | null>(null);
   const [dicomStudy, setDicomStudy] = useState<ImagingStudy | null>(null);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<DroppedFileInfo | null>(null);
 
   // DICOM Viewer controls
   const [zoomLevel, setZoomLevel] = useState(100);
@@ -50,16 +52,17 @@ export const Tab04Imaging: React.FC<Tab04ImagingProps> = ({ patient, onToast }) 
 
   const handleUploadSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const effectiveBodyPart = newBodyPart.trim() || (uploadedFile ? uploadedFile.name.replace(/\.[^/.]+$/, '') : 'Diagnostic Scan');
     const newStudy: ImagingStudy = {
       id: `img-${Date.now()}`,
       imagingType: newType,
-      bodyPart: newBodyPart,
+      bodyPart: effectiveBodyPart,
       scanDate: 'Today',
       referringDoctor: 'Dr. Elena Vance, MD',
       radiologist: 'Dr. S. Kulkarni, MD',
-      imagingCenter: 'Mednevo Diagnostics Facility',
-      clinicalFindings: 'No acute abnormal focal mass or acute bony pathology.',
-      impression: newImpression,
+      imagingCenter: uploadedFile ? `Attached: ${uploadedFile.name} (${uploadedFile.sizeFormatted})` : 'Mednevo Diagnostics Facility',
+      clinicalFindings: uploadedFile ? `Digitized study uploaded: ${uploadedFile.name}. Clinical telemetry and diagnostic slice verified.` : 'No acute abnormal focal mass or acute bony pathology.',
+      impression: newImpression.trim() || 'Imaging reviewed; findings consistent with clinical presentation.',
       reportStatus: 'Verified',
       dicomAvailable: true,
       thumbnailUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=300',
@@ -68,6 +71,7 @@ export const Tab04Imaging: React.FC<Tab04ImagingProps> = ({ patient, onToast }) 
     setIsUploadOpen(false);
     setNewBodyPart('');
     setNewImpression('');
+    setUploadedFile(null);
     onToast(`Imaging study ${newStudy.imagingType} (${newStudy.bodyPart}) added to records.`);
   };
 
@@ -417,13 +421,32 @@ export const Tab04Imaging: React.FC<Tab04ImagingProps> = ({ patient, onToast }) 
               </button>
             </div>
 
-            <form onSubmit={handleUploadSubmit} className="p-5 space-y-3.5 text-xs">
+            <form onSubmit={handleUploadSubmit} className="p-5 space-y-3.5 text-xs max-h-[80vh] overflow-y-auto">
+              {/* File Dropzone */}
+              <div>
+                <label className="block font-semibold text-slate-700 mb-1.5">
+                  Imaging File / DICOM Dataset
+                </label>
+                <FileDropzone
+                  selectedFile={uploadedFile}
+                  onFileSelect={(f) => {
+                    setUploadedFile(f);
+                    if (f && !newBodyPart) {
+                      setNewBodyPart(f.name.replace(/\.[^/.]+$/, ''));
+                    }
+                  }}
+                  acceptedFormats=".dcm,.pdf,.png,.jpg,.jpeg"
+                  label="Drop a file or browse files"
+                  helperText="Supports DICOM (.dcm), PDF, PNG, JPG up to 25 MB"
+                />
+              </div>
+
               <div>
                 <label className="block font-semibold text-slate-700 mb-1">Imaging Modality</label>
                 <select
                   value={newType}
                   onChange={(e) => setNewType(e.target.value as any)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-[#5C24FF]/20"
                 >
                   <option value="X-Ray">X-Ray</option>
                   <option value="MRI">MRI (Magnetic Resonance)</option>
@@ -439,10 +462,10 @@ export const Tab04Imaging: React.FC<Tab04ImagingProps> = ({ patient, onToast }) 
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Lumbar Spine (L1-S1)"
+                  placeholder="e.g. Lumbar Spine (L1-S1) or Chest PA"
                   value={newBodyPart}
                   onChange={(e) => setNewBodyPart(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-[#5C24FF]/20"
                 />
               </div>
 
@@ -450,27 +473,29 @@ export const Tab04Imaging: React.FC<Tab04ImagingProps> = ({ patient, onToast }) 
                 <label className="block font-semibold text-slate-700 mb-1">Radiologist Impression Summary</label>
                 <textarea
                   rows={3}
-                  required
                   placeholder="Clinical impression and findings..."
                   value={newImpression}
                   onChange={(e) => setNewImpression(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-[#5C24FF]/20"
                 />
               </div>
 
               <div className="pt-2 flex items-center justify-end gap-3">
                 <button
                   type="button"
-                  onClick={() => setIsUploadOpen(false)}
+                  onClick={() => {
+                    setIsUploadOpen(false);
+                    setUploadedFile(null);
+                  }}
                   className="px-4 py-2 border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 font-medium"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-[#5C24FF] text-white font-sora font-semibold rounded-xl shadow-md"
+                  className="px-5 py-2 bg-[#5C24FF] text-white font-sora font-semibold rounded-xl shadow-md hover:bg-[#501fe0] transition-colors"
                 >
-                  Upload Study
+                  Upload Study &amp; Link
                 </button>
               </div>
             </form>

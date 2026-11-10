@@ -15,6 +15,7 @@ import {
 import { ClinicalDocument } from '../../../types/clinical';
 import { MOCK_DOCUMENTS } from '../../../mockData/clinicalDetailsData';
 import { PatientRecord } from '../../../mockData/patientsData';
+import { FileDropzone, DroppedFileInfo } from '../../common/FileDropzone';
 
 interface Tab09DocumentsProps {
   patient: PatientRecord;
@@ -33,6 +34,7 @@ export const Tab09Documents: React.FC<Tab09DocumentsProps> = ({ patient, onToast
   const [isUploadOpen, setIsUploadOpen] = useState(false);
 
   // Upload state
+  const [uploadedFile, setUploadedFile] = useState<DroppedFileInfo | null>(null);
   const [uploadName, setUploadName] = useState('');
   const [uploadCategory, setUploadCategory] = useState<ClinicalDocument['category']>('Medical Reports');
 
@@ -66,20 +68,24 @@ export const Tab09Documents: React.FC<Tab09DocumentsProps> = ({ patient, onToast
 
   const handleUploadSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const effectiveName = uploadName.trim() || (uploadedFile ? uploadedFile.name : 'Clinical Record');
     const newDoc: ClinicalDocument = {
       id: `doc-${Date.now()}`,
-      documentName: uploadName.endsWith('.pdf') ? uploadName : `${uploadName}.pdf`,
+      documentName: effectiveName.includes('.') ? effectiveName : `${effectiveName}.pdf`,
       category: uploadCategory,
       uploadedBy: 'Dr. Elena Vance, MD',
       uploadedDate: 'Today',
-      fileType: 'PDF',
-      fileSize: '512 KB',
+      fileType: (uploadedFile?.name.split('.').pop()?.toUpperCase() as any) || 'PDF',
+      fileSize: uploadedFile?.sizeFormatted || '1.8 MB',
       verificationStatus: 'Verified',
-      aiSummaryNotes: `Clinical ${uploadCategory} record authenticated for patient ${patient.name}.`,
+      aiSummaryNotes: uploadedFile
+        ? `Clinical document ${uploadedFile.name} securely ingested and verified into patient records.`
+        : `Clinical ${uploadCategory} record authenticated for patient ${patient.name}.`,
     };
     setDocuments([newDoc, ...documents]);
     setIsUploadOpen(false);
     setUploadName('');
+    setUploadedFile(null);
     onToast(`Document "${newDoc.documentName}" uploaded to patient archive.`);
   };
 
@@ -372,7 +378,26 @@ export const Tab09Documents: React.FC<Tab09DocumentsProps> = ({ patient, onToast
               </button>
             </div>
 
-            <form onSubmit={handleUploadSubmit} className="p-5 space-y-3.5">
+            <form onSubmit={handleUploadSubmit} className="p-5 space-y-3.5 max-h-[80vh] overflow-y-auto">
+              {/* File Dropzone */}
+              <div>
+                <label className="block font-semibold text-slate-700 mb-1.5">
+                  Clinical Document / File
+                </label>
+                <FileDropzone
+                  selectedFile={uploadedFile}
+                  onFileSelect={(f) => {
+                    setUploadedFile(f);
+                    if (f && !uploadName) {
+                      setUploadName(f.name.replace(/\.[^/.]+$/, ''));
+                    }
+                  }}
+                  acceptedFormats=".pdf,.dcm,.png,.jpg,.jpeg"
+                  label="Drop a file or browse files"
+                  helperText="Supports PDF, DICOM, JPG, PNG up to 25 MB"
+                />
+              </div>
+
               <div>
                 <label className="block font-semibold text-slate-700 mb-1">Document Title</label>
                 <input
@@ -381,7 +406,7 @@ export const Tab09Documents: React.FC<Tab09DocumentsProps> = ({ patient, onToast
                   placeholder="e.g. Ophthalmology Retina Evaluation 2026"
                   value={uploadName}
                   onChange={(e) => setUploadName(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-[#5C24FF]/20"
                 />
               </div>
 
@@ -390,7 +415,7 @@ export const Tab09Documents: React.FC<Tab09DocumentsProps> = ({ patient, onToast
                 <select
                   value={uploadCategory}
                   onChange={(e) => setUploadCategory(e.target.value as any)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-[#5C24FF]/20"
                 >
                   <option value="Medical Reports">Medical Reports</option>
                   <option value="Lab Reports">Lab Reports</option>
@@ -404,25 +429,22 @@ export const Tab09Documents: React.FC<Tab09DocumentsProps> = ({ patient, onToast
                 </select>
               </div>
 
-              <div className="p-4 border-2 border-dashed border-purple-200 rounded-2xl text-center bg-purple-50/30 space-y-1">
-                <FileText className="w-6 h-6 text-[#5C24FF] mx-auto" />
-                <span className="font-semibold text-slate-700 block">Click to select PDF or drag and drop</span>
-                <span className="text-[10px] text-slate-400">PDF, JPG, PNG up to 25MB</span>
-              </div>
-
               <div className="flex items-center justify-end gap-3 pt-2">
                 <button
                   type="button"
-                  onClick={() => setIsUploadOpen(false)}
+                  onClick={() => {
+                    setIsUploadOpen(false);
+                    setUploadedFile(null);
+                  }}
                   className="px-4 py-2 border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 font-medium"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-[#5C24FF] text-white font-sora font-semibold rounded-xl shadow-md"
+                  className="px-5 py-2 bg-[#5C24FF] text-white font-sora font-semibold rounded-xl shadow-md hover:bg-[#501fe0] transition-colors"
                 >
-                  Upload & Verify
+                  Upload &amp; Verify Record
                 </button>
               </div>
             </form>
