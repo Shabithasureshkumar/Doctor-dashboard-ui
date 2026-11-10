@@ -121,9 +121,9 @@ export const Tab03Labs: React.FC<Tab03LabsProps> = ({ patient, onToast }) => {
   };
 
   return (
-    <div className="space-y-5 animate-in fade-in duration-200">
+    <div className="space-y-3.5 sm:space-y-4 animate-in fade-in duration-200">
       {/* Top Banner with Actions */}
-      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2.5">
             <div className="w-10 h-10 rounded-2xl bg-purple-50 text-[#5C24FF] flex items-center justify-center">
@@ -216,7 +216,7 @@ export const Tab03Labs: React.FC<Tab03LabsProps> = ({ patient, onToast }) => {
       </div>
 
       {/* Laboratory Results Table */}
-      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm p-5 sm:p-6 space-y-3">
+      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm p-4 sm:p-5 space-y-3">
         <div className="flex items-center justify-between pb-3 border-b border-slate-100">
           <h4 className="font-sora font-bold text-sm sm:text-base text-slate-900">
             Diagnostic Test Records ({filteredLabs.length})

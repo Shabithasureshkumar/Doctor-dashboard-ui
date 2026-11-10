@@ -84,12 +84,12 @@ export const CycleCalendarCard: React.FC<CycleCalendarCardProps> = ({ onSelectDa
         ))}
       </div>
 
-      {/* Day Grid - Compact without empty gap */}
-      <div className="grid grid-cols-7 gap-0.5 pt-1 text-center text-xs flex-1 flex flex-col justify-between">
+      {/* Day Grid - 5 weeks evenly distributed with no empty gap */}
+      <div className="grid grid-cols-7 gap-1 pt-1 text-center text-xs flex-1 grid-rows-5 my-0.5">
         {calendarCells.map((cell, idx) => {
           if (!cell.isCurrentMonth) {
             return (
-              <div key={idx} className="h-5.5 flex items-center justify-center text-slate-300 font-medium text-[10px]">
+              <div key={idx} className="h-full flex items-center justify-center text-slate-300 font-medium text-[10px]">
                 {cell.day}
               </div>
             );
@@ -98,7 +98,7 @@ export const CycleCalendarCard: React.FC<CycleCalendarCardProps> = ({ onSelectDa
           let cellStyle = 'text-slate-700 hover:bg-slate-50';
           if (cell.phase === 'menstruation') {
             cellStyle = cell.isToday
-              ? 'bg-gradient-to-br from-rose-500 to-pink-500 text-white font-bold ring-1.5 ring-rose-300/80 shadow-xs'
+              ? 'bg-gradient-to-br from-rose-500 to-pink-500 text-white font-bold ring-2 ring-rose-300/80 shadow-xs'
               : 'bg-rose-100 text-rose-700 font-medium';
           } else if (cell.phase === 'fertile') {
             cellStyle = 'bg-amber-100/90 text-amber-800 font-medium';
@@ -121,8 +121,8 @@ export const CycleCalendarCard: React.FC<CycleCalendarCardProps> = ({ onSelectDa
                   onSelectDate?.(cell.dateStr);
                 }
               }}
-              className={`h-5.5 w-full rounded-full flex items-center justify-center text-[10px] transition-all relative ${cellStyle} ${
-                isSelected && !cell.isToday ? 'ring-1.5 ring-[#5C24FF]' : ''
+              className={`h-full max-h-7.5 w-full max-w-7.5 mx-auto rounded-full flex items-center justify-center text-[10px] sm:text-[11px] transition-all relative ${cellStyle} ${
+                isSelected && !cell.isToday ? 'ring-2 ring-[#5C24FF]' : ''
               }`}
             >
               {cell.day}

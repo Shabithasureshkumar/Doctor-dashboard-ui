@@ -423,9 +423,9 @@ export const Tab02Vitals: React.FC<Tab02VitalsProps> = ({ patient, onToast }) =>
   };
 
   return (
-    <div className="space-y-5 animate-in fade-in duration-200">
+    <div className="space-y-3.5 sm:space-y-4 animate-in fade-in duration-200">
       {/* Header & Controls */}
-      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2.5">
             <div className="w-10 h-10 rounded-2xl bg-purple-50 text-[#5C24FF] flex items-center justify-center">
@@ -509,11 +509,11 @@ export const Tab02Vitals: React.FC<Tab02VitalsProps> = ({ patient, onToast }) =>
       </div>
 
       {/* 8 Primary Vitals Metric Cards (Matching Screen 2 Visual Design) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 items-stretch">
         {vitalCards.map((card) => (
           <div
             key={card.id}
-            className="bg-white rounded-[24px] p-4 sm:p-4.5 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] hover:border-purple-200 transition-all flex flex-col justify-between group"
+            className="bg-white rounded-[24px] p-4 sm:p-4.5 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] hover:border-purple-200 transition-all flex flex-col justify-between group h-full min-h-[160px]"
           >
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
@@ -566,7 +566,7 @@ export const Tab02Vitals: React.FC<Tab02VitalsProps> = ({ patient, onToast }) =>
       </div>
 
       {/* Date-wise Historical Vital Table & Telemetry Sources */}
-      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm p-5 sm:p-6 space-y-4">
+      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm p-4 sm:p-5 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
           <div>
             <div className="flex items-center gap-2 flex-wrap">

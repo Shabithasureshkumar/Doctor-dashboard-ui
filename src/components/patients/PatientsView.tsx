@@ -529,28 +529,30 @@ export const PatientsView: React.FC<PatientsViewProps> = ({
             </div>
           </div>
 
-          {/* 13 Options Navigation Ribbon (Sticky at top while scrolling) */}
-          <div className="bg-white/95 backdrop-blur-md rounded-full p-1 sm:p-1.5 border border-slate-200/80 shadow-xs overflow-x-auto scrollbar-none w-full sticky top-3 z-30 transition-all scroll-smooth">
-            <div className="flex items-center gap-1 sm:gap-1.5 min-w-max px-2">
-              {subTabs.map((tab) => {
-                const isActive = activeSubTab === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveSubTab(tab.id as PatientSubTab)}
-                    className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
-                      isActive
-                        ? 'bg-[#7F47FA] text-white shadow-[0_2px_10px_rgba(127,71,250,0.35)]'
-                        : 'text-slate-700 hover:text-[#5C24FF] hover:bg-purple-50/60'
-                    }`}
-                  >
-                    <span className={isActive ? 'text-white' : 'text-[#7F47FA]'}>
-                      {tab.icon}
-                    </span>
-                    <span>{tab.label}</span>
-                  </button>
-                );
-              })}
+          {/* 13 Options Navigation Ribbon (Sticky at top with solid page background mask so content scrolls underneath cleanly) */}
+          <div className="sticky top-0 z-30 bg-[#F8F9FE] pt-1 pb-2 -mx-1 px-1">
+            <div className="bg-white rounded-2xl p-1 sm:p-1.5 border border-slate-200/90 shadow-xs overflow-x-auto scrollbar-none w-full scroll-smooth">
+              <div className="flex items-center gap-1 sm:gap-1.5 min-w-max px-1">
+                {subTabs.map((tab) => {
+                  const isActive = activeSubTab === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveSubTab(tab.id as PatientSubTab)}
+                      className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all whitespace-nowrap ${
+                        isActive
+                          ? 'bg-[#7F47FA] text-white shadow-[0_2px_10px_rgba(127,71,250,0.35)] font-semibold'
+                          : 'text-slate-700 hover:text-[#5C24FF] hover:bg-purple-50/60'
+                      }`}
+                    >
+                      <span className={isActive ? 'text-white' : 'text-[#7F47FA]'}>
+                        {tab.icon}
+                      </span>
+                      <span>{tab.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 

@@ -21,7 +21,7 @@ export const Tab11GeneticsRisk: React.FC<Tab11GeneticsRiskProps> = ({ patient, o
   const genetics: GeneticsAndRiskData = MOCK_GENETICS_AND_RISK;
 
   return (
-    <div className="space-y-5 animate-in fade-in duration-200">
+    <div className="space-y-3.5 sm:space-y-4 animate-in fade-in duration-200">
       {/* 1. Clinical Risk Distinction Disclaimer */}
       <div className="p-3.5 bg-purple-50/90 border border-purple-200 rounded-2xl flex items-start gap-3 text-xs text-purple-900 shadow-sm">
         <ShieldAlert className="w-4 h-4 text-[#5C24FF] flex-shrink-0 mt-0.5" />
@@ -31,7 +31,7 @@ export const Tab11GeneticsRisk: React.FC<Tab11GeneticsRiskProps> = ({ patient, o
       </div>
 
       {/* Top Banner */}
-      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2.5">
             <div className="w-10 h-10 rounded-2xl bg-purple-50 text-[#5C24FF] flex items-center justify-center">
