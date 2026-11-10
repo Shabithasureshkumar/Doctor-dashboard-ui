@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Video,
   UserCheck,
-  Phone,
 } from 'lucide-react';
 import { ConsultationPreferences } from '../../../types/settings';
 
@@ -32,7 +31,7 @@ export const ConsultationSection: React.FC<ConsultationSectionProps> = ({
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {[
             {
               id: 'Video Consultation' as const,
@@ -49,14 +48,6 @@ export const ConsultationSection: React.FC<ConsultationSectionProps> = ({
               icon: UserCheck,
               color: 'text-emerald-600',
               bg: 'bg-emerald-50',
-            },
-            {
-              id: 'Audio / Phone' as const,
-              title: 'Audio / Phone',
-              subtitle: 'Direct telephone consult',
-              icon: Phone,
-              color: 'text-blue-600',
-              bg: 'bg-blue-50',
             },
           ].map((mode) => {
             const isSelected = preferences.defaultConsultationType === mode.id;

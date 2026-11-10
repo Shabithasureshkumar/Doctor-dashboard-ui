@@ -60,7 +60,7 @@ export interface AvailabilitySchedule {
 }
 
 export interface ConsultationPreferences {
-  defaultConsultationType: 'In-person' | 'Video Consultation' | 'Audio / Phone';
+  defaultConsultationType: 'In-person' | 'Video Consultation';
   autoConfirmAppointments: boolean;
   allowPatientRescheduling: boolean;
   rescheduleCutoffHours: number;
