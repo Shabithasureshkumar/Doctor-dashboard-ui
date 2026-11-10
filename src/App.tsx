@@ -238,6 +238,12 @@ export function App() {
         patientName={selectedPatient}
         onNewPrescription={handleOpenNewPrescription}
         onVirtualVisit={handleOpenVirtualVisit}
+        onNewAppointment={() => setIsNewAppointmentOpen(true)}
+        onStartChat={() => {
+          setIsPatientChartOpen(false);
+          setCurrentView('chats');
+        }}
+        onOpenAskAva={() => setIsAIScribeOpen(true)}
       />
 
       <NewAppointmentModal
