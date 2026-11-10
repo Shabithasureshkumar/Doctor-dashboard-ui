@@ -6,6 +6,7 @@ import { CalendarView } from './components/calendar/CalendarView';
 import { BillingView } from './components/billing/BillingView';
 import { SettingsView } from './components/settings/SettingsView';
 import { ChatView } from './components/chat/ChatView';
+import { ReportsView } from './components/reports/ReportsView';
 import { VirtualVisitModal } from './components/modals/VirtualVisitModal';
 import { SearchPatientModal } from './components/modals/SearchPatientModal';
 import { NewPrescriptionModal } from './components/modals/NewPrescriptionModal';
@@ -25,8 +26,8 @@ import { Appointment } from './types';
 import { CALENDAR_APPOINTMENTS } from './mockData';
 
 export function App() {
-  // Navigation View State: 'dashboard' | 'appointments' | 'patients' | 'calendar' | 'billing' | 'settings' | 'chats'
-  const [currentView, setCurrentView] = useState<'dashboard' | 'appointments' | 'patients' | 'calendar' | 'billing' | 'settings' | 'chats'>('dashboard');
+  // Navigation View State: 'dashboard' | 'appointments' | 'patients' | 'calendar' | 'billing' | 'settings' | 'chats' | 'reports'
+  const [currentView, setCurrentView] = useState<'dashboard' | 'appointments' | 'patients' | 'calendar' | 'billing' | 'settings' | 'chats' | 'reports'>('dashboard');
   const [appointments, setAppointments] = useState<Appointment[]>(CALENDAR_APPOINTMENTS);
 
   // Selected Patient for Contextual Modals
@@ -105,6 +106,7 @@ export function App() {
           onNavigateToCalendar={() => setCurrentView('calendar')}
           onNavigateToBilling={() => setCurrentView('billing')}
           onNavigateToChats={() => setCurrentView('chats')}
+          onNavigateToReports={() => setCurrentView('reports')}
           onOpenVirtualVisit={handleOpenVirtualVisit}
           onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
           onOpenNewPrescription={handleOpenNewPrescription}
@@ -127,6 +129,7 @@ export function App() {
           onNavigateToBilling={() => setCurrentView('billing')}
           onNavigateToPatients={() => setCurrentView('patients')}
           onNavigateToChats={() => setCurrentView('chats')}
+          onNavigateToReports={() => setCurrentView('reports')}
           onNavigateToCalendarGrid={() => setCurrentView('calendar')}
           onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
           onOpenFullBriefing={() => setIsFullBriefingOpen(true)}
@@ -141,6 +144,7 @@ export function App() {
           onNavigateToAppointments={() => setCurrentView('appointments')}
           onNavigateToBilling={() => setCurrentView('billing')}
           onNavigateToChats={() => setCurrentView('chats')}
+          onNavigateToReports={() => setCurrentView('reports')}
           onOpenVirtualVisit={handleOpenVirtualVisit}
           onOpenPatientChart={handleOpenPatientChart}
           onOpenNewAppointment={() => setIsNewAppointmentOpen(true)}
@@ -173,6 +177,7 @@ export function App() {
           onNavigateToPatients={() => setCurrentView('patients')}
           onNavigateToBilling={() => setCurrentView('billing')}
           onNavigateToChats={() => setCurrentView('chats')}
+          onNavigateToReports={() => setCurrentView('reports')}
           onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
           onOpenTasks={() => setIsTasksOpen(true)}
           onLogout={() => {
@@ -186,6 +191,7 @@ export function App() {
           onNavigateToAppointments={() => setCurrentView('appointments')}
           onNavigateToPatients={() => setCurrentView('patients')}
           onNavigateToBilling={() => setCurrentView('billing')}
+          onNavigateToReports={() => setCurrentView('reports')}
           onOpenSettings={() => setCurrentView('settings')}
           onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
           onOpenTasks={() => setIsTasksOpen(true)}
@@ -195,6 +201,18 @@ export function App() {
             setSelectedPatient(patientName);
             setIsNewAppointmentOpen(true);
           }}
+        />
+      ) : currentView === 'reports' ? (
+        <ReportsView
+          onBackToDashboard={() => setCurrentView('dashboard')}
+          onNavigateToAppointments={() => setCurrentView('appointments')}
+          onNavigateToPatients={() => setCurrentView('patients')}
+          onNavigateToBilling={() => setCurrentView('billing')}
+          onNavigateToChats={() => setCurrentView('chats')}
+          onOpenSettings={() => setCurrentView('settings')}
+          onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
+          onOpenTasks={() => setIsTasksOpen(true)}
+          onOpenPatientChart={handleOpenPatientChart}
         />
       ) : (
         <BillingView

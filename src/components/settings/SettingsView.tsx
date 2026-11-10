@@ -50,6 +50,7 @@ interface SettingsViewProps {
   onOpenTasks?: () => void;
   onLogout?: () => void;
   onNavigateToChats?: () => void;
+  onNavigateToReports?: () => void;
 }
 
 const SETTINGS_STORAGE_KEY = 'mednevo_doctor_settings_v1';
@@ -63,6 +64,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   onOpenTasks,
   onLogout,
   onNavigateToChats,
+  onNavigateToReports,
 }) => {
   // Load saved state or default
   const [settings, setSettings] = useState<DoctorSettingsState>(() => {
@@ -134,7 +136,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     else if (tab === 'Appointment') handleSafeNavigation(() => onNavigateToAppointments?.());
     else if (tab === 'Patient') handleSafeNavigation(() => onNavigateToPatients?.());
     else if (tab === 'Billing') handleSafeNavigation(() => onNavigateToBilling?.());
-    else if (tab === 'Reports') showToast('Clinical Analytics & Performance Reports module');
+    else if (tab === 'Reports') {
+      if (onNavigateToReports) handleSafeNavigation(onNavigateToReports);
+      else showToast('Clinical Analytics & Performance Reports module');
+    }
     else if (tab === 'Chats') {
       if (onNavigateToChats) handleSafeNavigation(onNavigateToChats);
       else showToast('Opening Clinical Messages...');

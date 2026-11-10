@@ -29,6 +29,7 @@ interface ChatViewProps {
   onOpenSettings?: () => void;
   onOpenSearchPatient?: () => void;
   onOpenTasks?: () => void;
+  onNavigateToReports?: () => void;
   onOpenPatientChart: (name: string) => void;
   onOpenVirtualVisit: (name: string) => void;
   onOpenSchedule: (name: string) => void;
@@ -42,6 +43,7 @@ export const ChatView: React.FC<ChatViewProps> = ({
   onOpenSettings,
   onOpenSearchPatient,
   onOpenTasks,
+  onNavigateToReports,
   onOpenPatientChart,
   onOpenVirtualVisit,
   onOpenSchedule,
@@ -223,7 +225,10 @@ export const ChatView: React.FC<ChatViewProps> = ({
     else if (tab === 'Appointment') onNavigateToAppointments?.();
     else if (tab === 'Patient') onNavigateToPatients?.();
     else if (tab === 'Billing') onNavigateToBilling?.();
-    else if (tab === 'Reports') showToast('Clinical Analytics & Performance Reports');
+    else if (tab === 'Reports') {
+      if (onNavigateToReports) onNavigateToReports();
+      else showToast('Clinical Analytics & Performance Reports');
+    }
   };
 
   return (

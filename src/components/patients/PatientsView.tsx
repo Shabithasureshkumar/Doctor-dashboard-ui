@@ -81,6 +81,7 @@ interface PatientsViewProps {
   onOpenAdjustSchedule: () => void;
   onOpenSettings?: () => void;
   onNavigateToChats?: () => void;
+  onNavigateToReports?: () => void;
 }
 
 export const PatientsView: React.FC<PatientsViewProps> = ({
@@ -99,6 +100,7 @@ export const PatientsView: React.FC<PatientsViewProps> = ({
   onOpenAdjustSchedule,
   onOpenSettings,
   onNavigateToChats,
+  onNavigateToReports,
 }) => {
   const [patients, setPatients] = useState<PatientRecord[]>(INITIAL_PATIENTS_LIST);
   const [selectedPatientId, setSelectedPatientId] = useState<string>('p-1');
@@ -197,7 +199,10 @@ export const PatientsView: React.FC<PatientsViewProps> = ({
     if (tab === 'Dashboard') onBackToDashboard();
     else if (tab === 'Appointment') onNavigateToAppointments();
     else if (tab === 'Billing') onNavigateToBilling();
-    else if (tab === 'Reports') onOpenAskAva();
+    else if (tab === 'Reports') {
+      if (onNavigateToReports) onNavigateToReports();
+      else onOpenAskAva();
+    }
     else if (tab === 'Chats') {
       if (onNavigateToChats) onNavigateToChats();
       else onOpenAskAva();
