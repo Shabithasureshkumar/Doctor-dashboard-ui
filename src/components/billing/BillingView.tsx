@@ -7,7 +7,6 @@ import {
   Wallet,
   Settings2,
   ArrowLeft,
-  Plus,
 } from 'lucide-react';
 import {
   BillingKPIs,
@@ -214,17 +213,9 @@ export const BillingView: React.FC<BillingViewProps> = ({
           </div>
         </div>
 
-        {/* Right: Quick actions & Doctor profile */}
+        {/* Right: Doctor profile */}
         <div className="flex items-center gap-3 justify-end">
-          <button
-            onClick={() => setIsCreateInvoiceOpen(true)}
-            className="flex items-center gap-1.5 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white px-4 py-2.5 rounded-xl font-sora font-semibold text-xs sm:text-sm shadow-[0_4px_14px_rgba(154,106,251,0.35)] hover:opacity-95 transition-all active:scale-95 whitespace-nowrap"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Create Invoice</span>
-          </button>
-
-          <div className="flex items-center gap-2 pl-3 border-l border-slate-200">
+          <div className="flex items-center gap-2">
             <img
               src={CURRENT_DOCTOR.avatarUrl}
               alt={CURRENT_DOCTOR.name}

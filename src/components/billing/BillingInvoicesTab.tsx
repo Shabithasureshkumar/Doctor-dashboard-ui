@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import {
   Search,
-  Plus,
   FileText,
   Send,
   Download,
@@ -22,7 +21,7 @@ interface BillingInvoicesTabProps {
 
 export const BillingInvoicesTab: React.FC<BillingInvoicesTabProps> = ({
   invoices,
-  onOpenCreateInvoice,
+  onOpenCreateInvoice: _onOpenCreateInvoice,
   onSelectInvoice,
   onSendReminder,
   onDownloadInvoice,
@@ -114,14 +113,6 @@ export const BillingInvoicesTab: React.FC<BillingInvoicesTabProps> = ({
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#9A6AFB] focus:bg-white transition-all"
               />
             </div>
-
-            <button
-              onClick={onOpenCreateInvoice}
-              className="flex items-center gap-1.5 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] hover:opacity-95 text-white px-4 py-2 rounded-xl font-sora font-semibold text-xs sm:text-sm shadow-sm transition-all whitespace-nowrap active:scale-95"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Create Invoice</span>
-            </button>
           </div>
         </div>
 

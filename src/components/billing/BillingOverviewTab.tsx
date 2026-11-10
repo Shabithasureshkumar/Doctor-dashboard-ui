@@ -28,7 +28,7 @@ export const BillingOverviewTab: React.FC<BillingOverviewTabProps> = ({
   kpis,
   invoices,
   onNavigateTab,
-  onOpenCreateInvoice,
+  onOpenCreateInvoice: _onOpenCreateInvoice,
   onOpenInstantPayout,
   onSelectInvoice,
   onSendReminder,
@@ -177,12 +177,6 @@ export const BillingOverviewTab: React.FC<BillingOverviewTabProps> = ({
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <button
-              onClick={onOpenCreateInvoice}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white font-sora text-xs font-semibold rounded-xl shadow-sm hover:opacity-95 transition-all"
-            >
-              + Create Invoice
-            </button>
             <button
               onClick={() => onNavigateTab('invoices')}
               className="flex items-center gap-1 text-xs font-semibold text-[#5C24FF] hover:text-[#4b1bd4] transition-colors"
