@@ -52,7 +52,7 @@ export const HelpSupportSection: React.FC<HelpSupportSectionProps> = ({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* 1. 24/7 Priority Clinical Concierge Banner */}
       <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-5">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">

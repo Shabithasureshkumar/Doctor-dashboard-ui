@@ -40,7 +40,7 @@ export const ProfileSection: React.FC<ProfileSectionProps> = ({
   onOpenSignOut,
   onOpenDeleteAccount,
 }) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(true);
   const [newLanguageInput, setNewLanguageInput] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -71,7 +71,7 @@ export const ProfileSection: React.FC<ProfileSectionProps> = ({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* 1. Header Card with Doctor Avatar & Medical Registration Badge */}
       <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
@@ -417,7 +417,7 @@ export const ProfileSection: React.FC<ProfileSectionProps> = ({
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 pt-1">
           {/* Card A: Active Session & Sign Out */}
-          <div className="p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-purple-50/20 border border-slate-200/80 flex flex-col justify-between gap-4">
+          <div className="p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-purple-50/20 border border-slate-200/80 flex flex-col justify-between gap-4 h-full">
             <div className="space-y-2.5">
               <div className="flex items-center justify-between">
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-100/80 text-emerald-800">
@@ -462,7 +462,7 @@ export const ProfileSection: React.FC<ProfileSectionProps> = ({
           </div>
 
           {/* Card B: Danger Zone - Delete Doctor Account */}
-          <div className="p-5 rounded-2xl bg-gradient-to-br from-rose-50/40 to-red-50/20 border border-rose-200 flex flex-col justify-between gap-4">
+          <div className="p-5 rounded-2xl bg-gradient-to-br from-rose-50/40 to-red-50/20 border border-rose-200 flex flex-col justify-between gap-4 h-full">
             <div className="space-y-2.5">
               <div className="flex items-center justify-between">
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-100 text-rose-800 border border-rose-200">

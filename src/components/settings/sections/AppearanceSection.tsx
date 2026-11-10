@@ -22,7 +22,7 @@ export const AppearanceSection: React.FC<AppearanceSectionProps> = ({
   onToast: _onToast,
 }) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* 1. Theme Mode Cards */}
       <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-5">
         <div>
@@ -93,69 +93,73 @@ export const AppearanceSection: React.FC<AppearanceSectionProps> = ({
       {/* 2. Brand Accent Color & Font Size Scaling */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {/* Accent Color */}
-        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-4">
-          <div className="flex items-center gap-2">
-            <Palette className="w-4 h-4 text-[#5C24FF]" />
-            <h4 className="font-sora font-bold text-sm text-slate-900">Brand Accent Color</h4>
-          </div>
-          <p className="text-xs text-slate-500">
-            Primary highlight hue applied to buttons, active navigation, and key badges
-          </p>
+        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-4 h-full flex flex-col justify-between">
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Palette className="w-4 h-4 text-[#5C24FF]" />
+              <h4 className="font-sora font-bold text-sm text-slate-900">Brand Accent Color</h4>
+            </div>
+            <p className="text-xs text-slate-500">
+              Primary highlight hue applied to buttons, active navigation, and key badges
+            </p>
 
-          <div className="grid grid-cols-2 gap-2.5 pt-1">
-            {[
-              { id: 'purple' as const, label: 'Mednevo Violet', hex: 'bg-[#5C24FF]' },
-              { id: 'cyan' as const, label: 'Oceanic Cyan', hex: 'bg-cyan-500' },
-              { id: 'indigo' as const, label: 'Royal Indigo', hex: 'bg-indigo-600' },
-              { id: 'emerald' as const, label: 'Clinical Emerald', hex: 'bg-emerald-600' },
-            ].map((col) => {
-              const isSelected = appearance.accentColor === col.id;
-              return (
-                <button
-                  key={col.id}
-                  type="button"
-                  onClick={() => onChange({ accentColor: col.id })}
-                  className={`p-3 rounded-2xl border flex items-center gap-2.5 text-xs font-semibold transition-all ${
-                    isSelected ? 'border-[#5C24FF] bg-purple-50/50 shadow-xs' : 'border-slate-100 hover:bg-slate-50'
-                  }`}
-                >
-                  <span className={`w-4 h-4 rounded-full ${col.hex} flex-shrink-0 shadow-xs`} />
-                  <span className="text-slate-800 truncate">{col.label}</span>
-                </button>
-              );
-            })}
+            <div className="grid grid-cols-2 gap-2.5 pt-1">
+              {[
+                { id: 'purple' as const, label: 'Mednevo Violet', hex: 'bg-[#5C24FF]' },
+                { id: 'cyan' as const, label: 'Oceanic Cyan', hex: 'bg-cyan-500' },
+                { id: 'indigo' as const, label: 'Royal Indigo', hex: 'bg-indigo-600' },
+                { id: 'emerald' as const, label: 'Clinical Emerald', hex: 'bg-emerald-600' },
+              ].map((col) => {
+                const isSelected = appearance.accentColor === col.id;
+                return (
+                  <button
+                    key={col.id}
+                    type="button"
+                    onClick={() => onChange({ accentColor: col.id })}
+                    className={`p-3 rounded-2xl border flex items-center gap-2.5 text-xs font-semibold transition-all ${
+                      isSelected ? 'border-[#5C24FF] bg-purple-50/50 shadow-xs' : 'border-slate-100 hover:bg-slate-50'
+                    }`}
+                  >
+                    <span className={`w-4 h-4 rounded-full ${col.hex} flex-shrink-0 shadow-xs`} />
+                    <span className="text-slate-800 truncate">{col.label}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
         {/* Font Size Scaling */}
-        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-4">
-          <div className="flex items-center gap-2">
-            <Type className="w-4 h-4 text-[#5C24FF]" />
-            <h4 className="font-sora font-bold text-sm text-slate-900">Typography Scale</h4>
-          </div>
-          <p className="text-xs text-slate-500">
-            Adjust global dashboard font scaling for optimal readability
-          </p>
+        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-4 h-full flex flex-col justify-between">
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Type className="w-4 h-4 text-[#5C24FF]" />
+              <h4 className="font-sora font-bold text-sm text-slate-900">Typography Scale</h4>
+            </div>
+            <p className="text-xs text-slate-500">
+              Adjust global dashboard font scaling for optimal readability
+            </p>
 
-          <div className="grid grid-cols-3 gap-2 pt-1">
-            {[
-              { id: 'small' as const, label: 'Small (90%)' },
-              { id: 'standard' as const, label: 'Standard (100%)' },
-              { id: 'large' as const, label: 'Large (110%)' },
-            ].map((fs) => (
-              <button
-                key={fs.id}
-                type="button"
-                onClick={() => onChange({ fontSize: fs.id })}
-                className={`py-3 rounded-2xl border text-xs font-bold transition-all text-center ${
-                  appearance.fontSize === fs.id
-                    ? 'bg-[#5C24FF] text-white border-[#5C24FF] shadow-xs'
-                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-purple-50/50'
-                }`}
-              >
-                {fs.label}
-              </button>
-            ))}
+            <div className="grid grid-cols-3 gap-2 pt-1">
+              {[
+                { id: 'small' as const, label: 'Small (90%)' },
+                { id: 'standard' as const, label: 'Standard (100%)' },
+                { id: 'large' as const, label: 'Large (110%)' },
+              ].map((fs) => (
+                <button
+                  key={fs.id}
+                  type="button"
+                  onClick={() => onChange({ fontSize: fs.id })}
+                  className={`py-3 rounded-2xl border text-xs font-bold transition-all text-center ${
+                    appearance.fontSize === fs.id
+                      ? 'bg-[#5C24FF] text-white border-[#5C24FF] shadow-xs'
+                      : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-purple-50/50'
+                  }`}
+                >
+                  {fs.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>

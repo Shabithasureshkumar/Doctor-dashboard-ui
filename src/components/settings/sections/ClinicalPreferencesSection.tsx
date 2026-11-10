@@ -92,9 +92,9 @@ export const ClinicalPreferencesSection: React.FC<ClinicalPreferencesSectionProp
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* 1. SOAP Note & EHR Documentation Preferences */}
-      <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-6">
+      <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-5">
         <div>
           <h3 className="font-sora font-bold text-base sm:text-lg text-slate-900">
             Clinical Documentation &amp; SOAP Templates
@@ -260,7 +260,7 @@ export const ClinicalPreferencesSection: React.FC<ClinicalPreferencesSectionProp
       {/* 3. Frequently Used Diagnoses & Procedures Shortcuts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Frequently Used Diagnoses */}
-        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3.5">
+        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3.5 h-full flex flex-col justify-between">
           <div className="flex items-center justify-between pb-2 border-b border-slate-100">
             <div className="flex items-center gap-2">
               <Stethoscope className="w-4 h-4 text-[#5C24FF]" />
@@ -336,7 +336,7 @@ export const ClinicalPreferencesSection: React.FC<ClinicalPreferencesSectionProp
         </div>
 
         {/* Frequently Used Procedures */}
-        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3.5">
+        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3.5 h-full flex flex-col justify-between">
           <div className="flex items-center justify-between pb-2 border-b border-slate-100">
             <div className="flex items-center gap-2">
               <Activity className="w-4 h-4 text-emerald-600" />
@@ -415,95 +415,97 @@ export const ClinicalPreferencesSection: React.FC<ClinicalPreferencesSectionProp
       {/* 4. Preferred Clinical Units & Digital Signature */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {/* Preferred Medical Units */}
-        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3.5">
-          <h4 className="font-sora font-bold text-sm text-slate-900">
-            Preferred Physiological &amp; Metric Units
-          </h4>
+        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3.5 h-full flex flex-col justify-between">
+          <div className="space-y-3.5">
+            <h4 className="font-sora font-bold text-sm text-slate-900">
+              Preferred Physiological &amp; Metric Units
+            </h4>
 
-          <div className="grid grid-cols-2 gap-3 text-xs">
-            <div>
-              <label className="text-[10px] font-bold text-slate-400 uppercase">Blood Pressure</label>
-              <div className="p-2 bg-slate-50 rounded-xl font-bold text-slate-800 border border-slate-100 mt-1">
-                mmHg (Standard)
+            <div className="grid grid-cols-2 gap-3 text-xs">
+              <div>
+                <label className="text-[10px] font-bold text-slate-400 uppercase">Blood Pressure</label>
+                <div className="p-2 bg-slate-50 rounded-xl font-bold text-slate-800 border border-slate-100 mt-1">
+                  mmHg (Standard)
+                </div>
               </div>
-            </div>
 
-            <div>
-              <label className="text-[10px] font-bold text-slate-400 uppercase">Temperature</label>
-              <div className="flex items-center gap-1 mt-1">
-                {(['°F', '°C'] as const).map((unit) => (
-                  <button
-                    key={unit}
-                    type="button"
-                    onClick={() =>
-                      onChange({
-                        preferredUnits: { ...clinical.preferredUnits, temperature: unit },
-                      })
-                    }
-                    className={`flex-1 py-1.5 rounded-xl font-bold border text-xs transition-all ${
-                      clinical.preferredUnits.temperature === unit
-                        ? 'bg-[#5C24FF] text-white border-[#5C24FF]'
-                        : 'bg-slate-50 text-slate-700 border-slate-200'
-                    }`}
-                  >
-                    {unit}
-                  </button>
-                ))}
+              <div>
+                <label className="text-[10px] font-bold text-slate-400 uppercase">Temperature</label>
+                <div className="flex items-center gap-1 mt-1">
+                  {(['°F', '°C'] as const).map((unit) => (
+                    <button
+                      key={unit}
+                      type="button"
+                      onClick={() =>
+                        onChange({
+                          preferredUnits: { ...clinical.preferredUnits, temperature: unit },
+                        })
+                      }
+                      className={`flex-1 py-1.5 rounded-xl font-bold border text-xs transition-all ${
+                        clinical.preferredUnits.temperature === unit
+                          ? 'bg-[#5C24FF] text-white border-[#5C24FF]'
+                          : 'bg-slate-50 text-slate-700 border-slate-200'
+                      }`}
+                    >
+                      {unit}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            <div>
-              <label className="text-[10px] font-bold text-slate-400 uppercase">Body Weight</label>
-              <div className="flex items-center gap-1 mt-1">
-                {(['kg', 'lbs'] as const).map((unit) => (
-                  <button
-                    key={unit}
-                    type="button"
-                    onClick={() =>
-                      onChange({
-                        preferredUnits: { ...clinical.preferredUnits, weight: unit },
-                      })
-                    }
-                    className={`flex-1 py-1.5 rounded-xl font-bold border text-xs transition-all ${
-                      clinical.preferredUnits.weight === unit
-                        ? 'bg-[#5C24FF] text-white border-[#5C24FF]'
-                        : 'bg-slate-50 text-slate-700 border-slate-200'
-                    }`}
-                  >
-                    {unit}
-                  </button>
-                ))}
+              <div>
+                <label className="text-[10px] font-bold text-slate-400 uppercase">Body Weight</label>
+                <div className="flex items-center gap-1 mt-1">
+                  {(['kg', 'lbs'] as const).map((unit) => (
+                    <button
+                      key={unit}
+                      type="button"
+                      onClick={() =>
+                        onChange({
+                          preferredUnits: { ...clinical.preferredUnits, weight: unit },
+                        })
+                      }
+                      className={`flex-1 py-1.5 rounded-xl font-bold border text-xs transition-all ${
+                        clinical.preferredUnits.weight === unit
+                          ? 'bg-[#5C24FF] text-white border-[#5C24FF]'
+                          : 'bg-slate-50 text-slate-700 border-slate-200'
+                      }`}
+                    >
+                      {unit}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            <div>
-              <label className="text-[10px] font-bold text-slate-400 uppercase">Blood Glucose</label>
-              <div className="flex items-center gap-1 mt-1">
-                {(['mg/dL', 'mmol/L'] as const).map((unit) => (
-                  <button
-                    key={unit}
-                    type="button"
-                    onClick={() =>
-                      onChange({
-                        preferredUnits: { ...clinical.preferredUnits, glucose: unit },
-                      })
-                    }
-                    className={`flex-1 py-1.5 rounded-xl font-bold border text-xs transition-all ${
-                      clinical.preferredUnits.glucose === unit
-                        ? 'bg-[#5C24FF] text-white border-[#5C24FF]'
-                        : 'bg-slate-50 text-slate-700 border-slate-200'
-                    }`}
-                  >
-                    {unit}
-                  </button>
-                ))}
+              <div>
+                <label className="text-[10px] font-bold text-slate-400 uppercase">Blood Glucose</label>
+                <div className="flex items-center gap-1 mt-1">
+                  {(['mg/dL', 'mmol/L'] as const).map((unit) => (
+                    <button
+                      key={unit}
+                      type="button"
+                      onClick={() =>
+                        onChange({
+                          preferredUnits: { ...clinical.preferredUnits, glucose: unit },
+                        })
+                      }
+                      className={`flex-1 py-1.5 rounded-xl font-bold border text-xs transition-all ${
+                        clinical.preferredUnits.glucose === unit
+                          ? 'bg-[#5C24FF] text-white border-[#5C24FF]'
+                          : 'bg-slate-50 text-slate-700 border-slate-200'
+                      }`}
+                    >
+                      {unit}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Digital Signature */}
-        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3.5 flex flex-col justify-between">
+        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3.5 h-full flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <div className="flex items-center gap-2">

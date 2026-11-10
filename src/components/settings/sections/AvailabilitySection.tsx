@@ -92,7 +92,7 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* 1. Working Hours & Weekly Schedule Card */}
       <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -196,16 +196,18 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({
       {/* 2. Consultation Duration, Buffer Time & Time Zone */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {/* Consultation Duration */}
-        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-purple-50 text-[#5C24FF] flex items-center justify-center">
-              <Clock className="w-4 h-4" />
+        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3 h-full flex flex-col justify-between">
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-xl bg-purple-50 text-[#5C24FF] flex items-center justify-center">
+                <Clock className="w-4 h-4" />
+              </div>
+              <h4 className="font-sora font-bold text-sm text-slate-900">Consultation Duration</h4>
             </div>
-            <h4 className="font-sora font-bold text-sm text-slate-900">Consultation Duration</h4>
+            <p className="text-xs text-slate-500">
+              Default clinical appointment slot duration booked by patients
+            </p>
           </div>
-          <p className="text-xs text-slate-500">
-            Default clinical appointment slot duration booked by patients
-          </p>
           <div className="grid grid-cols-2 gap-2 pt-1">
             {([15, 30, 45, 60] as const).map((mins) => (
               <button
@@ -225,16 +227,18 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({
         </div>
 
         {/* Appointment Buffer Time */}
-        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-              <CalendarCheck className="w-4 h-4" />
+        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3 h-full flex flex-col justify-between">
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                <CalendarCheck className="w-4 h-4" />
+              </div>
+              <h4 className="font-sora font-bold text-sm text-slate-900">Appointment Buffer</h4>
             </div>
-            <h4 className="font-sora font-bold text-sm text-slate-900">Appointment Buffer</h4>
+            <p className="text-xs text-slate-500">
+              Automated rest / EHR charting gap reserved between appointments
+            </p>
           </div>
-          <p className="text-xs text-slate-500">
-            Automated rest / EHR charting gap reserved between appointments
-          </p>
           <div className="grid grid-cols-2 gap-2 pt-1">
             {([0, 5, 10, 15] as const).map((buf) => (
               <button
@@ -254,16 +258,18 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({
         </div>
 
         {/* Time Zone */}
-        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
-              <Globe className="w-4 h-4" />
+        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3 h-full flex flex-col justify-between">
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                <Globe className="w-4 h-4" />
+              </div>
+              <h4 className="font-sora font-bold text-sm text-slate-900">Clinic Time Zone</h4>
             </div>
-            <h4 className="font-sora font-bold text-sm text-slate-900">Clinic Time Zone</h4>
+            <p className="text-xs text-slate-500">
+              Synchronizes with patient telehealth bookings and calendar invites
+            </p>
           </div>
-          <p className="text-xs text-slate-500">
-            Synchronizes with patient telehealth bookings and calendar invites
-          </p>
           <div className="pt-1">
             <select
               value={availability.timeZone}
@@ -283,7 +289,7 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({
       {/* 3. Leave Management & Holiday Schedule */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Planned Leaves & Out-of-Office */}
-        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-4">
+        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-4 h-full flex flex-col justify-between">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
@@ -410,7 +416,7 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({
         </div>
 
         {/* Public Holidays Sync */}
-        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-4">
+        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-4 h-full flex flex-col justify-between">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-xl bg-purple-50 text-[#5C24FF] flex items-center justify-center">

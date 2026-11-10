@@ -20,7 +20,7 @@ export const ConsultationSection: React.FC<ConsultationSectionProps> = ({
   onToast: _onToast,
 }) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* 1. Primary Consultation Mode Card */}
       <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-5">
         <div>

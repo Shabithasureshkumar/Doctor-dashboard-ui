@@ -66,7 +66,7 @@ export const IntegrationsSection: React.FC<IntegrationsSectionProps> = ({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Overview Card */}
       <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">

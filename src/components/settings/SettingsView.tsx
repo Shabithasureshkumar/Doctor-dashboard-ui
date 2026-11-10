@@ -132,6 +132,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     else if (tab === 'Appointment') handleSafeNavigation(() => onNavigateToAppointments?.());
     else if (tab === 'Patient') handleSafeNavigation(() => onNavigateToPatients?.());
     else if (tab === 'Billing') handleSafeNavigation(() => onNavigateToBilling?.());
+    else if (tab === 'Reports') showToast('Clinical Analytics & Performance Reports module');
+    else if (tab === 'Chats') showToast('Opening Ava Telehealth & Patient Messenger...');
   };
 
   // Sidebar Menu Items
@@ -205,11 +207,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     <div className="w-full min-h-screen bg-[#F8F9FE] text-slate-800 px-4 sm:px-6 lg:px-8 2xl:px-10 py-3 sm:py-5 space-y-4 sm:space-y-5 flex flex-col font-inter">
       {/* 1. Global Mednevo Header */}
       <DashboardHeader
-        activeTab="Dashboard"
+        activeTab={'' as TabType}
         onTabChange={handleTabChange}
         onSearchClick={onOpenSearchPatient}
         onOpenNotifications={onOpenTasks}
         onOpenSettings={() => {}}
+        isSettingsActive={true}
       />
 
       {/* 2. Settings Breadcrumb & Top Bar */}

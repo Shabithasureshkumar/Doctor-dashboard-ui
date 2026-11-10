@@ -35,7 +35,7 @@ export const SecuritySection: React.FC<SecuritySectionProps> = ({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* 1. Security Health Score Banner */}
       <div className="bg-gradient-to-r from-purple-900 via-[#5C24FF] to-[#7F47FA] text-white rounded-3xl p-6 sm:p-7 shadow-[0_8px_24px_rgba(92,36,255,0.25)] flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
         <div className="space-y-2 z-10">
@@ -262,37 +262,39 @@ export const SecuritySection: React.FC<SecuritySectionProps> = ({
       {/* 5. Login Audit Trail & Account Danger Zone */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Login History */}
-        <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3">
-          <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
-            <History className="w-4 h-4 text-[#5C24FF]" />
-            <h4 className="font-sora font-bold text-sm text-slate-900">Recent Login History Audit</h4>
-          </div>
+        <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3 h-full flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
+              <History className="w-4 h-4 text-[#5C24FF]" />
+              <h4 className="font-sora font-bold text-sm text-slate-900">Recent Login History Audit</h4>
+            </div>
 
-          <div className="space-y-2 text-xs">
-            {security.loginHistory.map((item) => (
-              <div key={item.id} className="p-2.5 rounded-xl bg-slate-50/70 flex items-center justify-between">
-                <div>
-                  <span className="font-bold text-slate-800 block">{item.device}</span>
-                  <span className="text-[11px] text-slate-400">
-                    {item.location} • {item.timestamp} • IP: {item.ip}
+            <div className="space-y-2 text-xs pt-2">
+              {security.loginHistory.map((item) => (
+                <div key={item.id} className="p-2.5 rounded-xl bg-slate-50/70 flex items-center justify-between">
+                  <div>
+                    <span className="font-bold text-slate-800 block">{item.device}</span>
+                    <span className="text-[11px] text-slate-400">
+                      {item.location} • {item.timestamp} • IP: {item.ip}
+                    </span>
+                  </div>
+                  <span
+                    className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                      item.status === 'Success'
+                        ? 'bg-emerald-50 text-emerald-700'
+                        : 'bg-rose-50 text-rose-700'
+                    }`}
+                  >
+                    {item.status}
                   </span>
                 </div>
-                <span
-                  className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                    item.status === 'Success'
-                      ? 'bg-emerald-50 text-emerald-700'
-                      : 'bg-rose-50 text-rose-700'
-                  }`}
-                >
-                  {item.status}
-                </span>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Danger Zone */}
-        <div className="bg-white rounded-3xl p-6 border border-rose-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3 flex flex-col justify-between">
+        <div className="bg-white rounded-3xl p-6 border border-rose-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-3 flex flex-col justify-between h-full">
           <div>
             <div className="flex items-center gap-2 pb-2 border-b border-rose-100 text-rose-600 font-sora font-bold text-sm">
               <AlertTriangle className="w-4 h-4 text-rose-500" />

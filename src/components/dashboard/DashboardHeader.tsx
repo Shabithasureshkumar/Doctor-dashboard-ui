@@ -10,6 +10,7 @@ interface DashboardHeaderProps {
   onOpenNotifications?: () => void;
   onOpenSettings?: () => void;
   onSearchClick?: () => void;
+  isSettingsActive?: boolean;
 }
 
 export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
@@ -18,6 +19,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   onOpenNotifications,
   onOpenSettings,
   onSearchClick,
+  isSettingsActive = false,
 }) => {
   const [hasUnreadNotification] = useState(true);
   const [showSearchInput, setShowSearchInput] = useState(false);
@@ -86,11 +88,15 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           {/* Settings Button */}
           <button
             onClick={onOpenSettings}
-            className="w-11 h-11 rounded-full bg-slate-100 hover:bg-slate-200/90 text-slate-600 flex items-center justify-center transition-colors"
+            className={`w-11 h-11 rounded-full flex items-center justify-center transition-all ${
+              isSettingsActive
+                ? 'bg-purple-100 text-[#5C24FF] ring-2 ring-[#9A6AFB]/40 shadow-xs'
+                : 'bg-slate-100 hover:bg-slate-200/90 text-slate-600'
+            }`}
             title="Settings"
             aria-label="Settings"
           >
-            <Settings className="w-5 h-5 text-slate-500" />
+            <Settings className={`w-5 h-5 ${isSettingsActive ? 'text-[#5C24FF]' : 'text-slate-500'}`} />
           </button>
 
           {/* Notifications Button with unread indicator */}

@@ -62,9 +62,9 @@ export const NotificationsSection: React.FC<NotificationsSectionProps> = ({
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Overview Card */}
-      <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-6">
+      <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] space-y-5">
         <div>
           <h3 className="font-sora font-bold text-base sm:text-lg text-slate-900">
             Notification Preferences &amp; Delivery Matrix
@@ -74,32 +74,35 @@ export const NotificationsSection: React.FC<NotificationsSectionProps> = ({
           </p>
         </div>
 
-        {/* Channel Legend Header */}
-        <div className="bg-slate-50/80 rounded-2xl p-4 border border-slate-100 flex flex-wrap items-center justify-between gap-4 text-xs font-semibold text-slate-700">
-          <div className="flex items-center gap-2">
-            <Bell className="w-4 h-4 text-[#5C24FF]" />
-            <span>Event Notification Type</span>
-          </div>
+        {/* Responsive Table Wrapper */}
+        <div className="overflow-x-auto -mx-1 px-1">
+          <div className="min-w-[620px] space-y-5">
+            {/* Channel Legend Header */}
+            <div className="bg-slate-50/80 rounded-2xl p-4 border border-slate-100 flex items-center justify-between gap-4 text-xs font-semibold text-slate-700">
+              <div className="flex items-center gap-2">
+                <Bell className="w-4 h-4 text-[#5C24FF]" />
+                <span>Event Notification Type</span>
+              </div>
 
-          <div className="flex items-center gap-8 sm:gap-12 pr-2 text-center">
-            <span className="flex items-center gap-1.5 w-12 justify-center">
-              <Mail className="w-3.5 h-3.5 text-purple-600" />
-              <span>Email</span>
-            </span>
-            <span className="flex items-center gap-1.5 w-12 justify-center">
-              <MessageSquare className="w-3.5 h-3.5 text-blue-600" />
-              <span>SMS</span>
-            </span>
-            <span className="flex items-center gap-1.5 w-12 justify-center">
-              <Smartphone className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Push</span>
-            </span>
-            <span className="flex items-center gap-1.5 w-12 justify-center">
-              <Bell className="w-3.5 h-3.5 text-amber-600" />
-              <span>In-App</span>
-            </span>
-          </div>
-        </div>
+              <div className="flex items-center gap-8 sm:gap-12 pr-2 text-center">
+                <span className="flex items-center gap-1.5 w-12 justify-center">
+                  <Mail className="w-3.5 h-3.5 text-purple-600" />
+                  <span>Email</span>
+                </span>
+                <span className="flex items-center gap-1.5 w-12 justify-center">
+                  <MessageSquare className="w-3.5 h-3.5 text-blue-600" />
+                  <span>SMS</span>
+                </span>
+                <span className="flex items-center gap-1.5 w-12 justify-center">
+                  <Smartphone className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Push</span>
+                </span>
+                <span className="flex items-center gap-1.5 w-12 justify-center">
+                  <Bell className="w-3.5 h-3.5 text-amber-600" />
+                  <span>In-App</span>
+                </span>
+              </div>
+            </div>
 
         {/* 1. Appointment Notifications */}
         <div className="space-y-3">
@@ -236,6 +239,8 @@ export const NotificationsSection: React.FC<NotificationsSectionProps> = ({
               </div>
             );
           })}
+        </div>
+          </div>
         </div>
       </div>
 
