@@ -104,31 +104,32 @@ export const PatientChartModal: React.FC<PatientChartModalProps> = ({
       title={`Patient Chart — ${patient.name}`}
       subtitle={`Electronic Health Record (EHR) • MRN: ${patient.patientId}`}
       maxWidth="7xl"
+      fixedHeight={true}
     >
-      <div className="space-y-4 font-inter">
+      <div className="h-full flex flex-col space-y-3 font-inter overflow-hidden">
         {/* ========================================================
-            1. PATIENT TOP IDENTITY & DEMOGRAPHICS BANNER (REFERENCE SCREEN)
+            1. PATIENT TOP IDENTITY & DEMOGRAPHICS BANNER (STATIC)
            ======================================================== */}
-        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-4 sm:p-6 space-y-4">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
+        <div className="flex-shrink-0 bg-white rounded-3xl border border-slate-200/90 shadow-sm p-3.5 sm:p-4 space-y-3">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div className="flex items-center gap-3.5 min-w-0">
               <img
                 src={patient.avatarUrl}
                 alt={patient.name}
-                className="w-16 h-16 rounded-full object-cover border-2 border-purple-200 shadow-sm flex-shrink-0"
+                className="w-14 h-14 rounded-full object-cover border-2 border-purple-200 shadow-sm flex-shrink-0"
               />
-              <div className="space-y-1">
-                <div className="flex items-center gap-2.5 flex-wrap">
-                  <h2 className="font-sora font-extrabold text-xl text-slate-900">
+              <div className="space-y-0.5 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h2 className="font-sora font-extrabold text-lg sm:text-xl text-slate-900 truncate">
                     {patient.name}
                   </h2>
-                  <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100">
+                  <span className="text-[11px] font-bold px-2 py-0.2 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100">
                     ✓ {patient.status}
                   </span>
-                  <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-purple-50 text-[#5C24FF] border border-purple-100">
+                  <span className="text-[11px] font-bold px-2 py-0.2 rounded-full bg-purple-50 text-[#5C24FF] border border-purple-100">
                     Blood: {patient.bloodGroup}
                   </span>
-                  <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700">
+                  <span className="text-[11px] font-bold px-2 py-0.2 rounded-full bg-slate-100 text-slate-700">
                     ID: {patient.patientId}
                   </span>
                 </div>
@@ -137,7 +138,7 @@ export const PatientChartModal: React.FC<PatientChartModalProps> = ({
                   Age: {patient.age} • {patient.gender} • DOB: {patient.dob}
                 </div>
 
-                <div className="flex items-center gap-4 text-xs text-slate-500 pt-1 flex-wrap">
+                <div className="flex items-center gap-4 text-xs text-slate-500 pt-0.5 flex-wrap">
                   <span className="flex items-center gap-1">
                     <Phone className="w-3.5 h-3.5 text-[#5C24FF]" />
                     {patient.phone}
@@ -161,9 +162,9 @@ export const PatientChartModal: React.FC<PatientChartModalProps> = ({
                   onNewAppointment?.(patient.name);
                   showToast(`Opening appointment booking for ${patient.name}`);
                 }}
-                className="flex items-center gap-1.5 px-4 py-2.5 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white font-sora font-semibold text-xs sm:text-sm rounded-2xl shadow-sm hover:opacity-95 transition-all active:scale-95 whitespace-nowrap"
+                className="flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white font-sora font-semibold text-xs rounded-xl shadow-sm hover:opacity-95 transition-all active:scale-95 whitespace-nowrap"
               >
-                <Calendar className="w-4 h-4" />
+                <Calendar className="w-3.5 h-3.5" />
                 <span>Book Appointment</span>
               </button>
 
@@ -176,15 +177,15 @@ export const PatientChartModal: React.FC<PatientChartModalProps> = ({
                     showToast(`Starting direct chat with ${patient.name}`);
                   }
                 }}
-                className="flex items-center gap-1.5 px-3.5 py-2.5 bg-purple-50 hover:bg-purple-100 text-[#5C24FF] font-sora font-semibold text-xs sm:text-sm rounded-2xl transition-all whitespace-nowrap"
+                className="flex items-center gap-1.5 px-3 py-2 bg-purple-50 hover:bg-purple-100 text-[#5C24FF] font-sora font-semibold text-xs rounded-xl transition-all whitespace-nowrap"
               >
-                <MessageSquare className="w-4 h-4" />
+                <MessageSquare className="w-3.5 h-3.5" />
                 <span>Start Chat</span>
               </button>
 
               <button
                 onClick={() => showToast(`Options menu opened for ${patient.name}`)}
-                className="w-10 h-10 rounded-2xl border border-slate-200 text-slate-500 hover:bg-slate-100 flex items-center justify-center transition-colors flex-shrink-0"
+                className="w-9 h-9 rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-100 flex items-center justify-center transition-colors flex-shrink-0"
                 title="More actions"
               >
                 <MoreVertical className="w-4 h-4" />
@@ -193,30 +194,30 @@ export const PatientChartModal: React.FC<PatientChartModalProps> = ({
           </div>
 
           {/* Context Badges: Allergy Warning, Last Visit, Next Appointment */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-100 text-xs">
-            <div className="p-2.5 bg-emerald-50/60 rounded-xl border border-emerald-100 flex items-center gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2.5 border-t border-slate-100 text-xs">
+            <div className="p-2 bg-emerald-50/60 rounded-xl border border-emerald-100 flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
               <div>
-                <span className="text-[10px] text-slate-400 font-bold uppercase block">Allergy Warning</span>
-                <span className="font-semibold text-emerald-800">No Known Drug Allergies (NKDA)</span>
+                <span className="text-[10px] text-slate-400 font-bold uppercase block leading-tight">Allergy Warning</span>
+                <span className="font-semibold text-emerald-800 text-[11px]">No Known Drug Allergies (NKDA)</span>
               </div>
             </div>
 
-            <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-100 flex items-center gap-2">
+            <div className="p-2 bg-slate-50 rounded-xl border border-slate-100 flex items-center gap-2">
               <Clock className="w-4 h-4 text-purple-600 flex-shrink-0" />
               <div>
-                <span className="text-[10px] text-slate-400 font-bold uppercase block">Last Visit Date</span>
-                <span className="font-semibold text-slate-800">
+                <span className="text-[10px] text-slate-400 font-bold uppercase block leading-tight">Last Visit Date</span>
+                <span className="font-semibold text-slate-800 text-[11px]">
                   {patient.recentVisit.date} ({patient.recentVisit.type})
                 </span>
               </div>
             </div>
 
-            <div className="p-2.5 bg-purple-50/60 rounded-xl border border-purple-100 flex items-center gap-2">
+            <div className="p-2 bg-purple-50/60 rounded-xl border border-purple-100 flex items-center gap-2">
               <Calendar className="w-4 h-4 text-[#5C24FF] flex-shrink-0" />
               <div>
-                <span className="text-[10px] text-[#5C24FF] font-bold uppercase block">Next Appointment</span>
-                <span className="font-semibold text-slate-900">
+                <span className="text-[10px] text-[#5C24FF] font-bold uppercase block leading-tight">Next Appointment</span>
+                <span className="font-semibold text-slate-900 text-[11px]">
                   {patient.nextAppointment?.date} at {patient.nextAppointment?.time}
                 </span>
               </div>
@@ -225,38 +226,36 @@ export const PatientChartModal: React.FC<PatientChartModalProps> = ({
         </div>
 
         {/* ========================================================
-            2. 13 SUB-TABS NAVIGATION RIBBON
+            2. 13 SUB-TABS NAVIGATION RIBBON (STATIC BELOW PROFILE)
            ======================================================== */}
-        <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-xs pt-1 pb-1">
-          <div className="bg-slate-50/80 rounded-2xl p-1 sm:p-1.5 border border-slate-200/90 shadow-2xs overflow-x-auto scrollbar-none w-full scroll-smooth">
-            <div className="flex items-center gap-1 sm:gap-1.5 min-w-max px-1">
-              {subTabs.map((tab) => {
-                const isActive = activeSubTab === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveSubTab(tab.id as PatientSubTab)}
-                    className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all whitespace-nowrap ${
-                      isActive
-                        ? 'bg-[#7F47FA] text-white shadow-[0_2px_10px_rgba(127,71,250,0.35)] font-semibold'
-                        : 'text-slate-700 hover:text-[#5C24FF] hover:bg-purple-50/70'
-                    }`}
-                  >
-                    <span className={isActive ? 'text-white' : 'text-[#7F47FA]'}>
-                      {tab.icon}
-                    </span>
-                    <span>{tab.label}</span>
-                  </button>
-                );
-              })}
-            </div>
+        <div className="flex-shrink-0 bg-slate-50/80 rounded-2xl p-1 sm:p-1.5 border border-slate-200/90 shadow-2xs overflow-x-auto scrollbar-none w-full scroll-smooth">
+          <div className="flex items-center gap-1 sm:gap-1.5 min-w-max px-1">
+            {subTabs.map((tab) => {
+              const isActive = activeSubTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveSubTab(tab.id as PatientSubTab)}
+                  className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all whitespace-nowrap ${
+                    isActive
+                      ? 'bg-[#7F47FA] text-white shadow-[0_2px_10px_rgba(127,71,250,0.35)] font-semibold'
+                      : 'text-slate-700 hover:text-[#5C24FF] hover:bg-purple-50/70'
+                  }`}
+                >
+                  <span className={isActive ? 'text-white' : 'text-[#7F47FA]'}>
+                    {tab.icon}
+                  </span>
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
         {/* ========================================================
-            3. TAB CONTENT (AI SUMMARY OVERVIEW BY DEFAULT)
+            3. TAB CONTENT (SCROLLABLE AREA UNDERNEATH)
            ======================================================== */}
-        <div className="pt-1">
+        <div className="flex-1 min-h-0 overflow-y-auto pr-1 pb-2 space-y-4">
           {activeSubTab === 'AI Summary' && (
             <Tab01AISummary
               patient={patient}

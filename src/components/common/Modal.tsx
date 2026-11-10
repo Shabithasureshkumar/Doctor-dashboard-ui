@@ -8,6 +8,7 @@ interface ModalProps {
   subtitle?: string;
   children: React.ReactNode;
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl' | 'full';
+  fixedHeight?: boolean;
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -17,6 +18,7 @@ export const Modal: React.FC<ModalProps> = ({
   subtitle,
   children,
   maxWidth = 'lg',
+  fixedHeight = false,
 }) => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -56,11 +58,13 @@ export const Modal: React.FC<ModalProps> = ({
         aria-hidden="true"
       />
       <div
-        className={`relative w-full ${maxWidthClasses[maxWidth]} bg-white rounded-2xl shadow-modal border border-slate-100 overflow-hidden z-10 animate-in zoom-in-95 duration-200`}
+        className={`relative w-full ${maxWidthClasses[maxWidth]} bg-white rounded-2xl shadow-modal border border-slate-100 overflow-hidden z-10 animate-in zoom-in-95 duration-200 flex flex-col ${
+          fixedHeight ? 'h-[92vh] max-h-[92vh]' : ''
+        }`}
         role="dialog"
         aria-modal="true"
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex-shrink-0">
           <div>
             <h3 className="font-sora font-semibold text-slate-900 text-lg">{title}</h3>
             {subtitle && <p className="text-xs text-slate-500 mt-0.5">{subtitle}</p>}
@@ -73,7 +77,15 @@ export const Modal: React.FC<ModalProps> = ({
             <X className="w-5 h-5" />
           </button>
         </div>
-        <div className="p-4 sm:p-6 max-h-[85vh] overflow-y-auto">{children}</div>
+        <div
+          className={`p-4 sm:p-6 ${
+            fixedHeight
+              ? 'flex-1 min-h-0 overflow-hidden flex flex-col'
+              : 'max-h-[85vh] overflow-y-auto'
+          }`}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );
