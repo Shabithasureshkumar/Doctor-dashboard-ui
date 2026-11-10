@@ -64,42 +64,42 @@ export const Tab13Periods: React.FC<Tab13PeriodsProps> = ({ patient, onToast }) 
         onInfoClick={() => onToast('Menstruation phase started on Jun 01, 2026. Expected duration: 5 days.')}
       />
 
-      {/* Row 2: Middle Section (Cycle Calendar + Trend Analysis + Cycle Insights) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4">
+      {/* Row 2: Middle Section (Cycle Calendar + Trend Analysis + Cycle Insights) - Uniform Height & Aligned */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4 items-stretch">
         {/* Cycle Calendar Card */}
-        <div className="lg:col-span-4 flex flex-col">
+        <div className="lg:col-span-4 flex flex-col h-full">
           <CycleCalendarCard
             onSelectDate={(d) => onToast(`Selected cycle date: ${d}`)}
           />
         </div>
 
-        {/* Trend Analysis Card */}
-        <div className="lg:col-span-5 flex flex-col">
+        {/* Trend Analysis Card (Scrollable with all logged period & phase trends) */}
+        <div className="lg:col-span-5 flex flex-col h-full">
           <TrendAnalysisCard />
         </div>
 
         {/* Cycle Insights Card */}
-        <div className="lg:col-span-3 flex flex-col">
+        <div className="lg:col-span-3 flex flex-col h-full">
           <CycleInsightsCard />
         </div>
       </div>
 
-      {/* Row 3: Bottom Section (Period Logs Table + Ovulation Tracking + Patient Notes & Sharing) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4">
+      {/* Row 3: Bottom Section (Period Logs Table + Ovulation Tracking + Patient Notes & Sharing) - Uniform Height & Aligned */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4 items-stretch">
         {/* Period Logs Table */}
-        <div className="lg:col-span-5 flex flex-col">
+        <div className="lg:col-span-5 flex flex-col h-full">
           <PeriodLogsTable
             onViewAll={() => onToast('Viewing all 30-day historical cycle logs...')}
           />
         </div>
 
         {/* Ovulation & Fertility Tracking */}
-        <div className="lg:col-span-4 flex flex-col">
+        <div className="lg:col-span-4 flex flex-col h-full">
           <OvulationTrackingCard />
         </div>
 
         {/* Patient Notes & Sharing */}
-        <div className="lg:col-span-3 flex flex-col">
+        <div className="lg:col-span-3 flex flex-col h-full">
           <PatientNotesSharingCard onToast={onToast} />
         </div>
       </div>

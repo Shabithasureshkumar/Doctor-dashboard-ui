@@ -73,11 +73,11 @@ export const PeriodLogsTable: React.FC<{ onViewAll?: () => void }> = ({ onViewAl
   ];
 
   return (
-    <div className="bg-white rounded-[24px] p-5 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] flex flex-col justify-between">
-      <div>
-        <div className="flex items-center justify-between pb-3 border-b border-slate-50">
+    <div className="bg-white rounded-[24px] p-4 sm:p-5 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] h-[340px] flex flex-col justify-between">
+      <div className="flex-1 flex flex-col min-h-0">
+        <div className="flex items-center justify-between pb-2.5 border-b border-slate-50 flex-shrink-0">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full bg-pink-50 text-rose-500 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-full bg-pink-50 text-rose-500 flex items-center justify-center flex-shrink-0">
               <FileEdit className="w-3.5 h-3.5" />
             </div>
             <h4 className="font-sora font-bold text-slate-900 text-sm">
@@ -94,7 +94,7 @@ export const PeriodLogsTable: React.FC<{ onViewAll?: () => void }> = ({ onViewAl
           </button>
         </div>
 
-        <div className="overflow-x-auto pt-2">
+        <div className="overflow-x-auto overflow-y-auto flex-1 min-h-0 pt-1.5 custom-scrollbar">
           <table className="w-full text-xs text-left">
             <thead>
               <tr className="text-slate-400 font-medium text-[11px] border-b border-slate-100">

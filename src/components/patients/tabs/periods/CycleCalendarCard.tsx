@@ -60,10 +60,10 @@ export const CycleCalendarCard: React.FC<CycleCalendarCardProps> = ({ onSelectDa
   ];
 
   return (
-    <div className="bg-white rounded-[24px] p-5 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+    <div className="bg-white rounded-[24px] p-4 sm:p-5 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] h-[390px] flex flex-col justify-between">
       <div>
         {/* Header & Controls */}
-        <div className="flex items-center justify-between pb-3">
+        <div className="flex items-center justify-between pb-2.5">
           <div>
             <h4 className="font-sora font-bold text-slate-900 text-sm">Cycle Calendar</h4>
             <span className="text-[11px] text-slate-400 font-medium">June 2026</span>
@@ -78,7 +78,7 @@ export const CycleCalendarCard: React.FC<CycleCalendarCardProps> = ({ onSelectDa
             </button>
             <button
               onClick={() => setSelectedDate('2026-06-02')}
-              className="px-2.5 py-0.5 rounded-full border border-slate-200 text-slate-600 text-[11px] font-semibold hover:bg-slate-50 transition-colors"
+              className="px-2.5 py-0.5 rounded-full border border-slate-200 text-slate-600 text-[10px] font-semibold hover:bg-slate-50 transition-colors"
             >
               Today
             </button>
@@ -86,18 +86,18 @@ export const CycleCalendarCard: React.FC<CycleCalendarCardProps> = ({ onSelectDa
         </div>
 
         {/* Days of week */}
-        <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-semibold text-slate-400 py-1.5 border-b border-slate-50">
+        <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-semibold text-slate-400 py-1 border-b border-slate-50">
           {daysOfWeek.map((d) => (
             <div key={d}>{d}</div>
           ))}
         </div>
 
         {/* Day Grid */}
-        <div className="grid grid-cols-7 gap-1.5 pt-2 text-center text-xs">
+        <div className="grid grid-cols-7 gap-1 pt-1.5 text-center text-xs">
           {calendarCells.map((cell, idx) => {
             if (!cell.isCurrentMonth) {
               return (
-                <div key={idx} className="h-8 flex items-center justify-center text-slate-300 font-medium text-[11px]">
+                <div key={idx} className="h-7 flex items-center justify-center text-slate-300 font-medium text-[11px]">
                   {cell.day}
                 </div>
               );
@@ -129,7 +129,7 @@ export const CycleCalendarCard: React.FC<CycleCalendarCardProps> = ({ onSelectDa
                     onSelectDate?.(cell.dateStr);
                   }
                 }}
-                className={`h-8 w-full rounded-full flex items-center justify-center text-[11px] transition-all relative ${cellStyle} ${
+                className={`h-7 w-full rounded-full flex items-center justify-center text-[11px] transition-all relative ${cellStyle} ${
                   isSelected && !cell.isToday ? 'ring-2 ring-[#5C24FF]' : ''
                 }`}
               >
@@ -141,29 +141,29 @@ export const CycleCalendarCard: React.FC<CycleCalendarCardProps> = ({ onSelectDa
       </div>
 
       {/* Legend Footer */}
-      <div className="pt-4 border-t border-slate-100 mt-3 flex items-center justify-between text-[10px] text-slate-500 flex-wrap gap-y-1.5">
+      <div className="pt-2.5 border-t border-slate-100 mt-2 flex items-center justify-between text-[9px] text-slate-500 flex-wrap gap-y-1">
         <span className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-rose-400" />
+          <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
           Menstruation
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-amber-300" />
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-300" />
           Fertility Window
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-emerald-500" />
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
           Ovulation
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-purple-300" />
+          <span className="w-1.5 h-1.5 rounded-full bg-purple-300" />
           Luteal Phase
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-pink-400" />
+          <span className="w-1.5 h-1.5 rounded-full bg-pink-400" />
           Intercourse
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-blue-400" />
+          <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
           Med taken
         </span>
       </div>

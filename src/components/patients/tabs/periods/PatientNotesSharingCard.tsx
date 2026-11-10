@@ -6,10 +6,10 @@ export const PatientNotesSharingCard: React.FC<{ onToast?: (msg: string) => void
 
   return (
     <>
-      <div className="bg-white rounded-[24px] p-5 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] flex flex-col justify-between">
-        <div>
-          <div className="flex items-center gap-2 pb-3 border-b border-slate-50">
-            <div className="w-7 h-7 rounded-full bg-pink-50 text-rose-500 flex items-center justify-center">
+      <div className="bg-white rounded-[24px] p-4 sm:p-5 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] h-[340px] flex flex-col justify-between">
+        <div className="flex-1 flex flex-col justify-between min-h-0">
+          <div className="flex items-center gap-2 pb-2.5 border-b border-slate-50 flex-shrink-0">
+            <div className="w-7 h-7 rounded-full bg-pink-50 text-rose-500 flex items-center justify-center flex-shrink-0">
               <FileText className="w-3.5 h-3.5" />
             </div>
             <h4 className="font-sora font-bold text-slate-900 text-sm">
@@ -17,57 +17,57 @@ export const PatientNotesSharingCard: React.FC<{ onToast?: (msg: string) => void
             </h4>
           </div>
 
-          <div className="pt-3 space-y-3">
+          <div className="pt-2 space-y-2 flex-1 flex flex-col justify-between min-h-0">
             {/* Patient Notes Quote Box */}
-            <div className="p-3 bg-purple-50/50 rounded-2xl border border-purple-100/60 relative">
-              <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#7C3AED] mb-1">
+            <div className="p-2.5 bg-purple-50/50 rounded-2xl border border-purple-100/60 relative">
+              <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#7C3AED] mb-0.5">
                 <FileText className="w-3 h-3" />
                 <span>Patient Notes</span>
               </div>
               <p className="text-xs text-slate-700 italic leading-relaxed">
                 “Experiencing more cramps this cycle. Taking ibuprofen as needed.”
               </p>
-              <span className="text-[10px] text-slate-400 block mt-1 font-medium">
+              <span className="text-[10px] text-slate-400 block mt-0.5 font-medium">
                 Jun 02, 2026
               </span>
             </div>
 
             {/* Last Updated */}
-            <div className="flex items-center justify-between text-xs py-1 border-b border-slate-50">
+            <div className="flex items-center justify-between text-xs py-0.5 border-b border-slate-50">
               <div className="flex items-center gap-1.5 text-slate-500">
                 <Clock className="w-3.5 h-3.5 text-slate-400" />
-                <span>Last Updated</span>
+                <span className="text-[11px]">Last Updated</span>
               </div>
-              <span className="font-semibold text-slate-800">Jun 05, 2026, 8:30 AM</span>
+              <span className="font-semibold text-slate-800 text-[11px]">Jun 05, 2026, 8:30 AM</span>
             </div>
 
             {/* Data Sharing Status */}
-            <div className="flex items-center justify-between text-xs py-1 border-b border-slate-50">
+            <div className="flex items-center justify-between text-xs py-0.5 border-b border-slate-50">
               <div className="flex items-center gap-1.5 text-slate-500">
                 <Share2 className="w-3.5 h-3.5 text-slate-400" />
-                <span>Data Sharing Status</span>
+                <span className="text-[11px]">Data Sharing Status</span>
               </div>
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 text-[11px] font-semibold">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 text-[10px] font-semibold">
                 <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                 Shared with provider
               </span>
             </div>
 
             {/* Shared Sections */}
-            <div className="text-xs py-1 space-y-1">
+            <div className="text-xs py-0.5 space-y-0.5">
               <div className="flex items-center gap-1.5 text-slate-500">
                 <Layers className="w-3.5 h-3.5 text-slate-400" />
-                <span className="font-medium">Shared Sections</span>
+                <span className="font-medium text-[11px]">Shared Sections</span>
               </div>
-              <p className="text-[11px] text-slate-600 pl-5 leading-normal">
-                Cycle data, Symptoms, Period logs, Fertility tracking (as permitted)
+              <p className="text-[10px] text-slate-600 pl-5 leading-tight">
+                Cycle data, Symptoms, Period logs, Fertility tracking
               </p>
             </div>
           </div>
         </div>
 
         {/* Action Button */}
-        <div className="pt-3 mt-1">
+        <div className="pt-2 flex-shrink-0">
           <button
             onClick={() => setIsPermissionsOpen(true)}
             className="w-full py-2.5 px-4 bg-[#6333F6] hover:bg-[#5324E0] text-white font-sora font-semibold text-xs rounded-xl shadow-xs transition-all flex items-center justify-center"
