@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import { LayoutGrid, Search, Settings, Bell, ChevronDown } from 'lucide-react';
+import {
+  LayoutDashboard,
+  CalendarDays,
+  UsersRound,
+  ChartNoAxesCombined,
+  MessagesSquare,
+  Wallet,
+  Search,
+  Settings,
+  Bell,
+  ChevronDown,
+} from 'lucide-react';
 import { CURRENT_DOCTOR } from '../../mockData';
 import { TabType } from '../../types';
 import { Avatar } from '../common/Avatar';
@@ -13,6 +24,21 @@ interface DashboardHeaderProps {
   isSettingsActive?: boolean;
 }
 
+interface NavItemConfig {
+  tab: TabType;
+  label: string;
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+}
+
+const NAV_ITEMS: NavItemConfig[] = [
+  { tab: 'Dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { tab: 'Appointment', label: 'Appointment', icon: CalendarDays },
+  { tab: 'Patient', label: 'Patient', icon: UsersRound },
+  { tab: 'Reports', label: 'Reports', icon: ChartNoAxesCombined },
+  { tab: 'Chats', label: 'Chats', icon: MessagesSquare },
+  { tab: 'Billing', label: 'Billing', icon: Wallet },
+];
+
 export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   activeTab,
   onTabChange,
@@ -25,27 +51,32 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [headerSearchQuery, setHeaderSearchQuery] = useState('');
 
-  const tabs: TabType[] = ['Dashboard', 'Appointment', 'Patient', 'Reports', 'Chats', 'Billing'];
-
   return (
     <header className="w-full pt-3 pb-2 transition-all">
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Navigation Tabs */}
-        <nav className="flex items-center gap-4 sm:gap-6 lg:gap-8 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
-          {tabs.map((tab) => {
+        <nav className="flex items-center gap-1.5 sm:gap-2 lg:gap-3 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
+          {NAV_ITEMS.map(({ tab, label, icon: Icon }) => {
             const isActive = activeTab === tab;
             return (
               <button
                 key={tab}
                 onClick={() => onTabChange(tab)}
-                className={`flex items-center gap-2.5 rounded-2xl font-sora transition-all duration-150 whitespace-nowrap ${
+                className={`group flex items-center gap-2 sm:gap-2.5 rounded-[14px] font-sora transition-all duration-200 whitespace-nowrap text-sm sm:text-[15px] ${
                   isActive
-                    ? 'bg-gradient-to-r from-[#9A6AFB] to-[#5C24FF] text-white px-6 py-3 font-semibold text-sm sm:text-base shadow-[0_4px_14px_rgba(154,106,251,0.35)]'
-                    : 'text-slate-700 hover:text-[#5C24FF] px-2 py-2 font-medium text-sm sm:text-base'
+                    ? 'bg-gradient-to-r from-[#7542FF] to-[#5425F5] text-white px-5 sm:px-6 py-2.5 sm:py-3 font-semibold shadow-[0_4px_16px_rgba(117,66,255,0.38)]'
+                    : 'text-[#1E293B] hover:text-[#5425F5] hover:bg-purple-50/70 px-3.5 sm:px-4 py-2.5 sm:py-3 font-medium'
                 }`}
               >
-                {tab === 'Dashboard' && <LayoutGrid className="w-5 h-5" />}
-                <span>{tab}</span>
+                <Icon
+                  className={`w-[19px] h-[19px] flex-shrink-0 transition-all duration-200 ${
+                    isActive
+                      ? 'text-white'
+                      : 'text-[#334155] group-hover:text-[#5425F5] group-hover:scale-110'
+                  }`}
+                  strokeWidth={1.9}
+                />
+                <span>{label}</span>
               </button>
             );
           })}
