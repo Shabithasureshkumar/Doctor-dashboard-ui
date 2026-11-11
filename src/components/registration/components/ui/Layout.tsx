@@ -52,18 +52,18 @@ interface ScreenHeaderProps {
 /** Icon badge + title (+ eyebrow) + completion ring. */
 export function ScreenHeader({ icon, title, eyebrow, progress, celebrate = true, badgeClassName }: ScreenHeaderProps) {
   return (
-    <div className="flex items-center gap-3.5 lg:gap-[18px]">
+    <div className="flex items-center gap-3 lg:gap-4">
       <span
         className={
           badgeClassName ??
-          'relative flex h-[52px] w-[52px] flex-none items-center justify-center rounded-[15px] border border-[#E1D6FF] bg-tint text-brand'
+          'relative flex h-[46px] w-[46px] sm:h-[50px] sm:w-[50px] flex-none items-center justify-center rounded-[14px] border border-[#E1D6FF] bg-tint text-brand'
         }
       >
         {icon}
       </span>
       <div className="min-w-0">
-        {eyebrow && <span className="mb-1 block text-xs font-semibold tracking-[0.06em] text-brand uppercase">{eyebrow}</span>}
-        <h1 className="m-0 font-display text-[22px] leading-tight font-bold tracking-[-0.02em] lg:text-[clamp(22px,1.9vw,26px)]">{title}</h1>
+        {eyebrow && <span className="mb-0.5 block text-[11px] font-semibold tracking-[0.06em] text-brand uppercase">{eyebrow}</span>}
+        <h1 className="m-0 font-display text-[20px] sm:text-[22px] leading-tight font-bold tracking-[-0.02em] lg:text-[clamp(21px,1.8vw,25px)]">{title}</h1>
       </div>
       {progress !== undefined && <ProgressRing value={progress} celebrate={celebrate} />}
     </div>
@@ -71,11 +71,11 @@ export function ScreenHeader({ icon, title, eyebrow, progress, celebrate = true,
 }
 
 export function Lead({ children }: { children: ReactNode }) {
-  return <p className="mt-3 mb-0 text-[14.5px] leading-relaxed text-muted">{children}</p>;
+  return <p className="mt-2 mb-0 text-[13.5px] sm:text-[14px] leading-relaxed text-muted">{children}</p>;
 }
 
 export function SectionLabel({ children }: { children: ReactNode }) {
-  return <span className="mb-2 block text-[13px] font-semibold text-ink-2">{children}</span>;
+  return <span className="mb-1.5 block text-[12.5px] font-semibold text-ink-2">{children}</span>;
 }
 
 interface StepFooterProps {
@@ -89,7 +89,7 @@ interface StepFooterProps {
 /** Divider + Back / Continue row used on every form step. */
 export function StepFooter({ onBack, onNext, nextLabel, ready, nextIcon = 'arrowRight' }: StepFooterProps) {
   return (
-    <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-[#EEE9FB] pt-5">
+    <div className="mt-5 sm:mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-[#EEE9FB] pt-3.5 sm:pt-4">
       {onBack ? <BackButton onClick={onBack} /> : <span />}
       <PrimaryButton onClick={onNext} ready={ready} celebrate>
         {nextLabel}

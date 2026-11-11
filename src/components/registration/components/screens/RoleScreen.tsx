@@ -38,7 +38,7 @@ export default function RoleScreen({ form, update, progress, onNext, onSkipToDas
         <Lead>Tell us how you practice so we can set up your portal the right way. You can change this later in Settings.</Lead>
       </Reveal>
 
-      <div role="radiogroup" aria-label="Provider role" className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <div role="radiogroup" aria-label="Provider role" className="mt-4 sm:mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
         {ROLES.map((r, i) => (
           <Reveal key={r.id} i={i + 2} className="grid">
             <RoleCard
@@ -59,10 +59,10 @@ export default function RoleScreen({ form, update, progress, onNext, onSkipToDas
       </Collapse>
 
       <Reveal i={6}>
-        <ul aria-label="What you get" className="mt-5 flex list-none flex-wrap gap-x-5 gap-y-2 p-0 text-[13px] font-medium text-muted">
+        <ul aria-label="What you get" className="mt-3.5 flex list-none flex-wrap gap-x-4 gap-y-1.5 p-0 text-[12.5px] font-medium text-muted">
           {PERKS.map((p) => (
-            <li key={p.label} className="flex items-center gap-[7px]">
-              <Icon name={p.icon} size={16} className="text-brand" />
+            <li key={p.label} className="flex items-center gap-[6px]">
+              <Icon name={p.icon} size={15} className="text-brand" />
               {p.label}
             </li>
           ))}
@@ -70,12 +70,12 @@ export default function RoleScreen({ form, update, progress, onNext, onSkipToDas
       </Reveal>
 
       <Reveal i={7}>
-        <div className="mt-8 border-t border-[#EEE9FB] pt-5">
+        <div className="mt-4 border-t border-[#EEE9FB] pt-3.5">
           <PrimaryButton wide celebrate onClick={onNext}>
             {continueLabel}
             <Icon name="arrowRight" size={18} strokeWidth={2.2} />
           </PrimaryButton>
-          <p className="mt-4 mb-0 text-center text-sm text-muted">
+          <p className="mt-2.5 mb-0 text-center text-[13px] text-muted">
             Already registered?{' '}
             <button
               type="button"

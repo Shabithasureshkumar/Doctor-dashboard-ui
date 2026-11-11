@@ -15,11 +15,11 @@ export default function DoctorsGuide({ step }: { step: number }) {
       <div
         key={`say-${messageKey}`}
         aria-live="polite"
-        className="say-tail absolute right-[calc(50%+128px)] bottom-[calc(100%+92px)] z-[2] hidden max-w-[200px] origin-bottom-right animate-say-pop rounded-[14px_14px_4px_14px] border border-[#E4DAFF] bg-white px-[13px] py-[9px] text-[13px] leading-snug font-semibold text-ink md:block"
+        className="say-tail absolute right-[calc(50%+112px)] bottom-[calc(100%+76px)] z-[2] hidden max-w-[190px] origin-bottom-right animate-say-pop rounded-[14px_14px_4px_14px] border border-[#E4DAFF] bg-white px-3 py-2 text-[12.5px] leading-snug font-semibold text-ink md:block shadow-sm"
       >
         {message}
       </div>
-      <div className="pointer-events-none absolute bottom-[calc(100%-1px)] left-1/2 w-[240px] -translate-x-1/2 select-none lg:w-[280px]">
+      <div className="pointer-events-none absolute bottom-[calc(100%-1px)] left-1/2 w-[220px] -translate-x-1/2 select-none lg:w-[252px]">
         <img
           key={`docs-${animKey}`}
           src={doctors}

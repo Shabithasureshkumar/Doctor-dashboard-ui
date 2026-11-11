@@ -52,7 +52,7 @@ export default function UnderReviewScreen({ email, onPreviewApproved, onHome, on
     <section>
       <Reveal i={0}>
         <ScreenHeader
-          badgeClassName="relative flex h-[52px] w-[52px] flex-none items-center justify-center rounded-[15px] bg-linear-135 from-brand-light to-brand text-white"
+          badgeClassName="relative flex h-[52px] w-[52px] flex-none items-center justify-center rounded-[15px] bg-gradient-to-br from-[#9a6afb] to-[#5c24ff] text-white shadow-md shadow-purple-500/25"
           icon={
             <>
               <span aria-hidden="true" className="absolute inset-0 animate-pulse-ring rounded-[15px] border-2 border-brand" />
@@ -94,7 +94,7 @@ export default function UnderReviewScreen({ email, onPreviewApproved, onHome, on
             <span className="rounded-full bg-[#EBE2FF] px-2.5 py-1 text-xs font-semibold text-brand">Usually under 24 hours</span>
           </div>
           <div aria-hidden="true" className="relative my-4 h-1.5 overflow-hidden rounded-md bg-[#E9E2FB]">
-            <i className="bar-fill absolute inset-y-0 left-0 w-[62%] overflow-hidden rounded-md bg-linear-to-r from-brand-light to-brand" />
+            <i className="bar-fill absolute inset-y-0 left-0 w-[62%] overflow-hidden rounded-md bg-gradient-to-r from-[#9a6afb] to-[#5c24ff]" />
           </div>
           <ol aria-label="Application status" className="relative z-[1] m-0 grid list-none grid-cols-3 gap-2.5 p-0">
             {STAGES.map((s) => (

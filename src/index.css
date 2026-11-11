@@ -129,10 +129,13 @@
 }
 
 .card-selected {
-  border-color: transparent !important;
-  background:
-    linear-gradient(180deg, #f7f2ff, #ffffff) padding-box,
-    linear-gradient(135deg, #9a6afb, #5c24ff) border-box !important;
+  position: relative !important;
+  border: 1.5px solid transparent !important;
+  background-image: linear-gradient(180deg, #f7f2ff, #ffffff), linear-gradient(135deg, #9a6afb, #5c24ff) !important;
+  background-origin: padding-box, border-box !important;
+  background-clip: padding-box, border-box !important;
+  -webkit-background-clip: padding-box, border-box !important;
+  box-shadow: 0 4px 20px -2px rgba(92, 36, 255, 0.15) !important;
 }
 .card-glow::after {
   content: "";

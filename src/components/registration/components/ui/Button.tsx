@@ -46,8 +46,8 @@ export function PrimaryButton({ children, onClick, ready, wide, celebrate, type 
       onClick={handleClick}
       className={[
         'btn-shine relative inline-flex h-[52px] items-center justify-center gap-2.5 overflow-hidden rounded-[14px] px-7',
-        'bg-linear-to-r from-[#8A4BFF] to-brand text-[15px] font-semibold text-white',
-        'transition-transform hover:from-[#7A3BF5] hover:to-brand-600 active:scale-[.97]',
+        'bg-gradient-to-r from-[#8A4BFF] to-[#5C24FF] text-[15px] font-semibold text-white shadow-md shadow-purple-500/20',
+        'transition-all duration-200 hover:from-[#7A3BF5] hover:to-[#4A15E8] hover:shadow-purple-500/30 active:scale-[.97]',
         'focus-visible:ring-4 focus-visible:ring-brand/25 focus-visible:outline-none',
         wide ? 'w-full' : '',
         ready ? 'animate-ready' : '',

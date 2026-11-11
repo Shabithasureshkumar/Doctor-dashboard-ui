@@ -43,10 +43,15 @@ export function ProgressRing({ value, celebrate = true }: { value: number; celeb
           strokeDashoffset={CIRC * (1 - value)}
         />
       </svg>
-      {full && <span className="absolute inset-[5px] animate-pop-in rounded-full bg-brand" />}
-      <span className={`absolute inset-0 flex items-center justify-center text-[11px] font-bold ${full ? 'text-white' : 'text-brand'}`}>
-        {full ? <Icon name="check" size={14} strokeWidth={3.5} /> : `${pct}%`}
-      </span>
+      {full ? (
+        <span className="absolute inset-[4px] z-10 flex items-center justify-center rounded-full bg-[#5C24FF] shadow-sm animate-pop-in">
+          <Icon name="check" size={15} strokeWidth={3.5} className="text-white" />
+        </span>
+      ) : (
+        <span className="absolute inset-0 z-10 flex items-center justify-center text-[11px] font-bold text-[#5C24FF]">
+          {pct}%
+        </span>
+      )}
     </span>
   );
 }

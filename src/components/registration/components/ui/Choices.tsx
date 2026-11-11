@@ -109,21 +109,21 @@ export function RoleCard(props: OptionProps & { icon: IconName; title: string; d
       aria-checked={selected}
       onClick={onClick}
       onAnimationEnd={onAnimationEnd}
-      className={`${optionBase} ${selected ? `${optionOn} card-glow` : optionIdle} ${popClass} flex flex-col items-start gap-1 rounded-[18px] p-[18px] pb-4`}
+      className={`${optionBase} ${selected ? `${optionOn} card-glow` : optionIdle} ${popClass} flex flex-col items-start gap-1 rounded-[16px] p-3.5 pb-3 sm:p-4 sm:pb-3.5`}
     >
       <span
-        className={`absolute top-3.5 right-3.5 z-[1] flex h-[22px] w-[22px] items-center justify-center rounded-full border-[1.5px] text-white transition-all duration-300 ${selected ? 'border-brand bg-brand' : 'border-[#D6CDF3] bg-white'}`}
+        className={`absolute top-3 right-3 z-[1] flex h-[20px] w-[20px] items-center justify-center rounded-full border-[1.5px] transition-all duration-300 ${selected ? 'border-[#5c24ff] bg-[#5c24ff] text-white shadow-xs' : 'border-[#D6CDF3] bg-white text-transparent'}`}
       >
-        <Icon name="check" size={12} strokeWidth={3.5} className={`transition-all duration-300 ${selected ? 'scale-100 opacity-100' : 'scale-50 opacity-0'}`} />
+        <Icon name="check" size={11} strokeWidth={3.5} className={`transition-all duration-300 ${selected ? 'scale-100 opacity-100 text-white' : 'scale-50 opacity-0'}`} />
       </span>
       <span
-        className={`mb-2 flex h-[46px] w-[46px] items-center justify-center rounded-[14px] transition-all duration-300 ease-expo ${selected ? '-rotate-6 bg-linear-135 from-brand-light to-brand text-white' : 'bg-tint text-brand'}`}
+        className={`mb-1.5 flex h-[40px] w-[40px] items-center justify-center rounded-[12px] transition-all duration-300 ease-expo ${selected ? '-rotate-6 bg-gradient-to-br from-[#9a6afb] to-[#5c24ff] text-white shadow-md shadow-purple-500/25' : 'bg-[#f3eeff] text-[#5c24ff]'}`}
       >
-        <Icon name={icon} size={22} />
+        <Icon name={icon} size={20} />
       </span>
-      <span className="text-[15px] font-semibold text-ink">{title}</span>
-      <span className="text-[13px] leading-snug text-muted">{description}</span>
-      <span className={`mt-2 rounded-md px-2 py-[3px] text-[11px] font-semibold transition-colors ${selected ? 'bg-[#EBE2FF] text-brand' : 'bg-[#F4F1FC] text-muted-2'}`}>{tag}</span>
+      <span className="text-[14px] sm:text-[14.5px] font-semibold text-ink leading-snug">{title}</span>
+      <span className="text-[12px] sm:text-[12.5px] leading-snug text-muted">{description}</span>
+      <span className={`mt-1.5 rounded-md px-2 py-[2px] text-[10.5px] font-semibold transition-colors ${selected ? 'bg-[#EBE2FF] text-[#5c24ff]' : 'bg-[#F4F1FC] text-muted-2'}`}>{tag}</span>
     </button>
   );
 }
@@ -158,7 +158,7 @@ export function TileOption(props: OptionProps & { icon: IconName; label: string 
       onAnimationEnd={onAnimationEnd}
       className={`${optionBase} ${props.selected ? optionOn : optionIdle} ${popClass} flex flex-col items-center gap-2.5 px-2.5 py-[18px]`}
     >
-      <span className={`flex h-[42px] w-[42px] items-center justify-center rounded-xl transition-colors ${props.selected ? 'bg-brand text-white' : 'bg-tint text-brand'}`}>
+      <span className={`flex h-[42px] w-[42px] items-center justify-center rounded-xl transition-all duration-300 ${props.selected ? 'bg-gradient-to-br from-[#9a6afb] to-[#5c24ff] text-white shadow-md shadow-purple-500/25' : 'bg-tint text-brand'}`}>
         <Icon name={props.icon} size={20} />
       </span>
       <span className="text-[15px] font-semibold text-ink">{props.label}</span>
