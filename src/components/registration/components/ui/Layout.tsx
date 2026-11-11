@@ -89,7 +89,7 @@ interface StepFooterProps {
 /** Divider + Back / Continue row used on every form step. */
 export function StepFooter({ onBack, onNext, nextLabel, ready, nextIcon = 'arrowRight' }: StepFooterProps) {
   return (
-    <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-[#EEE9FB] pt-5">
+    <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-[#EEE9FB] pt-4">
       {onBack ? <BackButton onClick={onBack} /> : <span />}
       <PrimaryButton onClick={onNext} ready={ready} celebrate>
         {nextLabel}
