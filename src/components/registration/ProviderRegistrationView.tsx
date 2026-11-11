@@ -60,7 +60,7 @@ function RegistrationFlow({ onCompleteRegistration, onSkipToDashboard }: Provide
   // What happens when a new screen opens.
   useEffect(() => {
     say(GREETINGS[step]);
-    cardRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.scrollY > 60 && window.innerWidth >= 1024) window.scrollTo({ top: 0, behavior: 'smooth' });
     if (step === REVIEW) {
       const t = window.setTimeout(() => {
         const r = cardRef.current?.getBoundingClientRect();
@@ -104,16 +104,17 @@ function RegistrationFlow({ onCompleteRegistration, onSkipToDashboard }: Provide
       progress: stepCompletion(step, form),
       onNext: () => go(step + 1),
       onBack: () => go(step - 1),
+      onSkipToDashboard,
     };
     return <Screen {...props} />;
   };
 
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center lg:h-screen lg:max-h-screen lg:overflow-hidden p-2 sm:p-3 lg:p-4 selection:bg-purple-200 selection:text-purple-900">
+    <>
       <BackgroundFx />
       <Confetti />
 
-      <div className="relative z-[1] mx-auto grid w-full max-w-[1300px] grid-cols-1 lg:grid-cols-[minmax(0,.82fr)_minmax(0,1fr)] gap-3 lg:gap-[18px] lg:h-[calc(100vh-32px)] lg:max-h-[890px] lg:rounded-[36px] lg:border lg:border-white/85 lg:bg-white/40 lg:p-3.5 lg:backdrop-blur-[18px] lg:shadow-[0_40px_90px_-50px_rgb(92_36_255/0.35)] lg:overflow-hidden">
+      <div className="relative z-[1] mx-auto grid max-w-[1280px] grid-cols-1 gap-3 p-2.5 lg:my-8 lg:grid-cols-[minmax(0,.82fr)_minmax(0,1fr)] lg:gap-[18px] lg:rounded-[40px] lg:border lg:border-white/85 lg:bg-white/40 lg:p-4 lg:backdrop-blur-[18px] lg:shadow-[0_40px_90px_-50px_rgb(92_36_255/0.35)]">
         <ParticleHero
           shape={hero.shape}
           kicker={hero.kicker}
@@ -124,8 +125,8 @@ function RegistrationFlow({ onCompleteRegistration, onSkipToDashboard }: Provide
           textKey={step}
         />
 
-        <main className="relative flex min-w-0 flex-col justify-between rounded-[24px] border border-white bg-linear-to-b from-[#F9F7FF] to-[#F2EDFF] p-3 sm:p-4 lg:h-full lg:min-h-0 lg:rounded-[28px] lg:px-6 lg:py-5 lg:overflow-hidden">
-          <header className="mb-[100px] flex flex-none items-center justify-between gap-4 rounded-[20px] border border-line-soft bg-white px-[18px] py-2.5 lg:mb-[118px]">
+        <main className="relative flex min-w-0 flex-col rounded-[24px] border border-white bg-linear-to-b from-[#F9F7FF] to-[#F2EDFF] p-3.5 lg:min-h-[max(640px,calc(100vh-96px))] lg:rounded-[30px] lg:px-[26px] lg:py-[22px]">
+          <header className="mb-[140px] flex flex-none items-center justify-between gap-4 rounded-[20px] border border-line-soft bg-white px-[18px] py-3 lg:mb-[172px]">
             <Stepper step={step} />
             <button
               type="button"
@@ -136,37 +137,23 @@ function RegistrationFlow({ onCompleteRegistration, onSkipToDashboard }: Provide
             </button>
           </header>
 
-          <div
-            ref={cardRef}
-            className="relative flex-1 min-h-0 w-full rounded-[26px] border border-line-soft bg-white px-5 pt-6 pb-6 lg:px-7 lg:pt-6 lg:pb-6 flex flex-col justify-between overflow-y-auto scrollbar-none"
-          >
+          <div ref={cardRef} className="relative my-auto w-full rounded-[28px] border border-line-soft bg-white px-[22px] pt-8 pb-[30px] lg:px-[clamp(22px,3vw,36px)]">
             <DoctorsGuide step={step} />
-            <div key={step} className={`flex-1 flex flex-col justify-between ${leaving ? 'animate-screen-out' : 'animate-screen-in'}`}>
+            <div key={step} className={leaving ? 'animate-screen-out' : 'animate-screen-in'}>
               {renderScreen()}
             </div>
           </div>
 
-          <div className="mt-2.5 mb-0 flex flex-none flex-wrap items-center justify-center gap-2 text-[12px] text-muted-2">
-            <span className="inline-flex items-center gap-1.5">
-              <Icon name="lock" size={13} className="text-brand" />
-              Your information is encrypted and kept private.
-            </span>
-            {onSkipToDashboard && (
-              <>
-                <span className="text-slate-300 hidden sm:inline">•</span>
-                <button
-                  type="button"
-                  onClick={onSkipToDashboard}
-                  className="font-semibold text-brand hover:text-brand-deep cursor-pointer"
-                >
-                  Already registered? Go to Dashboard →
-                </button>
-              </>
-            )}
-          </div>
+          <p className="mt-3.5 mb-0 flex items-center justify-center gap-2 text-[12.5px] text-muted-2">
+            <Icon name="lock" size={14} className="text-brand" />
+            Your information is encrypted and kept private.
+            <a href="#" className="font-semibold text-brand">
+              Need help?
+            </a>
+          </p>
         </main>
       </div>
-    </div>
+    </>
   );
 }
 

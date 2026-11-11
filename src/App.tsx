@@ -121,7 +121,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9FE] text-slate-800 antialiased selection:bg-purple-200 selection:text-purple-900">
+    <div className={`min-h-screen text-slate-800 antialiased selection:bg-purple-200 selection:text-purple-900 ${currentView === 'registration' ? 'bg-[#f1ecff]' : 'bg-[#F8F9FE]'}`}>
       {/* Active Screen View */}
       {currentView === 'registration' ? (
         <ProviderRegistrationView

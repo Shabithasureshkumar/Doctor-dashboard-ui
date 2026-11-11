@@ -151,16 +151,7 @@ export default function UnderReviewScreen({ email, onPreviewApproved, onHome, on
           <button type="button" onClick={onPreviewApproved} title="Prototype only" className="py-2 text-sm font-semibold text-muted hover:text-ink">
             Demo: view approved state →
           </button>
-          <div className="flex items-center gap-3">
-            <button type="button" onClick={onHome} className="py-2 px-3 text-sm font-semibold text-muted hover:text-ink">
-              Start over
-            </button>
-            {onGoToDashboard && (
-              <PrimaryButton onClick={onGoToDashboard}>
-                Go to dashboard <Icon name="arrowRight" size={16} />
-              </PrimaryButton>
-            )}
-          </div>
+          <PrimaryButton onClick={onGoToDashboard || onHome}>Return to homepage</PrimaryButton>
         </div>
       </Reveal>
     </section>

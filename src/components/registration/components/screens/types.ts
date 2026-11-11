@@ -7,4 +7,5 @@ export interface StepProps {
   progress: number;
   onNext: () => void;
   onBack: () => void;
+  onSkipToDashboard?: () => void;
 }

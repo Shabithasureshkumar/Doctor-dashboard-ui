@@ -19,7 +19,7 @@ const PERKS: { icon: IconName; label: string }[] = [
   { icon: 'wallet', label: 'Weekly payouts' },
 ];
 
-export default function RoleScreen({ form, update, progress, onNext }: StepProps) {
+export default function RoleScreen({ form, update, progress, onNext, onSkipToDashboard }: StepProps) {
   const current = ROLES.find((r) => r.id === form.role);
   const continueLabel = form.role === 'other' ? 'Continue' : `Continue as ${current?.title ?? ''}`;
 
@@ -77,9 +77,13 @@ export default function RoleScreen({ form, update, progress, onNext }: StepProps
           </PrimaryButton>
           <p className="mt-4 mb-0 text-center text-sm text-muted">
             Already registered?{' '}
-            <a href="#" className="font-semibold text-brand hover:text-brand-deep">
+            <button
+              type="button"
+              onClick={onSkipToDashboard}
+              className="font-semibold text-brand hover:text-brand-deep cursor-pointer"
+            >
               Sign in
-            </a>
+            </button>
           </p>
         </div>
       </Reveal>

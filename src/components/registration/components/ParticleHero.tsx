@@ -231,7 +231,7 @@ export default function ParticleHero({ shape, kicker, title, text, filled, compl
   return (
     <aside
       ref={heroRef}
-      className="hero-bg relative flex min-h-[340px] flex-col overflow-hidden rounded-[24px] border border-white/35 p-[22px] text-white lg:h-full lg:min-h-0 lg:rounded-[28px] lg:px-9 lg:pt-8 lg:pb-8"
+      className="hero-bg relative flex min-h-[340px] flex-col overflow-hidden rounded-[24px] border border-white/35 p-[22px] text-white lg:sticky lg:top-12 lg:h-[calc(100vh-96px)] lg:min-h-[640px] lg:self-start lg:rounded-[30px] lg:px-10 lg:pt-9 lg:pb-10"
     >
       <div aria-hidden="true" className="pointer-events-none absolute top-[46%] left-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgb(255_255_255/0.16),transparent_65%)]" />
       <div aria-hidden="true" className="hero-grain pointer-events-none absolute inset-0" />
