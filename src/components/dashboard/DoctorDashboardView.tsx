@@ -31,7 +31,7 @@ interface DoctorDashboardViewProps {
   onOpenTasks: () => void;
   onOpenExport: () => void;
   onOpenAskAva: () => void;
-  onNavigateToChats?: () => void;
+  onNavigateToChats?: (contactName?: string) => void;
   onNavigateToReports?: () => void;
   onNavigateToRegistration?: () => void;
 }
@@ -140,7 +140,7 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
           <NextAppointmentCard
             onJoinCall={() => onOpenVirtualVisit('Sarah Johnson')}
             onReview={() => onOpenAIScribe('Sarah Johnson')}
-            onOpenChat={() => onOpenAskAva()}
+            onOpenChat={() => (onNavigateToChats ? onNavigateToChats('Sarah Johnson') : onOpenAskAva())}
           />
         </div>
 
@@ -187,8 +187,8 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
         {/* Messages */}
         <div className="md:col-span-2 lg:col-span-4">
           <MessagesCard
-            onOpenInbox={onOpenAskAva}
-            onSelectMessage={(name) => onOpenPatientChart(name)}
+            onOpenInbox={() => onNavigateToChats?.()}
+            onSelectMessage={(name) => onNavigateToChats?.(name)}
           />
         </div>
       </div>

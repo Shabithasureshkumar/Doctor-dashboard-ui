@@ -45,6 +45,8 @@ export function App() {
 
   // Selected Patient for Contextual Modals
   const [selectedPatient, setSelectedPatient] = useState<string>('Sarah Johnson');
+  // Selected Chat Contact for direct chat routing
+  const [activeChatContact, setActiveChatContact] = useState<string | null>(null);
 
   // Modal States
   const [isVirtualVisitOpen, setIsVirtualVisitOpen] = useState(false);
@@ -73,6 +75,12 @@ export function App() {
   };
 
   // Handlers
+  const handleOpenChat = (contactName?: string) => {
+    if (contactName) {
+      setActiveChatContact(contactName);
+    }
+    setCurrentView('chats');
+  };
   const handleOpenVirtualVisit = (name?: string) => {
     if (name) setSelectedPatient(name);
     setIsVirtualVisitOpen(true);
@@ -134,7 +142,7 @@ export function App() {
           onNavigateToPatients={() => setCurrentView('patients')}
           onNavigateToCalendar={() => setCurrentView('calendar')}
           onNavigateToBilling={() => setCurrentView('billing')}
-          onNavigateToChats={() => setCurrentView('chats')}
+          onNavigateToChats={handleOpenChat}
           onNavigateToReports={() => setCurrentView('reports')}
           onNavigateToRegistration={() => setCurrentView('registration')}
           onOpenVirtualVisit={handleOpenVirtualVisit}
@@ -158,7 +166,7 @@ export function App() {
           onOpenNewAppointment={() => setIsNewAppointmentOpen(true)}
           onNavigateToBilling={() => setCurrentView('billing')}
           onNavigateToPatients={() => setCurrentView('patients')}
-          onNavigateToChats={() => setCurrentView('chats')}
+          onNavigateToChats={handleOpenChat}
           onNavigateToReports={() => setCurrentView('reports')}
           onNavigateToCalendarGrid={() => setCurrentView('calendar')}
           onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
@@ -173,7 +181,7 @@ export function App() {
           onBackToDashboard={() => setCurrentView('dashboard')}
           onNavigateToAppointments={() => setCurrentView('appointments')}
           onNavigateToBilling={() => setCurrentView('billing')}
-          onNavigateToChats={() => setCurrentView('chats')}
+          onNavigateToChats={handleOpenChat}
           onNavigateToReports={() => setCurrentView('reports')}
           onOpenVirtualVisit={handleOpenVirtualVisit}
           onOpenPatientChart={handleOpenPatientChart}
@@ -206,7 +214,7 @@ export function App() {
           onNavigateToAppointments={() => setCurrentView('appointments')}
           onNavigateToPatients={() => setCurrentView('patients')}
           onNavigateToBilling={() => setCurrentView('billing')}
-          onNavigateToChats={() => setCurrentView('chats')}
+          onNavigateToChats={handleOpenChat}
           onNavigateToReports={() => setCurrentView('reports')}
           onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
           onOpenTasks={() => setIsTasksOpen(true)}
@@ -222,6 +230,7 @@ export function App() {
         />
       ) : currentView === 'chats' ? (
         <ChatView
+          initialContactName={activeChatContact || undefined}
           onBackToDashboard={() => setCurrentView('dashboard')}
           onNavigateToAppointments={() => setCurrentView('appointments')}
           onNavigateToPatients={() => setCurrentView('patients')}
@@ -243,7 +252,7 @@ export function App() {
           onNavigateToAppointments={() => setCurrentView('appointments')}
           onNavigateToPatients={() => setCurrentView('patients')}
           onNavigateToBilling={() => setCurrentView('billing')}
-          onNavigateToChats={() => setCurrentView('chats')}
+          onNavigateToChats={handleOpenChat}
           onOpenSettings={() => setCurrentView('settings')}
           onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
           onOpenTasks={() => setIsTasksOpen(true)}
@@ -292,9 +301,9 @@ export function App() {
         onNewPrescription={handleOpenNewPrescription}
         onVirtualVisit={handleOpenVirtualVisit}
         onNewAppointment={() => setIsNewAppointmentOpen(true)}
-        onStartChat={() => {
+        onStartChat={(name) => {
           setIsPatientChartOpen(false);
-          setCurrentView('chats');
+          handleOpenChat(name || selectedPatient);
         }}
         onOpenAskAva={() => setIsAIScribeOpen(true)}
       />

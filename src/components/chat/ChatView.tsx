@@ -33,6 +33,55 @@ interface ChatViewProps {
   onOpenPatientChart: (name: string) => void;
   onOpenVirtualVisit: (name: string) => void;
   onOpenSchedule: (name: string) => void;
+  initialContactName?: string;
+}
+
+function createDynamicConversation(contactName: string): ChatConversation {
+  return {
+    id: `conv-${Date.now()}`,
+    patientId: `PT-${Math.floor(10000 + Math.random() * 90000)}`,
+    patientName: contactName,
+    patientAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    online: true,
+    lastActive: 'Active now',
+    isPinned: true,
+    isArchived: false,
+    unreadCount: 0,
+    lastMessage: {
+      text: 'Conversation thread opened.',
+      timestamp: 'Just now',
+      sender: 'patient',
+      type: 'text',
+    },
+    patientContext: {
+      patientId: `PT-${Math.floor(10000 + Math.random() * 90000)}`,
+      name: contactName,
+      avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+      age: 32,
+      gender: 'Female',
+      bloodGroup: 'O+',
+      phone: '+1 (555) 782-9011',
+      email: `${contactName.toLowerCase().replace(/[^a-z0-9]/g, '.')}@mednevo-care.com`,
+      allergies: ['NKDA'],
+      conditions: ['Direct Healthcare Consultation'],
+      currentMedications: ['As Prescribed'],
+      medicalAlerts: ['Direct secure chat active'],
+      lastAppointment: 'Nov 11, 2026',
+      lastConsultation: 'Today',
+      recentLabReports: [],
+      recentPrescriptions: [],
+    },
+    messages: [
+      {
+        id: `msg-${Date.now()}`,
+        sender: 'patient',
+        content: `Hello Doctor, this is ${contactName}. Connecting with you regarding clinical care.`,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        status: 'read',
+        type: 'text',
+      },
+    ],
+  };
 }
 
 export const ChatView: React.FC<ChatViewProps> = ({
@@ -47,9 +96,29 @@ export const ChatView: React.FC<ChatViewProps> = ({
   onOpenPatientChart,
   onOpenVirtualVisit,
   onOpenSchedule,
+  initialContactName,
 }) => {
-  const [conversations, setConversations] = useState<ChatConversation[]>(INITIAL_CONVERSATIONS);
-  const [selectedId, setSelectedId] = useState<string>('conv-1');
+  const [conversations, setConversations] = useState<ChatConversation[]>(() => {
+    if (!initialContactName) return INITIAL_CONVERSATIONS;
+    const term = initialContactName.trim().toLowerCase();
+    const exists = INITIAL_CONVERSATIONS.some((c) => {
+      const name = c.patientName.toLowerCase();
+      return name === term || name.includes(term) || term.includes(name);
+    });
+    if (exists) return INITIAL_CONVERSATIONS;
+    return [createDynamicConversation(initialContactName), ...INITIAL_CONVERSATIONS];
+  });
+
+  const [selectedId, setSelectedId] = useState<string>(() => {
+    if (!initialContactName) return 'conv-1';
+    const term = initialContactName.trim().toLowerCase();
+    const found = INITIAL_CONVERSATIONS.find((c) => {
+      const name = c.patientName.toLowerCase();
+      return name === term || name.includes(term) || term.includes(name);
+    });
+    return found ? found.id : 'conv-1';
+  });
+
   const [filterTab, setFilterTab] = useState<ChatFilterTab>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [isContextPanelOpen, setIsContextPanelOpen] = useState(true);
@@ -57,7 +126,29 @@ export const ChatView: React.FC<ChatViewProps> = ({
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Mobile navigation state: if true, user is looking at the active chat; if false, looking at conversation list
-  const [mobileViewingChat, setMobileViewingChat] = useState(false);
+  const [mobileViewingChat, setMobileViewingChat] = useState(() => Boolean(initialContactName));
+
+  // Sync state if initialContactName changes dynamically
+  const [prevContact, setPrevContact] = useState(initialContactName);
+  if (initialContactName !== prevContact) {
+    setPrevContact(initialContactName);
+    if (initialContactName) {
+      const term = initialContactName.trim().toLowerCase();
+      const found = conversations.find((c) => {
+        const name = c.patientName.toLowerCase();
+        return name === term || name.includes(term) || term.includes(name);
+      });
+      if (found) {
+        setSelectedId(found.id);
+        setMobileViewingChat(true);
+      } else {
+        const newConv = createDynamicConversation(initialContactName);
+        setConversations((prev) => [newConv, ...prev]);
+        setSelectedId(newConv.id);
+        setMobileViewingChat(true);
+      }
+    }
+  }
 
   const showToast = (msg: string) => {
     setToastMessage(msg);

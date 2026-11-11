@@ -80,7 +80,7 @@ interface PatientsViewProps {
   onOpenTasks: () => void;
   onOpenAdjustSchedule: () => void;
   onOpenSettings?: () => void;
-  onNavigateToChats?: () => void;
+  onNavigateToChats?: (contactName?: string) => void;
   onNavigateToReports?: () => void;
 }
 
@@ -496,7 +496,7 @@ export const PatientsView: React.FC<PatientsViewProps> = ({
                 </button>
 
                 <button
-                  onClick={onOpenAskAva}
+                  onClick={() => onNavigateToChats ? onNavigateToChats(selectedPatient.name) : onOpenAskAva()}
                   className="flex items-center gap-1.5 px-3.5 py-2.5 bg-purple-50 hover:bg-purple-100 text-[#5C24FF] font-sora font-semibold text-xs sm:text-sm rounded-2xl transition-all whitespace-nowrap"
                 >
                   <MessageSquare className="w-4 h-4" />
