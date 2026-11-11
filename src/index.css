@@ -77,3 +77,141 @@
   background-size: 200% 100%;
   animation: badge-shimmer 3s infinite linear;
 }
+
+/* ───────────────────────── Mednevo Provider Registration Component Styles ───────────────────────── */
+.bg-linear-to-b {
+  background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
+}
+.bg-linear-135 {
+  background-image: linear-gradient(135deg, var(--tw-gradient-stops));
+}
+
+.bg-fx {
+  background: linear-gradient(135deg, #f6f2ff 0%, #ede6ff 45%, #f4eeff 100%);
+}
+.bg-fx .blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+}
+.bg-fx .blob-1 { width: 520px; height: 520px; left: -160px; bottom: -200px; background: #d9c6ff; animation: blob-a 24s ease-in-out infinite alternate; }
+.bg-fx .blob-2 { width: 460px; height: 460px; right: -140px; top: -160px; background: #e2d4ff; animation: blob-b 28s ease-in-out infinite alternate; }
+.bg-fx .blob-3 { width: 380px; height: 380px; right: -100px; bottom: -140px; background: #d4c2ff; opacity: 0.8; }
+.bg-fx path { fill: none; stroke: rgb(255 255 255 / 0.75); stroke-width: 1.5; }
+@keyframes blob-a { to { transform: translate(80px, -60px); } }
+@keyframes blob-b { to { transform: translate(-70px, 70px); } }
+
+.hero-bg {
+  background: radial-gradient(120% 90% at 20% 10%, #a13cf5 0%, #5c24ff 42%, #2a1bc4 100%);
+}
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  right: -45%;
+  bottom: -38%;
+  width: 120%;
+  height: 70%;
+  border-radius: 50%;
+  border-top: 1.5px solid rgb(255 255 255 / 0.4);
+  background: radial-gradient(60% 50% at 50% 0%, rgb(255 255 255 / 0.12), transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+.hero-grain {
+  background-image: radial-gradient(rgb(255 255 255 / 0.07) 1px, transparent 1px);
+  background-size: 18px 18px;
+  mask-image: linear-gradient(180deg, #000, transparent 70%);
+}
+.logo-draw path {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: draw 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+}
+
+.card-selected {
+  border-color: transparent !important;
+  background:
+    linear-gradient(180deg, #f7f2ff, #ffffff) padding-box,
+    linear-gradient(135deg, #9a6afb, #5c24ff) border-box !important;
+}
+.card-glow::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(154 106 251 / 0.22), transparent 70%);
+  pointer-events: none;
+}
+
+.field-ok {
+  border-color: #b9a3ff !important;
+  padding-right: 42px !important;
+  background-repeat: no-repeat !important;
+  background-position: right 13px center !important;
+  background-size: 20px 20px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%235C24FF'/%3E%3Cpath d='M7 12.5l3.2 3.2L17 9' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  animation: ok-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes ok-pop { 0% { background-size: 0 0; } 60% { background-size: 24px 24px; } 100% { background-size: 20px 20px; } }
+
+.say-tail::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  bottom: 8px;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-right: 1px solid #e4daff;
+  border-bottom: 1px solid #e4daff;
+  transform: rotate(-45deg);
+}
+
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / 0.3) 50%, transparent 65%);
+  transform: translateX(-100%);
+  animation: shine 3.4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes shine { 0%, 62% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+.ripple {
+  position: absolute;
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.45);
+  transform: scale(0);
+  animation: ripple 0.6s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes ripple { to { transform: scale(4); opacity: 0; } }
+
+.ring-fg {
+  stroke-dasharray: 97.4;
+  transition: stroke-dashoffset 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bar-fill {
+  transform-origin: left;
+  animation: grow-x 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+}
+.bar-fill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.65), transparent);
+  transform: translateX(-100%);
+  animation: shimmer 1.8s linear infinite;
+}
+@keyframes grow-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes shimmer { to { transform: translateX(100%); } }
+
+.done-check path {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: draw 0.6s ease-out 0.7s forwards;
+}

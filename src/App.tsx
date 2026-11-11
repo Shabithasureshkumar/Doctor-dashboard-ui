@@ -7,6 +7,7 @@ import { BillingView } from './components/billing/BillingView';
 import { SettingsView } from './components/settings/SettingsView';
 import { ChatView } from './components/chat/ChatView';
 import { ReportsView } from './components/reports/ReportsView';
+import { ProviderRegistrationView } from './components/registration/ProviderRegistrationView';
 import { VirtualVisitModal } from './components/modals/VirtualVisitModal';
 import { SearchPatientModal } from './components/modals/SearchPatientModal';
 import { NewPrescriptionModal } from './components/modals/NewPrescriptionModal';
@@ -26,8 +27,20 @@ import { Appointment } from './types';
 import { CALENDAR_APPOINTMENTS } from './mockData';
 
 export function App() {
-  // Navigation View State: 'dashboard' | 'appointments' | 'patients' | 'calendar' | 'billing' | 'settings' | 'chats' | 'reports'
-  const [currentView, setCurrentView] = useState<'dashboard' | 'appointments' | 'patients' | 'calendar' | 'billing' | 'settings' | 'chats' | 'reports'>('dashboard');
+  // Navigation View State: 'registration' | 'dashboard' | 'appointments' | 'patients' | 'calendar' | 'billing' | 'settings' | 'chats' | 'reports'
+  const [currentView, setCurrentView] = useState<'registration' | 'dashboard' | 'appointments' | 'patients' | 'calendar' | 'billing' | 'settings' | 'chats' | 'reports'>(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const urlView = params.get('view');
+      if (urlView && ['registration', 'dashboard', 'appointments', 'patients', 'calendar', 'billing', 'settings', 'chats', 'reports'].includes(urlView)) {
+        return urlView as any;
+      }
+      const isRegistered = localStorage.getItem('mednevo_registered');
+      return isRegistered === 'true' ? 'dashboard' : 'registration';
+    } catch {
+      return 'registration';
+    }
+  });
   const [appointments, setAppointments] = useState<Appointment[]>(CALENDAR_APPOINTMENTS);
 
   // Selected Patient for Contextual Modals
@@ -90,6 +103,17 @@ export function App() {
     setIsNewAppointmentOpen(true);
   };
 
+  const handleRegistrationComplete = (doctorName?: string) => {
+    try {
+      localStorage.setItem('mednevo_registered', 'true');
+    } catch {
+      // ignore
+    }
+    const name = doctorName || 'Doctor';
+    showToast(`🎉 Welcome ${name}! Your Mednevo Doctor Portal is ready.`);
+    setCurrentView('dashboard');
+  };
+
   const handleAddAppointment = (newAppointment: Appointment) => {
     setAppointments((prev) => [newAppointment, ...prev]);
     showToast(`Appointment scheduled for ${newAppointment.patientName}`);
@@ -99,7 +123,12 @@ export function App() {
   return (
     <div className="min-h-screen bg-[#F8F9FE] text-slate-800 antialiased selection:bg-purple-200 selection:text-purple-900">
       {/* Active Screen View */}
-      {currentView === 'dashboard' ? (
+      {currentView === 'registration' ? (
+        <ProviderRegistrationView
+          onCompleteRegistration={handleRegistrationComplete}
+          onSkipToDashboard={() => setCurrentView('dashboard')}
+        />
+      ) : currentView === 'dashboard' ? (
         <DoctorDashboardView
           onNavigateToAppointments={() => setCurrentView('appointments')}
           onNavigateToPatients={() => setCurrentView('patients')}
@@ -107,6 +136,7 @@ export function App() {
           onNavigateToBilling={() => setCurrentView('billing')}
           onNavigateToChats={() => setCurrentView('chats')}
           onNavigateToReports={() => setCurrentView('reports')}
+          onNavigateToRegistration={() => setCurrentView('registration')}
           onOpenVirtualVisit={handleOpenVirtualVisit}
           onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
           onOpenNewPrescription={handleOpenNewPrescription}
@@ -181,8 +211,13 @@ export function App() {
           onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
           onOpenTasks={() => setIsTasksOpen(true)}
           onLogout={() => {
-            setToastMessage('Signed out of Mednevo Doctor Portal.');
-            setCurrentView('dashboard');
+            try {
+              localStorage.removeItem('mednevo_registered');
+            } catch {
+              // ignore
+            }
+            showToast('Signed out. Switched to Provider Onboarding.');
+            setCurrentView('registration');
           }}
         />
       ) : currentView === 'chats' ? (

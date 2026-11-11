@@ -33,6 +33,7 @@ interface DoctorDashboardViewProps {
   onOpenAskAva: () => void;
   onNavigateToChats?: () => void;
   onNavigateToReports?: () => void;
+  onNavigateToRegistration?: () => void;
 }
 
 export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
@@ -54,6 +55,7 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
   onOpenAskAva,
   onNavigateToChats,
   onNavigateToReports,
+  onNavigateToRegistration,
 }) => {
   const [activeTab, setActiveTab] = useState<TabType>('Dashboard');
   const [alerts, setAlerts] = useState<ClinicalAlert[]>(INITIAL_ALERTS);
@@ -94,6 +96,7 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
         onSearchClick={onOpenSearchPatient}
         onOpenNotifications={onOpenTasks}
         onOpenSettings={onOpenSettings || onOpenAdjustSchedule}
+        onNavigateToRegistration={onNavigateToRegistration}
       />
 
       {/* 2. Doctor Greeting & Top Level Actions */}
