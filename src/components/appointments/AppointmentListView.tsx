@@ -132,10 +132,16 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
     setSelectedDate(dates[nextIdx]);
   };
 
-  // Filtered appointments by active tab (Upcoming, Past, Cancelled) & Search query
+  // Filtered appointments by active tab (Upcoming, Pending, Completed, Past, Cancelled) & Search query
   const filteredAppointments = useMemo(() => {
     return appointments.filter((apt) => {
-      if (apt.category !== activeCategory) return false;
+      if (activeCategory === 'pending') {
+        if (apt.category !== 'upcoming' && apt.category !== 'pending') return false;
+      } else if (activeCategory === 'completed') {
+        if (apt.category !== 'past' && apt.category !== 'completed') return false;
+      } else {
+        if (apt.category !== activeCategory) return false;
+      }
       if (!searchQuery.trim()) return true;
       const q = searchQuery.toLowerCase();
       return (
@@ -150,6 +156,8 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
   const counts = useMemo(() => {
     return {
       upcoming: appointments.filter((a) => a.category === 'upcoming').length,
+      pending: appointments.filter((a) => a.category === 'upcoming' || a.category === 'pending').length,
+      completed: appointments.filter((a) => a.category === 'past' || a.category === 'completed').length,
       past: appointments.filter((a) => a.category === 'past').length,
       cancelled: appointments.filter((a) => a.category === 'cancelled').length,
     };
@@ -360,7 +368,10 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
       {/* 3. Five Top Metric Cards (Matches Screenshot Exactly) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-4 w-full flex-shrink-0">
         {/* Card 1: Today's Appointments (Purple Gradient) */}
-        <div className="bg-gradient-to-br from-[#9A6AFB] via-[#7F47FA] to-[#5C24FF] text-white rounded-3xl p-5 shadow-[0_8px_24px_rgba(154,106,251,0.35)] flex flex-col justify-between relative overflow-hidden">
+        <div
+          onClick={() => setActiveCategory('upcoming')}
+          className="bg-gradient-to-br from-[#9A6AFB] via-[#7F47FA] to-[#5C24FF] text-white rounded-3xl p-5 shadow-[0_8px_24px_rgba(154,106,251,0.35)] flex flex-col justify-between relative overflow-hidden cursor-pointer hover:opacity-95 transition-all"
+        >
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-purple-100">Today's Appointments</span>
             <div className="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center">
@@ -376,7 +387,12 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
         </div>
 
         {/* Card 2: Completed */}
-        <div className="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm flex flex-col justify-between">
+        <div
+          onClick={() => setActiveCategory('completed')}
+          className={`bg-white rounded-3xl p-5 border shadow-sm flex flex-col justify-between cursor-pointer transition-all hover:border-purple-200 ${
+            activeCategory === 'completed' ? 'ring-2 ring-[#5C24FF] border-purple-200' : 'border-slate-100'
+          }`}
+        >
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">Completed</span>
             <div className="w-8 h-8 rounded-xl bg-purple-50 text-[#5C24FF] flex items-center justify-center">
@@ -392,7 +408,12 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
         </div>
 
         {/* Card 3: Upcoming */}
-        <div className="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm flex flex-col justify-between">
+        <div
+          onClick={() => setActiveCategory('upcoming')}
+          className={`bg-white rounded-3xl p-5 border shadow-sm flex flex-col justify-between cursor-pointer transition-all hover:border-purple-200 ${
+            activeCategory === 'upcoming' ? 'ring-2 ring-[#5C24FF] border-purple-200' : 'border-slate-100'
+          }`}
+        >
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">Upcoming</span>
             <div className="w-8 h-8 rounded-xl bg-purple-50 text-[#5C24FF] flex items-center justify-center">
@@ -405,7 +426,12 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
         </div>
 
         {/* Card 4: Cancelled */}
-        <div className="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm flex flex-col justify-between">
+        <div
+          onClick={() => setActiveCategory('cancelled')}
+          className={`bg-white rounded-3xl p-5 border shadow-sm flex flex-col justify-between cursor-pointer transition-all hover:border-purple-200 ${
+            activeCategory === 'cancelled' ? 'ring-2 ring-[#5C24FF] border-purple-200' : 'border-slate-100'
+          }`}
+        >
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">Cancelled</span>
             <div className="w-8 h-8 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center">
@@ -455,11 +481,13 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
         </div>
       </div>
 
-      {/* 4. Filter Pills: Upcoming (5) | Past (10) | Cancelled (1) */}
-      <div className="flex items-center gap-2 flex-shrink-0">
+      {/* 4. Filter Pills: Upcoming (5) | Pending (5) | Completed (10) | Past (10) | Cancelled (1) */}
+      <div className="flex items-center gap-2 flex-wrap flex-shrink-0">
         {(
           [
             { id: 'upcoming', label: `Upcoming (${counts.upcoming})` },
+            { id: 'pending', label: `Pending (${counts.pending})` },
+            { id: 'completed', label: `Completed (${counts.completed})` },
             { id: 'past', label: `Past (${counts.past})` },
             { id: 'cancelled', label: `Cancelled (${counts.cancelled})` },
           ] as const
@@ -694,10 +722,27 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
 
                       {/* Status / Countdown */}
                       <td className="py-4 px-3 whitespace-nowrap">
-                        <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-[#5C24FF]">
-                          <Clock className="w-3.5 h-3.5 text-[#5C24FF]" />
-                          <span>{apt.countdown}</span>
-                        </div>
+                        {apt.category === 'past' || apt.category === 'completed' || activeCategory === 'completed' ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                            <span>{apt.countdown}</span>
+                          </span>
+                        ) : apt.category === 'cancelled' || activeCategory === 'cancelled' ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-100">
+                            <XCircle className="w-3.5 h-3.5 text-rose-500" />
+                            <span>Cancelled</span>
+                          </span>
+                        ) : activeCategory === 'pending' ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-100">
+                            <Clock className="w-3.5 h-3.5 text-amber-600" />
+                            <span>Pending ({apt.countdown})</span>
+                          </span>
+                        ) : (
+                          <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-[#5C24FF]">
+                            <Clock className="w-3.5 h-3.5 text-[#5C24FF]" />
+                            <span>{apt.countdown}</span>
+                          </div>
+                        )}
                       </td>
 
                       {/* Actions */}
@@ -715,13 +760,14 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
                               <span>Join Now</span>
                             </button>
                             <button
+                              onClick={() => onOpenPatientChart(apt.patientName)}
                               className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
-                              title="Options"
+                              title="Patient Chart"
                             >
                               <MoreVertical className="w-4 h-4" />
                             </button>
                           </div>
-                        ) : apt.category === 'upcoming' ? (
+                        ) : (apt.category === 'upcoming' || activeCategory === 'pending' || apt.category === 'pending') && apt.category !== 'past' && apt.category !== 'cancelled' ? (
                           <div className="flex items-center justify-end gap-1.5">
                             <button
                               onClick={() => handleStartAppointment(apt)}
@@ -751,7 +797,7 @@ export const AppointmentListView: React.FC<AppointmentListViewProps> = ({
                         ) : (
                           <div className="flex items-center justify-end gap-2">
                             <span className="text-xs text-slate-400 font-medium">
-                              {apt.category === 'past' ? 'Completed' : 'Cancelled'}
+                              {apt.category === 'cancelled' ? 'Cancelled' : 'Completed'}
                             </span>
                             <button
                               onClick={() => onOpenPatientChart(apt.patientName)}

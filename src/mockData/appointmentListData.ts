@@ -1,5 +1,5 @@
 export type AppointmentVisitMode = 'Video Call' | 'In-Person';
-export type AppointmentCategory = 'upcoming' | 'past' | 'cancelled';
+export type AppointmentCategory = 'upcoming' | 'pending' | 'completed' | 'past' | 'cancelled';
 
 export interface DetailedAppointment {
   id: string;
