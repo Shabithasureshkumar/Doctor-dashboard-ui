@@ -51,9 +51,9 @@ export const Modal: React.FC<ModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 top-0 left-0 right-0 bottom-0 w-screen h-screen z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200 !m-0">
       <div
-        className="fixed inset-0"
+        className="fixed inset-0 top-0 left-0 right-0 bottom-0"
         onClick={onClose}
         aria-hidden="true"
       />

@@ -243,8 +243,9 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#F8F9FE] text-slate-800 px-4 sm:px-6 lg:px-8 2xl:px-10 py-3 sm:py-5 space-y-5 font-inter">
-      {/* 1. Global Mednevo Header */}
+    <div className="w-full min-h-screen bg-[#F8F9FE] text-slate-800 font-inter relative">
+      <div className="w-full px-4 sm:px-6 lg:px-8 2xl:px-10 py-3 sm:py-5 space-y-5">
+        {/* 1. Global Mednevo Header */}
       <DashboardHeader
         activeTab="Reports"
         onTabChange={handleTabChange}
@@ -653,6 +654,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
             </button>
           </div>
         </div>
+      </div>
       </div>
 
       {/* Report Details Slide-over Drawer */}

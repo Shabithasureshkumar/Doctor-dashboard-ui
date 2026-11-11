@@ -36,11 +36,25 @@ export const ReportDetailsDrawer: React.FC<ReportDetailsDrawerProps> = ({
   onOpenPatientChart,
   onToast,
 }) => {
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') onClose();
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = 'unset';
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }
+  }, [isOpen, onClose]);
+
   if (!isOpen || !report) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-slate-900/50 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
+    <div className="fixed inset-0 top-0 left-0 right-0 bottom-0 w-screen h-screen z-50 flex justify-end bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200 !m-0 !p-0">
+      <div className="fixed inset-0 top-0 left-0 right-0 bottom-0" onClick={onClose} aria-hidden="true" />
       <ReportDetailsContent
         key={report.id}
         report={report}
@@ -93,7 +107,7 @@ const ReportDetailsContent: React.FC<ReportDetailsContentProps> = ({
   const isReviewed = report.status === 'Reviewed';
 
   return (
-    <div className="relative w-full max-w-2xl bg-white h-full shadow-2xl flex flex-col z-10 overflow-hidden animate-in slide-in-from-right duration-250">
+    <div className="relative w-full max-w-2xl bg-white h-screen max-h-screen shadow-2xl flex flex-col z-10 overflow-hidden animate-in slide-in-from-right duration-250 !m-0 !p-0">
       {/* Drawer Header */}
       <div className="p-5 sm:p-6 border-b border-slate-100 flex items-center justify-between gap-4 bg-slate-50/70 flex-shrink-0">
         <div className="flex items-center gap-3 min-w-0">
