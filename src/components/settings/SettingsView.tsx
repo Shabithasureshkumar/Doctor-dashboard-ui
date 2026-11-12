@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   User,
   Calendar,
@@ -21,6 +21,7 @@ import {
 import { INITIAL_SETTINGS_STATE } from '../../mockData/settingsData';
 import { DashboardHeader } from '../dashboard/DashboardHeader';
 import { TabType } from '../../types';
+import { applyThemeSettings } from '../../utils/themeManager';
 
 // Section Components
 import { ProfileSection } from './sections/ProfileSection';
@@ -97,27 +98,34 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     }, 4000);
   };
 
+  // Sync active theme with loaded settings
+  useEffect(() => {
+    applyThemeSettings(settings.appearance);
+  }, [settings.appearance]);
+
   const handleSaveAll = () => {
     try {
       localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
     } catch (e) {
       console.error(e);
     }
+    applyThemeSettings(settings.appearance);
     setHasUnsavedChanges(false);
     showToast('All settings changes saved and synchronized successfully.');
   };
 
   const handleDiscardChanges = () => {
+    let restored = INITIAL_SETTINGS_STATE;
     try {
       const saved = localStorage.getItem(SETTINGS_STORAGE_KEY);
       if (saved) {
-        setSettings(JSON.parse(saved));
-      } else {
-        setSettings(INITIAL_SETTINGS_STATE);
+        restored = JSON.parse(saved);
       }
     } catch {
-      setSettings(INITIAL_SETTINGS_STATE);
+      restored = INITIAL_SETTINGS_STATE;
     }
+    setSettings(restored);
+    applyThemeSettings(restored.appearance);
     setHasUnsavedChanges(false);
     showToast('Changes discarded. Restored previous configuration.');
   };
@@ -475,8 +483,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             <AppearanceSection
               appearance={settings.appearance}
               onChange={(updated) => {
-                setSettings({ ...settings, appearance: { ...settings.appearance, ...updated } });
+                const nextAppearance = { ...settings.appearance, ...updated };
+                setSettings({ ...settings, appearance: nextAppearance });
                 setHasUnsavedChanges(true);
+                applyThemeSettings(nextAppearance);
               }}
               onSave={handleSaveAll}
               onToast={showToast}

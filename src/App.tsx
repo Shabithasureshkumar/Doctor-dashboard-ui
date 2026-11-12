@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { initThemeEngine } from './utils/themeManager';
 import { DoctorDashboardView } from './components/dashboard/DoctorDashboardView';
 import { AppointmentListView } from './components/appointments/AppointmentListView';
 import { PatientsView } from './components/patients/PatientsView';
@@ -42,6 +43,11 @@ export function App() {
     }
   });
   const [appointments, setAppointments] = useState<Appointment[]>(CALENDAR_APPOINTMENTS);
+
+  // Initialize Theme Engine (Light, Dark / Night Shift, System Automatic)
+  useEffect(() => {
+    initThemeEngine();
+  }, []);
 
   // Selected Patient for Contextual Modals
   const [selectedPatient, setSelectedPatient] = useState<string>('Sarah Johnson');
