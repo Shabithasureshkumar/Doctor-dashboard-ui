@@ -333,8 +333,8 @@ export const PatientsView: React.FC<PatientsViewProps> = ({
 
       {/* 4. Main Two-Column Split Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 w-full items-start">
-        {/* Left Column: Search & Patient List (Static Sticky Sidebar with internal scrolling & fixed bottom pagination) */}
-        <div className="lg:col-span-4 2xl:col-span-3 lg:sticky lg:top-4 lg:self-start bg-white rounded-3xl border border-slate-100 shadow-sm p-4 sm:p-5 flex flex-col h-[calc(100vh-2rem)] max-h-[calc(100vh-2rem)] overflow-hidden">
+        {/* Left Column: Search & Patient List (Responsive: scrollable box on mobile/tablet, sticky sidebar on desktop) */}
+        <div className="lg:col-span-4 2xl:col-span-3 lg:sticky lg:top-4 lg:self-start bg-white rounded-3xl border border-slate-100 shadow-sm p-4 sm:p-5 flex flex-col h-auto max-h-[460px] lg:h-[calc(100vh-2rem)] lg:max-h-[calc(100vh-2rem)] overflow-hidden">
           {/* Static Header */}
           <div className="flex items-center justify-between pb-1 flex-shrink-0">
             <h3 className="font-sora font-bold text-base text-slate-900">
