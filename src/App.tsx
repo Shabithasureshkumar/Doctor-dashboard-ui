@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { initThemeEngine } from './utils/themeManager';
+import { onSessionExpired } from './api/client';
+import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { DoctorDashboardView } from './components/dashboard/DoctorDashboardView';
 import { AppointmentListView } from './components/appointments/AppointmentListView';
 import { PatientsView } from './components/patients/PatientsView';
@@ -43,10 +45,25 @@ export function App() {
     }
   });
   const [appointments, setAppointments] = useState<Appointment[]>(CALENDAR_APPOINTMENTS);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Initialize Theme Engine (Light, Dark / Night Shift, System Automatic)
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => {
+      setToastMessage((current) => (current === msg ? null : current));
+    }, 4000);
+  };
+
+  // Initialize Theme Engine and API session expiration listeners
   useEffect(() => {
     initThemeEngine();
+
+    const unsubscribe = onSessionExpired(() => {
+      showToast('Session expired. Please re-authenticate.');
+      setCurrentView('registration');
+    });
+
+    return () => unsubscribe();
   }, []);
 
   // Selected Patient for Contextual Modals
@@ -68,17 +85,9 @@ export function App() {
   const [isExportOpen, setIsExportOpen] = useState(false);
   const [isTasksOpen, setIsTasksOpen] = useState(false);
   const [isRequestRefillOpen, setIsRequestRefillOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // New Appointment prefill
   const [slotPrefill, setSlotPrefill] = useState<{ day?: string; time?: string }>({});
-
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => {
-      setToastMessage((current) => (current === msg ? null : current));
-    }, 4000);
-  };
 
   // Handlers
   const handleOpenChat = (contactName?: string) => {
@@ -136,141 +145,143 @@ export function App() {
 
   return (
     <div className={`min-h-screen text-slate-800 antialiased selection:bg-purple-200 selection:text-purple-900 ${currentView === 'registration' ? 'bg-[#f1ecff]' : 'bg-[#F8F9FE]'}`}>
-      {/* Active Screen View */}
-      {currentView === 'registration' ? (
-        <ProviderRegistrationView
-          onCompleteRegistration={handleRegistrationComplete}
-          onSkipToDashboard={() => setCurrentView('dashboard')}
-        />
-      ) : currentView === 'dashboard' ? (
-        <DoctorDashboardView
-          onNavigateToAppointments={() => setCurrentView('appointments')}
-          onNavigateToPatients={() => setCurrentView('patients')}
-          onNavigateToCalendar={() => setCurrentView('calendar')}
-          onNavigateToBilling={() => setCurrentView('billing')}
-          onNavigateToChats={handleOpenChat}
-          onNavigateToReports={() => setCurrentView('reports')}
-          onNavigateToRegistration={() => setCurrentView('registration')}
-          onOpenVirtualVisit={handleOpenVirtualVisit}
-          onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
-          onOpenNewPrescription={handleOpenNewPrescription}
-          onOpenReferPatient={handleOpenReferPatient}
-          onOpenAIScribe={handleOpenAIScribe}
-          onOpenAdjustSchedule={() => setIsAdjustScheduleOpen(true)}
-          onOpenSettings={() => setCurrentView('settings')}
-          onOpenPatientChart={handleOpenPatientChart}
-          onOpenFullBriefing={() => setIsFullBriefingOpen(true)}
-          onOpenTasks={() => setIsTasksOpen(true)}
-          onOpenExport={() => setIsExportOpen(true)}
-          onOpenAskAva={() => setIsAskAvaOpen(true)}
-        />
-      ) : currentView === 'appointments' ? (
-        <AppointmentListView
-          onBackToDashboard={() => setCurrentView('dashboard')}
-          onOpenVirtualVisit={handleOpenVirtualVisit}
-          onOpenPatientChart={handleOpenPatientChart}
-          onOpenNewAppointment={() => setIsNewAppointmentOpen(true)}
-          onNavigateToBilling={() => setCurrentView('billing')}
-          onNavigateToPatients={() => setCurrentView('patients')}
-          onNavigateToChats={handleOpenChat}
-          onNavigateToReports={() => setCurrentView('reports')}
-          onNavigateToCalendarGrid={() => setCurrentView('calendar')}
-          onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
-          onOpenFullBriefing={() => setIsFullBriefingOpen(true)}
-          onOpenAskAva={() => setIsAskAvaOpen(true)}
-          onOpenTasks={() => setIsTasksOpen(true)}
-          onOpenAdjustSchedule={() => setIsAdjustScheduleOpen(true)}
-          onOpenSettings={() => setCurrentView('settings')}
-        />
-      ) : currentView === 'patients' ? (
-        <PatientsView
-          onBackToDashboard={() => setCurrentView('dashboard')}
-          onNavigateToAppointments={() => setCurrentView('appointments')}
-          onNavigateToBilling={() => setCurrentView('billing')}
-          onNavigateToChats={handleOpenChat}
-          onNavigateToReports={() => setCurrentView('reports')}
-          onOpenVirtualVisit={handleOpenVirtualVisit}
-          onOpenPatientChart={handleOpenPatientChart}
-          onOpenNewAppointment={() => setIsNewAppointmentOpen(true)}
-          onOpenNewPrescription={handleOpenNewPrescription}
-          onOpenAIScribe={handleOpenAIScribe}
-          onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
-          onOpenFullBriefing={() => setIsFullBriefingOpen(true)}
-          onOpenAskAva={() => setIsAskAvaOpen(true)}
-          onOpenTasks={() => setIsTasksOpen(true)}
-          onOpenAdjustSchedule={() => setIsAdjustScheduleOpen(true)}
-          onOpenSettings={() => setCurrentView('settings')}
-        />
-      ) : currentView === 'calendar' ? (
-        <CalendarView
-          onBackToDashboard={() => setCurrentView('dashboard')}
-          onNavigateToList={() => setCurrentView('appointments')}
-          onNewAppointment={handleOpenNewAppointment}
-          onBlockTime={() => setIsAdjustScheduleOpen(true)}
-          onExport={() => setIsExportOpen(true)}
-          onOpenPatientChart={handleOpenPatientChart}
-          onOpenVirtualVisit={handleOpenVirtualVisit}
-          onRefillRequest={() => setIsRequestRefillOpen(true)}
-          onOpenAskAva={() => setIsAskAvaOpen(true)}
-          appointments={appointments}
-        />
-      ) : currentView === 'settings' ? (
-        <SettingsView
-          onBackToDashboard={() => setCurrentView('dashboard')}
-          onNavigateToAppointments={() => setCurrentView('appointments')}
-          onNavigateToPatients={() => setCurrentView('patients')}
-          onNavigateToBilling={() => setCurrentView('billing')}
-          onNavigateToChats={handleOpenChat}
-          onNavigateToReports={() => setCurrentView('reports')}
-          onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
-          onOpenTasks={() => setIsTasksOpen(true)}
-          onLogout={() => {
-            try {
-              localStorage.removeItem('mednevo_registered');
-            } catch {
-              // ignore
-            }
-            showToast('Signed out. Switched to Provider Onboarding.');
-            setCurrentView('registration');
-          }}
-        />
-      ) : currentView === 'chats' ? (
-        <ChatView
-          initialContactName={activeChatContact || undefined}
-          onBackToDashboard={() => setCurrentView('dashboard')}
-          onNavigateToAppointments={() => setCurrentView('appointments')}
-          onNavigateToPatients={() => setCurrentView('patients')}
-          onNavigateToBilling={() => setCurrentView('billing')}
-          onNavigateToReports={() => setCurrentView('reports')}
-          onOpenSettings={() => setCurrentView('settings')}
-          onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
-          onOpenTasks={() => setIsTasksOpen(true)}
-          onOpenPatientChart={handleOpenPatientChart}
-          onOpenVirtualVisit={handleOpenVirtualVisit}
-          onOpenSchedule={(patientName) => {
-            setSelectedPatient(patientName);
-            setIsNewAppointmentOpen(true);
-          }}
-        />
-      ) : currentView === 'reports' ? (
-        <ReportsView
-          onBackToDashboard={() => setCurrentView('dashboard')}
-          onNavigateToAppointments={() => setCurrentView('appointments')}
-          onNavigateToPatients={() => setCurrentView('patients')}
-          onNavigateToBilling={() => setCurrentView('billing')}
-          onNavigateToChats={handleOpenChat}
-          onOpenSettings={() => setCurrentView('settings')}
-          onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
-          onOpenTasks={() => setIsTasksOpen(true)}
-          onOpenPatientChart={handleOpenPatientChart}
-        />
-      ) : (
-        <BillingView
-          onBackToDashboard={() => setCurrentView('dashboard')}
-          onNavigateToCalendar={() => setCurrentView('appointments')}
-          onOpenSettings={() => setCurrentView('settings')}
-        />
-      )}
+      {/* Active Screen View Protected by Global Healthcare ErrorBoundary */}
+      <ErrorBoundary fallbackTitle="Module Render Error">
+        {currentView === 'registration' ? (
+          <ProviderRegistrationView
+            onCompleteRegistration={handleRegistrationComplete}
+            onSkipToDashboard={() => setCurrentView('dashboard')}
+          />
+        ) : currentView === 'dashboard' ? (
+          <DoctorDashboardView
+            onNavigateToAppointments={() => setCurrentView('appointments')}
+            onNavigateToPatients={() => setCurrentView('patients')}
+            onNavigateToCalendar={() => setCurrentView('calendar')}
+            onNavigateToBilling={() => setCurrentView('billing')}
+            onNavigateToChats={handleOpenChat}
+            onNavigateToReports={() => setCurrentView('reports')}
+            onNavigateToRegistration={() => setCurrentView('registration')}
+            onOpenVirtualVisit={handleOpenVirtualVisit}
+            onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
+            onOpenNewPrescription={handleOpenNewPrescription}
+            onOpenReferPatient={handleOpenReferPatient}
+            onOpenAIScribe={handleOpenAIScribe}
+            onOpenAdjustSchedule={() => setIsAdjustScheduleOpen(true)}
+            onOpenSettings={() => setCurrentView('settings')}
+            onOpenPatientChart={handleOpenPatientChart}
+            onOpenFullBriefing={() => setIsFullBriefingOpen(true)}
+            onOpenTasks={() => setIsTasksOpen(true)}
+            onOpenExport={() => setIsExportOpen(true)}
+            onOpenAskAva={() => setIsAskAvaOpen(true)}
+          />
+        ) : currentView === 'appointments' ? (
+          <AppointmentListView
+            onBackToDashboard={() => setCurrentView('dashboard')}
+            onOpenVirtualVisit={handleOpenVirtualVisit}
+            onOpenPatientChart={handleOpenPatientChart}
+            onOpenNewAppointment={() => setIsNewAppointmentOpen(true)}
+            onNavigateToBilling={() => setCurrentView('billing')}
+            onNavigateToPatients={() => setCurrentView('patients')}
+            onNavigateToChats={handleOpenChat}
+            onNavigateToReports={() => setCurrentView('reports')}
+            onNavigateToCalendarGrid={() => setCurrentView('calendar')}
+            onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
+            onOpenFullBriefing={() => setIsFullBriefingOpen(true)}
+            onOpenAskAva={() => setIsAskAvaOpen(true)}
+            onOpenTasks={() => setIsTasksOpen(true)}
+            onOpenAdjustSchedule={() => setIsAdjustScheduleOpen(true)}
+            onOpenSettings={() => setCurrentView('settings')}
+          />
+        ) : currentView === 'patients' ? (
+          <PatientsView
+            onBackToDashboard={() => setCurrentView('dashboard')}
+            onNavigateToAppointments={() => setCurrentView('appointments')}
+            onNavigateToBilling={() => setCurrentView('billing')}
+            onNavigateToChats={handleOpenChat}
+            onNavigateToReports={() => setCurrentView('reports')}
+            onOpenVirtualVisit={handleOpenVirtualVisit}
+            onOpenPatientChart={handleOpenPatientChart}
+            onOpenNewAppointment={() => setIsNewAppointmentOpen(true)}
+            onOpenNewPrescription={handleOpenNewPrescription}
+            onOpenAIScribe={handleOpenAIScribe}
+            onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
+            onOpenFullBriefing={() => setIsFullBriefingOpen(true)}
+            onOpenAskAva={() => setIsAskAvaOpen(true)}
+            onOpenTasks={() => setIsTasksOpen(true)}
+            onOpenAdjustSchedule={() => setIsAdjustScheduleOpen(true)}
+            onOpenSettings={() => setCurrentView('settings')}
+          />
+        ) : currentView === 'calendar' ? (
+          <CalendarView
+            onBackToDashboard={() => setCurrentView('dashboard')}
+            onNavigateToList={() => setCurrentView('appointments')}
+            onNewAppointment={handleOpenNewAppointment}
+            onBlockTime={() => setIsAdjustScheduleOpen(true)}
+            onExport={() => setIsExportOpen(true)}
+            onOpenPatientChart={handleOpenPatientChart}
+            onOpenVirtualVisit={handleOpenVirtualVisit}
+            onRefillRequest={() => setIsRequestRefillOpen(true)}
+            onOpenAskAva={() => setIsAskAvaOpen(true)}
+            appointments={appointments}
+          />
+        ) : currentView === 'settings' ? (
+          <SettingsView
+            onBackToDashboard={() => setCurrentView('dashboard')}
+            onNavigateToAppointments={() => setCurrentView('appointments')}
+            onNavigateToPatients={() => setCurrentView('patients')}
+            onNavigateToBilling={() => setCurrentView('billing')}
+            onNavigateToChats={handleOpenChat}
+            onNavigateToReports={() => setCurrentView('reports')}
+            onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
+            onOpenTasks={() => setIsTasksOpen(true)}
+            onLogout={() => {
+              try {
+                localStorage.removeItem('mednevo_registered');
+              } catch {
+                // ignore
+              }
+              showToast('Signed out. Switched to Provider Onboarding.');
+              setCurrentView('registration');
+            }}
+          />
+        ) : currentView === 'chats' ? (
+          <ChatView
+            initialContactName={activeChatContact || undefined}
+            onBackToDashboard={() => setCurrentView('dashboard')}
+            onNavigateToAppointments={() => setCurrentView('appointments')}
+            onNavigateToPatients={() => setCurrentView('patients')}
+            onNavigateToBilling={() => setCurrentView('billing')}
+            onNavigateToReports={() => setCurrentView('reports')}
+            onOpenSettings={() => setCurrentView('settings')}
+            onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
+            onOpenTasks={() => setIsTasksOpen(true)}
+            onOpenPatientChart={handleOpenPatientChart}
+            onOpenVirtualVisit={handleOpenVirtualVisit}
+            onOpenSchedule={(patientName) => {
+              setSelectedPatient(patientName);
+              setIsNewAppointmentOpen(true);
+            }}
+          />
+        ) : currentView === 'reports' ? (
+          <ReportsView
+            onBackToDashboard={() => setCurrentView('dashboard')}
+            onNavigateToAppointments={() => setCurrentView('appointments')}
+            onNavigateToPatients={() => setCurrentView('patients')}
+            onNavigateToBilling={() => setCurrentView('billing')}
+            onNavigateToChats={handleOpenChat}
+            onOpenSettings={() => setCurrentView('settings')}
+            onOpenSearchPatient={() => setIsSearchPatientOpen(true)}
+            onOpenTasks={() => setIsTasksOpen(true)}
+            onOpenPatientChart={handleOpenPatientChart}
+          />
+        ) : (
+          <BillingView
+            onBackToDashboard={() => setCurrentView('dashboard')}
+            onNavigateToCalendar={() => setCurrentView('appointments')}
+            onOpenSettings={() => setCurrentView('settings')}
+          />
+        )}
+      </ErrorBoundary>
 
       {/* Interactive Modals */}
       <VirtualVisitModal
