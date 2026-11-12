@@ -182,6 +182,7 @@ export interface AppearanceSettings {
   theme: 'light' | 'dark' | 'system';
   accentColor: 'purple' | 'cyan' | 'indigo' | 'emerald';
   fontSize: 'small' | 'standard' | 'large';
+  fontScale?: number;
   layoutDensity: 'comfortable' | 'compact';
   highContrast: boolean;
   reducedMotion: boolean;

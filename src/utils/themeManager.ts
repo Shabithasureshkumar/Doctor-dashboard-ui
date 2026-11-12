@@ -130,7 +130,9 @@ export function applyThemeSettings(appearance: AppearanceSettings) {
   root.setAttribute('data-accent', appearance.accentColor);
 
   // 4. Typography Scale
-  if (appearance.fontSize === 'small') {
+  if (typeof appearance.fontScale === 'number' && appearance.fontScale >= 75 && appearance.fontScale <= 150) {
+    root.style.fontSize = `${appearance.fontScale}%`;
+  } else if (appearance.fontSize === 'small') {
     root.style.fontSize = '90%';
   } else if (appearance.fontSize === 'large') {
     root.style.fontSize = '110%';
@@ -138,6 +140,9 @@ export function applyThemeSettings(appearance: AppearanceSettings) {
     root.style.fontSize = '100%';
   }
   root.setAttribute('data-font-size', appearance.fontSize);
+  if (appearance.fontScale) {
+    root.setAttribute('data-font-scale', `${appearance.fontScale}%`);
+  }
 
   // 5. Layout Density
   if (appearance.layoutDensity === 'compact') {

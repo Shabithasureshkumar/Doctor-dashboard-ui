@@ -140,26 +140,132 @@ export const AppearanceSection: React.FC<AppearanceSectionProps> = ({
               Adjust global dashboard font scaling for optimal readability
             </p>
 
+            {/* Quick Preset Buttons */}
             <div className="grid grid-cols-3 gap-2 pt-1">
               {[
-                { id: 'small' as const, label: 'Small (90%)' },
-                { id: 'standard' as const, label: 'Standard (100%)' },
-                { id: 'large' as const, label: 'Large (110%)' },
-              ].map((fs) => (
-                <button
-                  key={fs.id}
-                  type="button"
-                  onClick={() => onChange({ fontSize: fs.id })}
-                  className={`py-3 rounded-2xl border text-xs font-bold transition-all text-center ${
-                    appearance.fontSize === fs.id
-                      ? 'bg-[#5C24FF] text-white border-[#5C24FF] shadow-xs'
-                      : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-purple-50/50'
-                  }`}
-                >
-                  {fs.label}
-                </button>
-              ))}
+                { id: 'small' as const, scale: 90, label: 'Small (90%)' },
+                { id: 'standard' as const, scale: 100, label: 'Standard (100%)' },
+                { id: 'large' as const, scale: 110, label: 'Large (110%)' },
+              ].map((fs) => {
+                const isSelected =
+                  appearance.fontScale !== undefined
+                    ? Math.abs(appearance.fontScale - fs.scale) <= 3
+                    : appearance.fontSize === fs.id;
+
+                return (
+                  <button
+                    key={fs.id}
+                    type="button"
+                    onClick={() =>
+                      onChange({
+                        fontSize: fs.id,
+                        fontScale: fs.scale,
+                      })
+                    }
+                    className={`py-2.5 rounded-2xl border text-xs font-bold transition-all text-center ${
+                      isSelected
+                        ? 'bg-[#5C24FF] text-white border-[#5C24FF] shadow-xs'
+                        : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-purple-50/50'
+                    }`}
+                  >
+                    {fs.label}
+                  </button>
+                );
+              })}
             </div>
+
+            {/* Interactive Draggable Range Slider */}
+            {(() => {
+              const currentScale =
+                appearance.fontScale ??
+                (appearance.fontSize === 'small' ? 90 : appearance.fontSize === 'large' ? 110 : 100);
+
+              const handleSliderChange = (newVal: number) => {
+                let category: 'small' | 'standard' | 'large' = 'standard';
+                if (newVal <= 92) category = 'small';
+                else if (newVal >= 108) category = 'large';
+                else category = 'standard';
+
+                onChange({
+                  fontScale: newVal,
+                  fontSize: category,
+                });
+              };
+
+              const fillPercent = Math.min(
+                100,
+                Math.max(0, ((currentScale - 85) / (120 - 85)) * 100)
+              );
+
+              return (
+                <div className="pt-3 border-t border-slate-100 space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-semibold text-slate-500 flex items-center gap-1.5">
+                      <span>Drag to scale</span>
+                      <span className="px-2 py-0.5 rounded-full bg-purple-50 text-[#5C24FF] font-bold text-[11px] border border-purple-100">
+                        {currentScale}%
+                      </span>
+                    </span>
+                    <span className="text-[11px] text-slate-400 font-medium">85% – 120%</span>
+                  </div>
+
+                  {/* Range Slider Track */}
+                  <div className="relative flex items-center py-0.5">
+                    <input
+                      type="range"
+                      min={85}
+                      max={120}
+                      step={1}
+                      value={currentScale}
+                      onChange={(e) => handleSliderChange(Number(e.target.value))}
+                      className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-[#5C24FF]"
+                      style={{
+                        background: `linear-gradient(to right, #5C24FF 0%, #5C24FF ${fillPercent}%, #E2E8F0 ${fillPercent}%, #E2E8F0 100%)`,
+                      }}
+                    />
+                  </div>
+
+                  {/* Scale Markers */}
+                  <div className="flex justify-between items-center text-[10px] font-semibold text-slate-400 px-0.5 select-none">
+                    <button
+                      type="button"
+                      onClick={() => handleSliderChange(85)}
+                      className={`hover:text-[#5C24FF] transition-colors ${currentScale === 85 ? 'text-[#5C24FF] font-bold' : ''}`}
+                    >
+                      85%
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleSliderChange(90)}
+                      className={`hover:text-[#5C24FF] transition-colors ${currentScale === 90 ? 'text-[#5C24FF] font-bold' : ''}`}
+                    >
+                      90%
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleSliderChange(100)}
+                      className={`hover:text-[#5C24FF] transition-colors ${currentScale === 100 ? 'text-[#5C24FF] font-bold' : ''}`}
+                    >
+                      100% (Default)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleSliderChange(110)}
+                      className={`hover:text-[#5C24FF] transition-colors ${currentScale === 110 ? 'text-[#5C24FF] font-bold' : ''}`}
+                    >
+                      110%
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleSliderChange(120)}
+                      className={`hover:text-[#5C24FF] transition-colors ${currentScale === 120 ? 'text-[#5C24FF] font-bold' : ''}`}
+                    >
+                      120%
+                    </button>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         </div>
       </div>
